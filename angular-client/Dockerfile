@@ -1,5 +1,5 @@
 # Create image based on the official Node 6 image from dockerhub
-FROM node:8
+FROM node:10
 
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
