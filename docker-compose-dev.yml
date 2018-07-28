@@ -1,4 +1,4 @@
-version: '3' # specify docker-compose version
+version: '3.2' # specify docker-compose version
 
 # Define the services/containers to be run
 services:
@@ -22,3 +22,7 @@ services:
     image: mongo # specify image to build container from
     ports:
       - "27017:27017" # specify port forewarding
+    volumes:
+      - type: volume
+        source: dbvol
+        target: /data/db
