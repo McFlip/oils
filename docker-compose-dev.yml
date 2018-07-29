@@ -7,7 +7,7 @@ services:
     ports:
       - "4200:4200" # specify port forewarding
     volumes:
-      - ./angular-client:/usr/src/app # bind src code to container
+      - ./angular-client/src:/usr/src/app/src # bind src code to container
 
   express: #name of the second service
     build: express-server # specify the directory of the Dockerfile
