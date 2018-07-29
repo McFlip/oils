@@ -26,3 +26,5 @@ services:
       - type: volume
         source: dbvol
         target: /data/db
+volumes:
+  dbvol:
