@@ -8,7 +8,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy dependency definitions
-COPY package.json /usr/src/app
+COPY package.json wait-for-it.sh /usr/src/app/
 
 # Install dependecies
 RUN npm install
@@ -18,6 +18,3 @@ COPY . /usr/src/app
 
 # Expose the port the app runs in
 EXPOSE 3000
-
-# Serve the app
-CMD ["npm", "start"]

@@ -8,6 +8,7 @@ services:
       - "4200:4200" # specify port forewarding
     volumes:
       - ./angular-client/src:/usr/src/app/src # bind src code to container
+    command: ["npm", "start"]     # Serve the app
 
   express: #name of the second service
     build: express-server # specify the directory of the Dockerfile
@@ -16,7 +17,11 @@ services:
     volumes:
       - ./express-server/routes:/usr/src/app/routes # bind src code to container
     links:
-      - database # link this service to the database service
+      - "database" # link this service to the database service
+    depends_on:
+      - "database"
+    # Serve the app; wait for db connection
+    command: ["./wait-for-it.sh", "database:27017", "--", "npm", "start"]
 
   database: # name of the third service
     image: mongo # specify image to build container from
