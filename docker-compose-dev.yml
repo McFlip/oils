@@ -3,6 +3,7 @@ version: '3.2' # specify docker-compose version
 # Define the services/containers to be run
 services:
   angular: # name of the first service
+    container_name: angular-app
     build: angular-client # specify the directory of the Dockerfile
     ports:
       - "4200:4200" # specify port forewarding
@@ -11,19 +12,21 @@ services:
     command: ["npm", "start"]     # Serve the app
 
   express: #name of the second service
+    container_name: express-api
     build: express-server # specify the directory of the Dockerfile
     ports:
       - "3000:3000" #specify ports forewarding
     volumes:
-      - ./express-server/routes:/usr/src/app/routes # bind src code to container
+      - ./express-server/server:/usr/src/app/server # bind src code to container
     links:
       - "database" # link this service to the database service
     depends_on:
       - "database"
     # Serve the app; wait for db connection
-    command: ["./wait-for-it.sh", "database:27017", "--", "npm", "start"]
+    command: ["bash", "/usr/src/app/wait-for-it.sh", "database:27017", "--", "yarn", "run", "start"]
 
   database: # name of the third service
+    container_name: mongo-db
     image: mongo # specify image to build container from
     ports:
       - "27017:27017" # specify port forewarding
@@ -31,5 +34,14 @@ services:
       - type: volume
         source: dbvol
         target: /data/db
+  adminmongo:
+    container_name: adminmongo
+    image: mrvautin/adminmongo
+    ports:
+      - "1234:1234"
+    links:
+      - "database"
+    depends_on:
+      - "database"
 volumes:
   dbvol:

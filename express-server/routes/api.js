@@ -2,21 +2,13 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+import {User} from '../models/user.js';
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
 
 // Connect to mongodb
 mongoose.connect(dbHost);
-
-// create mongoose schema
-const userSchema = new mongoose.Schema({
-  name: String,
-  age: Number
-});
-
-// create mongoose model
-const User = mongoose.model('User', userSchema);
 
 /* GET api listing. */
 router.get('/', (req, res) => {
