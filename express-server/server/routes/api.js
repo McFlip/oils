@@ -1,8 +1,8 @@
 // Import dependencies
-const mongoose = require('mongoose');
-const express = require('express');
-const router = express.Router();
-import {User} from '../models/user.js';
+import mongoose from 'mongoose';
+import { Router } from 'express';
+const router = new Router();
+import User from '../models/user.js';
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
@@ -49,4 +49,4 @@ router.post('/users', (req, res) => {
     });
 });
 
-module.exports = router;
+export {router as api};
