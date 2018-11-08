@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { Router } from 'express';
 const router = new Router();
 import User from '../models/user.js';
+import * as UserController from '../controllers/user.js';
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
@@ -11,42 +12,15 @@ const dbHost = 'mongodb://database/mean-docker';
 mongoose.connect(dbHost);
 
 /* GET api listing. */
-router.get('/', (req, res) => {
-        res.send('api works');
-});
+router.get('/', UserController.ping);
 
 /* GET all users. */
-router.get('/users', (req, res) => {
-    User.find({}, (err, users) => {
-        if (err) res.status(500).send(error)
-
-        res.status(200).json(users);
-    });
-});
+router.get('/users', UserController.getUsers);
 
 /* GET one users. */
-router.get('/users/:id', (req, res) => {
-    User.findById(req.param.id, (err, users) => {
-        if (err) res.status(500).send(error)
-
-        res.status(200).json(users);
-    });
-});
+router.get('/users/:id', UserController.getUser);
 
 /* Create a user. */
-router.post('/users', (req, res) => {
-    let user = new User({
-        name: req.body.name,
-        age: req.body.age
-    });
-
-    user.save(error => {
-        if (error) res.status(500).send(error);
-
-        res.status(201).json({
-            message: 'User created successfully'
-        });
-    });
-});
+router.post('/users', UserController.createUser);
 
 export {router as api};
