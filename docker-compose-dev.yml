@@ -2,13 +2,15 @@ version: '3.2' # specify docker-compose version
 
 # Define the services/containers to be run
 services:
-  angular: # name of the first service
-    container_name: angular-app
-    build: angular-client # specify the directory of the Dockerfile
+  react: # name of the first service
+    container_name: react-app
+    build: react-client # specify the directory of the Dockerfile
     ports:
-      - "4200:4200" # specify port forewarding
+      - "8080:8080" # specify port forewarding
     volumes:
-      - ./angular-client/src:/usr/src/app/src # bind src code to container
+      - ./react-client/src:/usr/src/app/src # bind src code to container
+      - ./react-client/style:/usr/src/app/style # bind src code to container
+      - ./react-client/test:/usr/src/app/test # bind src code to container
     command: ["npm", "start"]     # Serve the app
 
   express: #name of the second service
@@ -43,5 +45,9 @@ services:
       - "database"
     depends_on:
       - "database"
+    environment:
+      - CONN_NAME="mean-docker"
+      - DB_HOST="database"
+      - DB_NAME="mean-docker"
 volumes:
   dbvol:
