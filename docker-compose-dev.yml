@@ -6,11 +6,12 @@ services:
     container_name: react-app
     build: react-client # specify the directory of the Dockerfile
     ports:
-      - "8080:8080" # specify port forewarding
+      - "80:8080" # specify port forewarding
     volumes:
-      - ./react-client/src:/usr/src/app/src # bind src code to container
-      - ./react-client/style:/usr/src/app/style # bind src code to container
-      - ./react-client/test:/usr/src/app/test # bind src code to container
+      - './react-client:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    environment:
+      - NODE_ENV=development
     command: ["npm", "start"]     # Serve the app
 
   express: #name of the second service
