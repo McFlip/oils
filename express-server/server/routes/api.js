@@ -2,8 +2,8 @@
 import mongoose from 'mongoose';
 import { Router } from 'express';
 const router = new Router();
-import User from '../models/user.js';
-import * as UserController from '../controllers/user.js';
+import Post from '../models/post.js';
+import * as PostController from '../controllers/post.js';
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
@@ -15,15 +15,18 @@ mongoose.connect(dbHost, dbOpts)
   .catch(err => console.log(err));
 
 /* GET api listing. */
-router.get('/', UserController.ping);
+router.get('/', PostController.ping);
 
-/* GET all users. */
-router.get('/users', UserController.getUsers);
+/* GET all posts. */
+router.get('/posts', PostController.getPosts);
 
-/* GET one users. */
-router.get('/users/:id', UserController.getUser);
+/* GET one posts. */
+router.get('/posts/:id', PostController.getPost);
 
-/* Create a user. */
-router.post('/users', UserController.createUser);
+/* Delete post */
+router.delete('/posts/:id', PostController.deletePost);
+
+/* Create a post. */
+router.post('/posts', PostController.createPost);
 
 export {router as api};

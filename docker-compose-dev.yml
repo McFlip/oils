@@ -12,6 +12,10 @@ services:
       - '/usr/src/app/node_modules'
     environment:
       - NODE_ENV=development
+    links:
+      - "express"
+    depends_on:
+      - "express"
     command: ["npm", "start"]     # Serve the app
 
   express: #name of the second service
