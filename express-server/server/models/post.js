@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 // create mongoose schema
 const postSchema = new Schema({
   title: String,
-  categories: String,
+  product: { type: ObjectId, ref: 'Product'},
   content: String
 });
 

@@ -4,6 +4,7 @@ import { Router } from 'express';
 const router = new Router();
 import Post from '../models/post.js';
 import * as PostController from '../controllers/post.js';
+import * as ProdController from '../controllers/prod.js';
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
@@ -17,8 +18,11 @@ mongoose.connect(dbHost, dbOpts)
 /* GET api listing. */
 router.get('/', PostController.ping);
 
+/* GET all products. */
+router.get('/products', ProdController.getProducts);
+
 /* GET all posts. */
-router.get('/posts', PostController.getPosts);
+router.get('/products/:id/posts', PostController.getPosts);
 
 /* GET one posts. */
 router.get('/posts/:id', PostController.getPost);

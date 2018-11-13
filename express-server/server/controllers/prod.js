@@ -1,20 +1,11 @@
-import Post from '../models/post.js';
 import Product from '../models/product.js';
 
-/* GET api listing. */
-export function ping (req, res) {
-  res.status(200).send('api works');
-}
-
-/* GET all posts. */
-export function getPosts (req, res) {
-  Product.findById(req.params.id).
-  populate('posts').
-  select('posts').
-  exec((err, posts) => {
+/* GET all products. */
+export function getProducts (req, res) {
+  Product.find({}, (err, products) => {
       if (err) res.status(500).send(error)
-      console.log(req.params.sku);
-      res.status(200).send(posts.posts);
+
+      res.status(200).send(products);
   });
 }
 

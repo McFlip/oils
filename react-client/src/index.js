@@ -9,6 +9,7 @@ import reducers from "./reducers";
 import PostsIndex from "./components/posts_index";
 import PostsNew from "./components/posts_new";
 import PostsShow from "./components/posts_show";
+import ProdsIndex from "./components/prods_index";
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -19,7 +20,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/posts/new" component={PostsNew} />
           <Route path="/posts/:id" component={PostsShow} />
-          <Route path="/" component={PostsIndex} />
+          <Route path="/" component={ProdsIndex} />
         </Switch>
       </div>
     </BrowserRouter>

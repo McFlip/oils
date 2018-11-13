@@ -1,13 +1,13 @@
 import _ from "lodash";
-import { FETCH_POSTS, FETCH_POST, DELETE_POST } from "../actions/posts";
+import { FETCH_PRODS, FETCH_PROD, DELETE_PROD } from "../actions/prods";
 
 export default function(state = {}, action) {
   switch (action.type) {
-    case DELETE_POST:
+    case DELETE_PROD:
       return _.omit(state, action.payload);
-    case FETCH_POST:
+    case FETCH_PROD:
       return { ...state, [action.payload.data._id]: action.payload.data };
-    case FETCH_POSTS:
+    case FETCH_PRODS:
       return _.mapKeys(action.payload.data, "_id");
     default:
       return state;
