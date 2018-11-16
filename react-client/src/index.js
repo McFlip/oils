@@ -10,6 +10,9 @@ import PostsIndex from "./components/posts_index";
 import PostsNew from "./components/posts_new";
 import PostsShow from "./components/posts_show";
 import ProdsIndex from "./components/prods_index";
+import Home from "./components/home";
+import UsesIndex from "./components/uses_index";
+import RecipesIndex from "./components/recipes_index";
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -20,7 +23,10 @@ ReactDOM.render(
         <Switch>
           <Route path="/posts/new" component={PostsNew} />
           <Route path="/posts/:id" component={PostsShow} />
-          <Route path="/" component={ProdsIndex} />
+          <Route path="/products" component={ProdsIndex} />
+          <Route path="/uses" component={UsesIndex} />
+          <Route path="/recipes" component={RecipesIndex} />
+          <Route path="/" component={Home} />
         </Switch>
       </div>
     </BrowserRouter>
