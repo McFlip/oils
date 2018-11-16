@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 //import { fetchProds } from "../actions/prods";
 import ProdsList from "./prods_list";
 import Menu from "./menu";
+import ProdsDropdown from "./prods_dropdown"
 
 class ProdsIndex extends Component {
   /*componentDidMount() {
@@ -14,12 +15,7 @@ class ProdsIndex extends Component {
   render() {
     return (
       <div>
-        <Menu page="products" />
-        <div className="text-xs-right">
-          <Link className="btn btn-primary" to="/posts/new">
-            New Inventory Item
-          </Link>
-        </div>
+        <Menu page="products" dropdown={ProdsDropdown} />
         <h3>Inventory</h3>
         <ProdsList />
       </div>
@@ -27,9 +23,10 @@ class ProdsIndex extends Component {
   }
 }
 
+/*
 function mapStateToProps(state) {
   return { prods: state.prods };
 }
-
+*/
 //export default connect(mapStateToProps, { fetchProds })(ProdsIndex);
 export default ProdsIndex;

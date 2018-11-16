@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-const Menu = ({page}) => {
+const Menu = ({page, dropdown}) => {
   const brandLogo = { width : '40px' };
   const pages = ['products','uses','recipes'];
+  const pagesDropDown = ['products'];
 
   function pageLinks(p) {
     let isActive = '';
@@ -13,6 +14,21 @@ const Menu = ({page}) => {
         <Link className="nav-link" to={`/${p}`}>{p}</Link>
       </li>
     );
+  }
+
+  function renderDropDown() {
+    if (pagesDropDown.find(p => p == page)) {
+      return (
+        <li className="nav-item dropdown">
+          <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown">
+            Actions
+          </a>
+          {dropdown()}
+        </li>
+      );
+    } else {
+      return null;
+    }
   }
 
   return (
@@ -26,16 +42,7 @@ const Menu = ({page}) => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav">
           { pages.map(pageLinks) }
-          <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown">
-              Dropdown link
-            </a>
-            <div className="dropdown-menu">
-              <a className="dropdown-item" href="#">Action</a>
-              <a className="dropdown-item" href="#">Another action</a>
-              <a className="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
+          { renderDropDown() }
         </ul>
       </div>
     </nav>
