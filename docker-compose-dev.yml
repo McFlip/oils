@@ -6,10 +6,10 @@ services:
     container_name: react-app
     build: react-client # specify the directory of the Dockerfile
     ports:
-      - "80:8080" # specify port forewarding
+      - "8080:8080" # specify port forewarding
     volumes:
       - './react-client:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      #- '/usr/src/app/node_modules'
     environment:
       - NODE_ENV=development
     links:

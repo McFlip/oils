@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "development",
   entry: ["./src/index.js"],
   output: {
     path: __dirname,
@@ -6,21 +7,14 @@ module.exports = {
     filename: "bundle.js"
   },
   module: {
-    loaders: [
+    rules: [
       {
+        test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel",
-        query: {
-          presets: ["react", "es2015", "stage-1"]
+        use: {
+          loader: "babel-loader"
         }
       }
     ]
-  },
-  resolve: {
-    extensions: ["", ".js", ".jsx"]
-  },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: "./"
   }
 };
