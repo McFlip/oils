@@ -13,7 +13,7 @@ class ProdsList extends Component {
     return _.map(this.props.prods, prod => {
       return (
         <li className="list-group-item" key={prod.sku}>
-          <span>
+          <span data-testid='sku'>
           {prod.sku}
           </span>
           <span className="invItem">
