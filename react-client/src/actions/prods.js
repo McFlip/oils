@@ -18,7 +18,7 @@ export function fetchProds() {
 
 export function createProd(values, callback) {
   const request = axios
-    .prod(`${ROOT_URL}/prods`, values)
+    .post(`${ROOT_URL}/prods`, values)
     .then(() => callback());
 
   return {

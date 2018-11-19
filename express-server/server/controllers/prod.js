@@ -2,7 +2,7 @@ import Product from '../models/product.js';
 
 /* GET all products. */
 export function getProducts (req, res) {
-  Product.find({}, (err, products) => {
+  Product.find({}).sort({category: 1, sku: 1}).exec((err, products) => {
       if (err) res.status(500).send(error)
 
       res.status(200).send(products);

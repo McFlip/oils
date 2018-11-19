@@ -16,7 +16,8 @@ const oilSchema = new Schema({
   photosensitive: Boolean,
   topical: Boolean,
   dilute: Boolean,
-  aromatic: Boolean
+  aromatic: Boolean,
+  dietary: Boolean
 });
 
 // create mongoose schema
@@ -39,7 +40,8 @@ const prodSchema = new Schema({
   pics: [prod_gfxSchema],
   uses: [String],
   recipes: [{ type: ObjectId, ref: 'Recipe' }],
-  posts: [{ type: ObjectId, ref: 'Post'}]
+  posts: [{ type: ObjectId, ref: 'Post'}],
+  contains: [{ type: ObjectId, ref: 'Product'}]
 });
 
 // create mongoose model

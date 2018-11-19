@@ -16,7 +16,7 @@ class ProdsIndex extends Component {
     return (
       <div>
         <Menu page="products" dropdown={ProdsDropdown} />
-        <h3>Inventory</h3>
+        <h2>Inventory</h2>
         <ProdsList />
       </div>
     );
