@@ -43,3 +43,12 @@ export function deletePost (req, res) {
     res.status(200).json(posts);
   });
 }
+
+/* Update one product */
+export function updateProduct(req, res) {
+  Product.findByIdAndUpdate(req.params.id, { $set: req.body}, { new: true }, function (err, product) {
+    if (err) res.status(500).send(error)
+
+    res.status(200).send(product);
+});
+}

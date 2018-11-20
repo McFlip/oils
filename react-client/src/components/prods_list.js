@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProds } from "../actions/prods";
+import Checkbox from './checkbox';
 
 class ProdsList extends Component {
   constructor(props){
@@ -49,10 +50,7 @@ class ProdsList extends Component {
               {prod.qty}
             </span>
           </button>
-          <span className='form-group form-check-inline px-2'>
-            <label className="form-check-label" htmlFor={`checkbox_${prod._id}`}> wishlist </label>
-            <input className="form-check-input ml-2" type="checkbox" checked={prod.wishlist} id={`checkbox_${prod._id}`} readOnly />
-          </span>
+          <Checkbox _id={prod._id} checked={prod.wishlist} />
         </li>
       );
     });
