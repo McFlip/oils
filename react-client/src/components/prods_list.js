@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProds } from "../actions/prods";
 import Checkbox from './checkbox';
+import QTY_Button from './qty_button';
 
 class ProdsList extends Component {
   constructor(props){
@@ -44,12 +45,7 @@ class ProdsList extends Component {
           <span className="px-2">
             {prod.size}
           </span>
-          <button type="button" className="btn btn-primary px-2" onClick={()=> alert('Modal w/ ch qty form')} >
-            QTY:
-            <span className='badge badge-light'>
-              {prod.qty}
-            </span>
-          </button>
+          <QTY_Button qty={prod.qty} _id={prod._id} />
           <Checkbox _id={prod._id} checked={prod.wishlist} />
         </li>
       );
