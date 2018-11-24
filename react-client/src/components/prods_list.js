@@ -36,19 +36,11 @@ class ProdsList extends Component {
 
   handleClose(){
     this.setState({sel_prod: null});
-<<<<<<< HEAD
-=======
-    console.log('closing');
->>>>>>> 0dcb9185385143d531e3510804571bab2bc2b9da
   }
 
   handleSubmit(id, value){
     this.props.updateProd(id, value);
     this.handleClose();
-<<<<<<< HEAD
-=======
-
->>>>>>> 0dcb9185385143d531e3510804571bab2bc2b9da
   }
 
   renderProds() {
