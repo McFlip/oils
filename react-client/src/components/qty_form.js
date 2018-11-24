@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateProd } from '../actions/prods';
 
 class QTY_Form extends Component {
   constructor(props){
     super(props);
-    this.state = {value: this.props.value};
-
+    this.state = { value: this.props.value };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  componentDidUpdate(prevProps) {
+  // compare props and force update to state on prop update
+  if (this.props.value !== prevProps.value) {
+    this.setState({value: this.props.value});
+  }
+}
 
   // controlled component
   handleChange(event) {
@@ -17,10 +22,10 @@ class QTY_Form extends Component {
   }
 
   // dispatch actions
-  handleSubmit(event) {
-    event.preventDefault();
-    alert('Set qty to: ' + this.state.value);
-    //this.props.updateProd(this.props._id, this.state.value);
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.handleSubmit(this.props._id, {qty: this.state.value});
+    $('#qtyModal').modal('toggle');
   }
 
   render(){
@@ -41,7 +46,7 @@ class QTY_Form extends Component {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.props.close}>Close</button>
-                <button type="submit" className="btn btn-primary" data-dismiss="modal">Save changes</button>
+                <button type="submit" className="btn btn-primary" >Save changes</button>
               </div>
             </form>
           </div>
@@ -50,11 +55,5 @@ class QTY_Form extends Component {
     );
   }
 }
-/*
-function mapStateToProps(state, ownProps) {
-  return { value: state.prods[ownProps._id].qty };
-}
 
-export default connect(mapStateToProps, { updateProd })(QTY_Form);
-*/
 export default QTY_Form;
