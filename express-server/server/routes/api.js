@@ -21,6 +21,9 @@ router.get('/', PostController.ping);
 /* GET all products. */
 router.get('/products', ProdController.getProducts);
 
+/* GET product search results. */
+router.get('/products/search/:category', ProdController.searchProducts);
+
 /* UPDATE product. */
 router.post('/products/:id', ProdController.updateProduct);
 

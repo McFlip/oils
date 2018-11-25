@@ -11,8 +11,8 @@ export function getPosts (req, res) {
   Product.findById(req.params.id).
   populate('posts').
   select('posts').
-  exec((err, posts) => {
-      if (err) res.status(500).send(error)
+  exec((error, posts) => {
+      if (error) res.status(500).send(error)
       console.log(req.params.sku);
       res.status(200).send(posts.posts);
   });
@@ -20,8 +20,8 @@ export function getPosts (req, res) {
 
 /* GET one posts. */
 export function getPost (req, res) {
-  Post.findById(req.params.id, (err, posts) => {
-      if (err) res.status(500).send(error)
+  Post.findById(req.params.id, (error, posts) => {
+      if (error) res.status(500).send(error)
 
       res.status(200).json(posts);
   });
@@ -46,8 +46,8 @@ export function createPost (req, res) {
 
 /* Delete one post. */
 export function deletePost (req, res) {
-  Post.findByIdAndRemove(req.params.id, (err, posts) => {
-    if (err) res.status(500).send(error)
+  Post.findByIdAndRemove(req.params.id, (error, posts) => {
+    if (error) res.status(500).send(error)
 
     res.status(200).json(posts);
   });

@@ -17,6 +17,15 @@ export function fetchProds() {
   };
 }
 
+export function searchProds(category, term) {
+  const request = axios.get(`${ROOT_URL}/products/search/:category?q=${term}`);
+
+  return {
+    type: FETCH_PRODS,
+    payload: request
+  };
+}
+
 export function createProd(values, callback) {
   const request = axios
     .post(`${ROOT_URL}/prods`, values)

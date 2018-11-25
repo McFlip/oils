@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchProds, updateProd } from "../actions/prods";
+import { fetchProds, updateProd, searchProds } from "../actions/prods";
 import ProdsList from "./prods_list";
 import Menu from "./menu";
 import ProdsDropdown from "./prods_dropdown"
