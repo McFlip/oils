@@ -23,7 +23,7 @@ export default class QTY_Button extends Component {
         onClick={this.handleClick}
       >
         QTY:
-        <span className='badge badge-light'>
+        <span className='badge badge-light' data-testid='qty'>
           {this.props.qty}
         </span>
       </button>

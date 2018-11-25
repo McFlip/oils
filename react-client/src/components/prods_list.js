@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchProds } from "../actions/prods";
-import { updateProd } from '../actions/prods';
+import _ from "lodash";
 import Checkbox from './checkbox';
 import QTY_Button from './qty_button';
 import QTY_Form from './qty_form';
@@ -15,10 +14,6 @@ class ProdsList extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {};
-  }
-
-  componentDidMount() {
-    this.props.fetchProds();
   }
 
   categorize(cat){
@@ -39,7 +34,7 @@ class ProdsList extends Component {
   }
 
   handleSubmit(id, value){
-    this.props.updateProd(id, value);
+    this.props.handleSubmit(id, value);
     this.handleClose();
   }
 
@@ -53,11 +48,11 @@ class ProdsList extends Component {
             {prod.sku}
           </span>
           <span className="px-2">
-            <Link to={`/products/${prod._id}`}>
+            <Link to={`/products/${prod._id}`} data-testid='descr'>
               {prod.descr}
             </Link>
           </span>
-          <span className="px-2">
+          <span className="px-2" data-testid='size'>
             {prod.size}
           </span>
           <QTY_Button qty={prod.qty} _id={prod._id} handleClick={this.handleClick} />
@@ -85,8 +80,4 @@ class ProdsList extends Component {
   }
 }
 
-function mapStateToProps({prods}) {
-  return { prods };
-}
-
-export default connect(mapStateToProps, { fetchProds, updateProd })(ProdsList);
+export default ProdsList;
