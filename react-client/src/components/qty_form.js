@@ -30,13 +30,13 @@ class QTY_Form extends Component {
 
   render(){
     return(
-      <div className="modal fade" id="qtyModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="qtyModal" tabIndex="-1" role="dialog">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <form onSubmit={this.handleSubmit}>
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" className="close" data-dismiss="modal" onClick={this.props.close}>
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
