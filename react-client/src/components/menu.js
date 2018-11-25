@@ -23,7 +23,7 @@ const Menu = ({page, dropdown}) => {
           <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown">
             Actions
           </a>
-          {dropdown()}
+          {dropdown}
         </li>
       );
     } else {

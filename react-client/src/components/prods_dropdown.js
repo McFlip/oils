@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-const ProdsDropdown = () => {
+const ProdsDropdown = (handleListAll) => {
   return (
     <div className="dropdown-menu">
+      <a className="dropdown-item" href="#"
+        onClick={
+          (e) => {
+            e.preventDefault();
+            handleListAll();
+          }
+        }
+      >List All</a>
       <Link className="dropdown-item" to="/prods_new">New Inventory Item</Link>
       <a className="dropdown-item" href="#">Filter Wishlist</a>
     </div>

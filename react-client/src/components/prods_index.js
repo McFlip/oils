@@ -9,12 +9,11 @@ import ProdsDropdown from "./prods_dropdown"
 class ProdsIndex extends Component {
   constructor(props){
     super(props);
-    //this.handleClick = this.handleClick.bind(this);
-    //this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    //this.state = {};
+    this.handleListAll = this.handleListAll.bind(this);
   }
-  componentDidMount() {
+
+  handleListAll(){
     this.props.fetchProds();
   }
 
@@ -25,7 +24,7 @@ class ProdsIndex extends Component {
   render() {
     return (
       <div>
-        <Menu page="products" dropdown={ProdsDropdown} />
+        <Menu page="products" dropdown={ProdsDropdown(this.handleListAll)} />
         <h2>Inventory</h2>
         <ProdsList prods={this.props.prods} updateProd={this.handleSubmit} handleSubmit={this.handleSubmit} />
       </div>
@@ -39,4 +38,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, { fetchProds, updateProd })(ProdsIndex);
-//export default ProdsIndex;
