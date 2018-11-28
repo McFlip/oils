@@ -1,9 +1,5 @@
 import _ from "lodash";
-export const FETCH_PRODS = "fetch_prods";
-export const FETCH_PROD = "fetch_prod";
-export const CREATE_PROD = "create_prod";
-export const DELETE_PROD = "delete_prod";
-export const UPDATE_PROD = 'update_prod';
+import { FETCH_PRODS, FETCH_PROD, CREATE_PROD, DELETE_PROD, UPDATE_PROD } from "constants/";
 
 const testProd = {
   a: {
@@ -17,16 +13,15 @@ const testProd = {
 };
 
 export const fetchProds = jest.fn(() => {
-  console.log([testProd]);
   return {
   type: FETCH_PRODS,
-  payload: [testProd]
+  payload: {data: [testProd.a]}
   }
 });
 
 export const updateProd = jest.fn((id, values) => {
   return {
     type: FETCH_PROD,
-    payload: _.assignIn(testProd.id, values)
+    payload: {data: _.assignIn(testProd[id], values)}
   };
 });

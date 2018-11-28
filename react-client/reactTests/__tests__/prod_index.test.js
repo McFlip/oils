@@ -51,7 +51,10 @@ test('List All', () => {
   expect(getByTestId('size').textContent).toBe('1 oz');
   expect(getByTestId('qty').textContent).toBe('9');
   expect(getByLabelText('wishlist').checked).toBe(false);
-  // fireEvent.click(getByLabelText('wishlist'));
-  // expect(getByLabelText('wishlist').checked).toBe(true);
-  // expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(1);
+  fireEvent.click(getByLabelText('wishlist'));
+  expect(getByLabelText('wishlist').checked).toBe(true);
+  expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(1);
+  fireEvent.click(getByLabelText('wishlist'));
+  expect(getByLabelText('wishlist').checked).toBe(false);
+  expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(2);
 });
