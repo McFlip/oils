@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import 'bootstrap';
+import $ from 'jquery';
+import Popper from 'popper.js';
 
 class QTY_Form extends Component {
   constructor(props){
@@ -35,8 +38,8 @@ class QTY_Form extends Component {
           <div className="modal-content">
             <form onSubmit={this.handleSubmit}>
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" className="close" data-dismiss="modal" onClick={this.props.close}>
+                <h5 className="modal-title" id="qtyModalTitle">Update Quantity</h5>
+                <button type="button" className="close" data-dismiss="modal" onClick={this.props.close} data-testid="xButton">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>

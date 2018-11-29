@@ -5,6 +5,8 @@ import { createStore, applyMiddleware } from "redux";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import promise from "redux-promise";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import reducers from "./reducers";
 import PostsIndex from "./components/posts_index";
 import PostsNew from "./components/posts_new";

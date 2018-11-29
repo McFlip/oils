@@ -20,6 +20,7 @@ export default class QTY_Button extends Component {
         className="btn btn-primary px-2"
         data-toggle="modal"
         data-target="#qtyModal"
+        data-testid="qtyButton"
         onClick={this.handleClick}
       >
         QTY:

@@ -2,7 +2,8 @@ import React from 'react';
 import promise from "redux-promise";
 import { createStore, applyMiddleware } from "redux";
 
-import { render, fireEvent } from '../test-utils';
+import { render, fireEvent, wait } from '../test-utils';
+
 import ProdsIndex from 'components/prods_index';
 import reducers from 'reducers/';
 import * as prodsActionMock from 'actions/prods';
@@ -42,8 +43,9 @@ test('can render with initial state', () => {
 });
 
 
-test('List All', () => {
+test('List All', async () => {
   const {getByTestId, getByLabelText, getByText} = render(<ProdsIndex />, { store });
+  // check render
   fireEvent.click(getByText('Actions'));
   fireEvent.click(getByText('List All'));
   expect(getByTestId('sku').textContent).toBe('1');
@@ -51,10 +53,33 @@ test('List All', () => {
   expect(getByTestId('size').textContent).toBe('1 oz');
   expect(getByTestId('qty').textContent).toBe('9');
   expect(getByLabelText('wishlist').checked).toBe(false);
+  // check wishlist
   fireEvent.click(getByLabelText('wishlist'));
   expect(getByLabelText('wishlist').checked).toBe(true);
   expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(1);
   fireEvent.click(getByLabelText('wishlist'));
   expect(getByLabelText('wishlist').checked).toBe(false);
   expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(2);
+  // check qty button
+  // open and close w/out submit
+  fireEvent.click(getByTestId('qtyButton'));
+  expect(getByText('Save changes')).toBeTruthy;
+  await wait(()=>expect(getByLabelText('QTY:').value).toBe('9'));
+  fireEvent.change(getByLabelText('QTY:'), {target: {value: '10'}});
+  fireEvent.click(getByText('Close'));
+  expect(getByText('Save changes')).toBeFalsey;
+  fireEvent.click(getByTestId('qtyButton'));
+  expect(getByText('Save changes')).toBeTruthy;
+  await wait(()=>expect(getByLabelText('QTY:').value).toBe('9'));
+  fireEvent.change(getByLabelText('QTY:'), {target: {value: '11'}});
+  fireEvent.click(getByTestId('xButton'));
+  expect(getByText('Save changes')).toBeFalsey;
+  fireEvent.click(getByTestId('qtyButton'));
+  await wait(()=>expect(getByLabelText('QTY:').value).toBe('9'));
+  // check submit
+  fireEvent.change(getByLabelText('QTY:'), {target: {value: '5'}});
+  fireEvent.click(getByText('Save changes'));
+  await wait(()=>expect(getByTestId('qty').textContent).toBe('5'));
+  fireEvent.click(getByTestId('qtyButton'));
+  await wait(()=>expect(getByLabelText('QTY:').value).toBe('5'));
 });
