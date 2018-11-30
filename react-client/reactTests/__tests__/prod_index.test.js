@@ -43,9 +43,10 @@ test('can render with initial state', () => {
 });
 
 
-test('List All', async () => {
+test('List All, qty button, wishlist', async () => {
   const {getByTestId, getByLabelText, getByText} = render(<ProdsIndex />, { store });
   // check render
+  expect(getByTestId('sku')).toBeFalsey;
   fireEvent.click(getByText('Actions'));
   fireEvent.click(getByText('List All'));
   expect(getByTestId('sku').textContent).toBe('1');
@@ -82,4 +83,26 @@ test('List All', async () => {
   await wait(()=>expect(getByTestId('qty').textContent).toBe('5'));
   fireEvent.click(getByTestId('qtyButton'));
   await wait(()=>expect(getByLabelText('QTY:').value).toBe('5'));
+});
+
+test('Search Bar', async () => {
+  // check correct sku
+  const {getByTestId, getByLabelText, getByText} = render(<ProdsIndex />, { store });
+  fireEvent.change(getByTestId('searchInput'), {target: {value: '1'}});
+  fireEvent.click(getByText('Search'));
+  await wait(()=>   expect(getByTestId('sku').textContent).toBe('1'));
+  // check bad sku
+  fireEvent.change(getByTestId('searchInput'), {target: {value: '2'}});
+  fireEvent.click(getByText('Search'));
+  await wait(()=> expect(getByTestId('sku')).toBeFalsey);
+  // check correct descr
+  fireEvent.click(getByTestId('searchSelect'));
+  fireEvent.click(getByText('Description'));
+  fireEvent.change(getByTestId('searchInput'), {target: {value: 'test'}});
+  fireEvent.click(getByText('Search'));
+  await wait(()=>   expect(getByTestId('sku').textContent).toBe('1'));
+  // check bad descr
+  fireEvent.change(getByTestId('searchInput'), {target: {value: 'fake news'}});
+  fireEvent.click(getByText('Search'));
+  await wait(()=> expect(getByTestId('sku')).toBeFalsey);
 });

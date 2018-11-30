@@ -18,6 +18,7 @@ class SearchBar extends Component {
               value={this.state.category}
               className='input-group-text'
               onChange={event => this.onSelectChange(event.target.value)}
+              data-testid='searchSelect'
             >
               <option value='sku'>Item #</option>
               <option value='descr'>Description</option>
@@ -28,6 +29,7 @@ class SearchBar extends Component {
             value={this.state.term}
             onChange={event => this.onInputChange(event.target.value)}
             className="form-control"
+            data-testid='searchInput'
           />
           <div className="input-group-append">
             <button className="btn btn-outline-secondary" type="submit" >Search</button>
