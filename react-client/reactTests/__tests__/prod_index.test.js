@@ -1,38 +1,15 @@
 import React from 'react';
-import promise from "redux-promise";
-import { createStore, applyMiddleware } from "redux";
-
-import { render, fireEvent, wait } from '../test-utils';
+import { render, fireEvent, wait, cleanup, newStore } from '../test-utils';
 
 import ProdsIndex from 'components/prods_index';
-import reducers from 'reducers/';
 import * as prodsActionMock from 'actions/prods';
+import { testState } from 'constants/';
 
 jest.mock('actions/prods');
-
-const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
-const store = createStoreWithMiddleware(reducers, testState);
-
-const reducer = (state = {}, action) => {
-  return state;
-}
-
-const testState = {
-  prods: {
-    a: {
-      _id: 'a',
-      sku: 1,
-      descr: 'test',
-      size: '1 oz',
-      qty: 9,
-      wishlist: false
-    }
-  }
-}
+afterEach(cleanup);
 
 test('can render with initial state', () => {
   const {getByTestId, getByLabelText} = render(<ProdsIndex />, {
-    reducer,
     initialState: testState
   });
   expect(getByTestId('sku').textContent).toBe('1');
@@ -44,9 +21,10 @@ test('can render with initial state', () => {
 
 
 test('List All, qty button, wishlist', async () => {
-  const {getByTestId, getByLabelText, getByText} = render(<ProdsIndex />, { store });
+  const store = newStore();
+  const {getByTestId, queryByTestId, getByLabelText, getByText} = render(<ProdsIndex />, { store });
   // check render
-  expect(getByTestId('sku')).toBeFalsey;
+  expect(queryByTestId('sku')).toBeNull();
   fireEvent.click(getByText('Actions'));
   fireEvent.click(getByText('List All'));
   expect(getByTestId('sku').textContent).toBe('1');
@@ -57,7 +35,6 @@ test('List All, qty button, wishlist', async () => {
   // check wishlist
   fireEvent.click(getByLabelText('wishlist'));
   expect(getByLabelText('wishlist').checked).toBe(true);
-  expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(1);
   fireEvent.click(getByLabelText('wishlist'));
   expect(getByLabelText('wishlist').checked).toBe(false);
   expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(2);
@@ -86,23 +63,24 @@ test('List All, qty button, wishlist', async () => {
 });
 
 test('Search Bar', async () => {
+  const store = newStore();
+  const {getByTestId, queryByTestId} = render(<ProdsIndex />, { store });
   // check correct sku
-  const {getByTestId, getByLabelText, getByText} = render(<ProdsIndex />, { store });
   fireEvent.change(getByTestId('searchInput'), {target: {value: '1'}});
-  fireEvent.click(getByText('Search'));
+  fireEvent.click(getByTestId('Search'));
   await wait(()=>   expect(getByTestId('sku').textContent).toBe('1'));
   // check bad sku
   fireEvent.change(getByTestId('searchInput'), {target: {value: '2'}});
-  fireEvent.click(getByText('Search'));
-  await wait(()=> expect(getByTestId('sku')).toBeFalsey);
+  fireEvent.click(getByTestId('Search'));
+  await wait(()=> expect(queryByTestId('sku')).toBeNull());
   // check correct descr
-  fireEvent.click(getByTestId('searchSelect'));
-  fireEvent.click(getByText('Description'));
+  fireEvent.change(getByTestId('searchSelect'), {target: {value: 'descr'}});
   fireEvent.change(getByTestId('searchInput'), {target: {value: 'test'}});
-  fireEvent.click(getByText('Search'));
+  fireEvent.click(getByTestId('Search'));
   await wait(()=>   expect(getByTestId('sku').textContent).toBe('1'));
   // check bad descr
   fireEvent.change(getByTestId('searchInput'), {target: {value: 'fake news'}});
-  fireEvent.click(getByText('Search'));
-  await wait(()=> expect(getByTestId('sku')).toBeFalsey);
+  fireEvent.click(getByTestId('Search'));
+  await wait(()=> expect(queryByTestId('sku')).toBeNull());
+  expect(prodsActionMock.searchProds).toHaveBeenCalledTimes(4);
 });

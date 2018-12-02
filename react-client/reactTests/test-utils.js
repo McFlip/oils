@@ -1,14 +1,14 @@
-import {render} from 'react-testing-library';
+import { render } from 'react-testing-library';
 import React from 'react';
-import {createStore} from 'redux';
-import {Provider, connect} from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import promise from "redux-promise";
+import reducers from 'reducers/';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
-
-//const reducer = () => null; // override this in the test
 
 function renderWithRedux(
   ui,
-  {initialState, reducer, store = createStore(reducer, initialState)} = {}) {
+  {initialState, reducer = (state = {}) => state, store = createStore(reducer, initialState)} = {}) {
   return {
     ...render(
       <Provider store={store}>
@@ -23,6 +23,13 @@ function renderWithRedux(
     store,
   }
 }
+
+export const newStore = () => {
+  const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+  const store = createStoreWithMiddleware(reducers, {});
+  return store;
+}
+
 
 // re-export everything
 export * from 'react-testing-library';

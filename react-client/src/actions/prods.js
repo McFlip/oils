@@ -1,12 +1,5 @@
 import axios from "axios";
-
-export const FETCH_PRODS = "fetch_prods";
-export const FETCH_PROD = "fetch_prod";
-export const CREATE_PROD = "create_prod";
-export const DELETE_PROD = "delete_prod";
-export const UPDATE_PROD = 'update_prod';
-
-const ROOT_URL = "http://localhost:3000";
+import { FETCH_PRODS, FETCH_PROD, CREATE_PROD, DELETE_PROD, ROOT_URL } from "../constants/";
 
 export function fetchProds() {
   const request = axios.get(`${ROOT_URL}/products`);

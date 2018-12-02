@@ -32,7 +32,7 @@ class SearchBar extends Component {
             data-testid='searchInput'
           />
           <div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="submit" >Search</button>
+            <button className="btn btn-outline-secondary" type="submit" data-testid="Search">Search</button>
           </div>
         </div>
       </form>
