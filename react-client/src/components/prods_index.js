@@ -13,10 +13,15 @@ class ProdsIndex extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleListAll = this.handleListAll.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleFilterWishlist = this.handleFilterWishlist.bind(this);
   }
 
   handleListAll(){
     this.props.fetchProds();
+  }
+
+  handleFilterWishlist(){
+    this.props.searchProds('wishlist', 'true');
   }
 
   handleSearch(category, term){
@@ -30,7 +35,7 @@ class ProdsIndex extends Component {
   render() {
     return (
       <div>
-        <Menu page="products" dropdown={ProdsDropdown(this.handleListAll)} />
+        <Menu page="products" dropdown={ProdsDropdown(this.handleListAll,this.handleFilterWishlist)} />
         <h2>Inventory</h2>
         <SearchBar onSearchSubmit={this.handleSearch} />
         <ProdsList prods={this.props.prods} updateProd={this.handleSubmit} handleSubmit={this.handleSubmit} />

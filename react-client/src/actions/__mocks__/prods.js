@@ -1,7 +1,8 @@
 import _ from "lodash";
-import { FETCH_PRODS, FETCH_PROD, CREATE_PROD, DELETE_PROD, UPDATE_PROD, testState} from "constants/";
+import { FETCH_PRODS, FETCH_PROD, CREATE_PROD, DELETE_PROD, UPDATE_PROD, testState, testState2} from "constants/";
 
 const testProd = testState.prods;
+const testProd2 = testState2.prods; // has 2 prods
 
 export const fetchProds = jest.fn(() => {
   return {
@@ -12,10 +13,19 @@ export const fetchProds = jest.fn(() => {
 
 export const searchProds = jest.fn((category, term) => {
   // console.log(`category: ${category}, term: ${term}`);
+  let request;
+  // cast to int
   if (!isNaN(term)) {
     term = parseInt(term);
   }
-  const request = _.find(testProd, {[category]: term});
+  // filter wishlist test has 2 prods
+  // cast to boolean
+  if (category == 'wishlist') {
+    term = (term == 'true');
+    request = _.find(testProd2, {[category]: term});
+  } else {
+    request = _.find(testProd, {[category]: term});
+  }
   let result = [];
   if (request) {
     result = [request];

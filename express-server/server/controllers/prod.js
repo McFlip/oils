@@ -16,7 +16,7 @@ export function searchProducts(req, res) {
   const k = req.params.category;
   const q = req.query.q;
   let search;
-  if (isNaN(q)) {
+  if (isNaN(q) && q !== 'true') {
     search = {[k]: { "$regex": q, "$options": "i" } };
   } else {
     search = {[k]: q };

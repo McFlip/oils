@@ -1,12 +1,11 @@
 import React from 'react';
-import { render, fireEvent, wait, cleanup, newStore } from '../test-utils';
+import { render, fireEvent, wait, newStore } from '../test-utils';
 
 import ProdsIndex from 'components/prods_index';
 import * as prodsActionMock from 'actions/prods';
 import { testState } from 'constants/';
 
 jest.mock('actions/prods');
-afterEach(cleanup);
 
 test('can render with initial state', () => {
   const {getByTestId, getByLabelText} = render(<ProdsIndex />, {
@@ -18,7 +17,6 @@ test('can render with initial state', () => {
   expect(getByTestId('qty').textContent).toBe('9');
   expect(getByLabelText('wishlist').checked).toBe(false);
 });
-
 
 test('List All, qty button, wishlist', async () => {
   const store = newStore();
@@ -83,4 +81,13 @@ test('Search Bar', async () => {
   fireEvent.click(getByTestId('Search'));
   await wait(()=> expect(queryByTestId('sku')).toBeNull());
   expect(prodsActionMock.searchProds).toHaveBeenCalledTimes(4);
+});
+
+test('Filter by Wishlist', async () => {
+  const store = newStore();
+  const { getByText, queryByText } = render(<ProdsIndex />, { store });
+  fireEvent.click(getByText('Actions'));
+  fireEvent.click(getByText('Filter Wishlist'));
+  // await wait(()=> expect(getByText('second')).toBeTruthy);
+  expect(queryByText('first')).toBeNull;
 });

@@ -16,3 +16,23 @@ export const testState = {
     }
   }
 }
+export const testState2 = {
+  prods: {
+    a: {
+      _id: 'a',
+      sku: 1,
+      descr: 'first',
+      size: '1 oz',
+      qty: 9,
+      wishlist: false
+    },
+    b: {
+      _id: 'b',
+      sku: 2,
+      descr: 'second',
+      size: '1 oz',
+      qty: 9,
+      wishlist: true
+    }
+  }
+}
