@@ -37,6 +37,7 @@ export function getPost (req, res) {
   });
 }
 
+// TODO: convert decimal to int
 /* Create a post. */
 export function createPost (req, res) {
   let post = new Post({

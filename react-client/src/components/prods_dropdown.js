@@ -12,7 +12,7 @@ const ProdsDropdown = (handleListAll, handleFilterWishlist) => {
           }
         }
       >List All</a>
-      <Link className="dropdown-item" to="/prods_new">New Inventory Item</Link>
+      <Link className="dropdown-item" to="/products/new">New Inventory Item</Link>
       <a className="dropdown-item" href="#"
       onClick={
         (e) => {

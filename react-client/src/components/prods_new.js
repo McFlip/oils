@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, formValueSelector } from "redux-form";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createPost } from "../actions/posts";
+import { createProd } from "../actions/prods";
+import Menu from "./menu";
 
-class PostsNew extends Component {
+class ProdsNew extends Component {
   renderField(field) {
     const { meta: { touched, error } } = field;
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
@@ -12,10 +13,19 @@ class PostsNew extends Component {
     return (
       <div className={className}>
         <label>{field.label}</label>
-        <input className="form-control" type="text" {...field.input} />
+        <input className="form-control" type={field.type} {...field.input} />
         <div className="text-help">
           {touched ? error : ""}
         </div>
+      </div>
+    );
+  }
+
+  renderCB(field) {
+    return (
+      <div className='form-check'>
+        <input className="form-check-input" type='checkbox' {...field.input} />
+        <label className='form-check-label'>{field.label}</label>
       </div>
     );
   }
@@ -27,53 +37,111 @@ class PostsNew extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, isOil } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <Field
-          label="Title For Post"
-          name="title"
-          component={this.renderField}
-        />
-        <Field
-          label="Categories"
-          name="categories"
-          component={this.renderField}
-        />
-        <Field
-          label="Post Content"
-          name="content"
-          component={this.renderField}
-        />
-        <button type="submit" className="btn btn-primary">Submit</button>
-        <Link to="/" className="btn btn-danger">Cancel</Link>
-      </form>
+      <div>
+        <Menu page='products' />
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+          <Field
+            label="Item Number"
+            name="sku"
+            component={this.renderField}
+            type='text'
+          />
+          <Field
+            label="Description"
+            name="descr"
+            component={this.renderField}
+          />
+          <Field
+            label="Size"
+            name="size"
+            component={this.renderField}
+          />
+          <Field
+            label="Category"
+            name="category"
+            component={this.renderField}
+          />
+          <Field
+            label='Quantity'
+            name='qty'
+            component={this.renderField}
+            type='number'
+          />
+          <Field
+            label='Wholesale'
+            name='wholesale'
+            component={this.renderField}
+            type='number'
+          />
+          <Field
+            label='Retail'
+            name='retail'
+            component={this.renderField}
+            type='number'
+          />
+          <Field
+            label='PV'
+            name='pv'
+            component={this.renderField}
+            type='number'
+          />
+          <Field
+            label='Add to wishlist'
+            name='wishlist'
+            component={this.renderCB}
+          />
+          <Field
+            label='Individual oil'
+            name='oil'
+            component={this.renderCB}
+          />
+          {isOil && (
+            <div>
+              <Field
+                label='photosensitive'
+                name='photosensitive'
+                component={this.renderCB}
+              />
+              <Field
+                label='topical'
+                name='topical'
+                component={this.renderCB}
+              />
+              <Field
+                label='dilute'
+                name='dilute'
+                component={this.renderCB}
+              />
+              <Field
+                label='aromatic'
+                name='aromatic'
+                component={this.renderCB}
+              />
+            </div>
+          )}
+          <button type="submit" className="btn btn-primary">Submit</button>
+          <Link to="/products" className="btn btn-danger">Cancel</Link>
+        </form>
+      </div>
     );
   }
 }
 
 function validate(values) {
-  // console.log(values) -> { title: 'asdf', categories: 'asdf', content: 'asdf' }
   const errors = {};
-
   // Validate the inputs from 'values'
-  if (!values.title) {
-    errors.title = "Enter a title";
+  if (!values.descr) {
+    errors.descr = "Description is required";
   }
-  if (!values.categories) {
-    errors.categories = "Enter some categories";
-  }
-  if (!values.content) {
-    errors.content = "Enter some content please";
-  }
-
-  // If errors is empty, the form is fine to submit
-  // If errors has *any* properties, redux form assumes form is invalid
   return errors;
 }
 
+const selector = formValueSelector('ProdsNewForm');
+
 export default reduxForm({
   validate,
-  form: "PostsNewForm"
-})(connect(null, { createPost })(PostsNew));
+  form: "ProdsNewForm"
+})(connect(state => ({isOil: selector(state, 'oil')}), { createProd })(ProdsNew));
