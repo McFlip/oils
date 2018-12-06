@@ -21,11 +21,17 @@ router.get('/', PostController.ping);
 /* GET all products. */
 router.get('/products', ProdController.getProducts);
 
+/* GET one product. */
+router.get('/products/:id', ProdController.getProduct);
+
 /* GET product search results. */
 router.get('/products/search/:category', ProdController.searchProducts);
 
 /* UPDATE product. */
 router.post('/products/:id', ProdController.updateProduct);
+
+// CREATE product
+router.post('/products', ProdController.createProduct);
 
 /* GET all posts. */
 router.get('/products/:id/posts', PostController.getPosts);

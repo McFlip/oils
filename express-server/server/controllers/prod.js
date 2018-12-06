@@ -1,4 +1,4 @@
-import Product from '../models/product.js';
+import { Product, Oil } from '../models/product.js';
 
 /* GET all products. */
 export function getProducts (req, res) {
@@ -6,6 +6,15 @@ export function getProducts (req, res) {
       if (error) res.status(500).send(error)
 
       res.status(200).send(products);
+  });
+}
+
+/* GET one product. */
+export function getProduct (req, res) {
+  Product.findById(req.params.id).exec((error, product) => {
+      if (error) res.status(500).send(error)
+
+      res.status(200).send(product);
   });
 }
 
@@ -25,6 +34,23 @@ export function searchProducts(req, res) {
     if (error) res.status(500).send(error)
 
     res.status(200).send(products);
+  });
+}
+
+// CREATE product
+export function createProduct(req, res) {
+  const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body;
+  let product = new Product({ sku, descr, size, category, qty, wholesale, retail, pv, wishlist });
+  if (oil) {
+    product.oil = new Oil({ photosensitive, topical, dilute, aromatic });
+  }
+
+  product.save(error => {
+    if (error) res.status(500).send(error);
+
+    res.status(201).json({
+        message: 'Product created successfully'
+    });
   });
 }
 

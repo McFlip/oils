@@ -11,6 +11,20 @@ export const fetchProds = jest.fn(() => {
   }
 });
 
+export const fetchProd = jest.fn((id) => {
+  return {
+  type: FETCH_PROD,
+  payload: {data: testProd.a}
+  }
+});
+
+export const createProd = jest.fn((values, callback) => {
+  return {
+  type: CREATE_PROD,
+  payload: {}
+  }
+});
+
 export const searchProds = jest.fn((category, term) => {
   // console.log(`category: ${category}, term: ${term}`);
   let request;

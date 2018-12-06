@@ -88,6 +88,5 @@ test('Filter by Wishlist', async () => {
   const { getByText, queryByText } = render(<ProdsIndex />, { store });
   fireEvent.click(getByText('Actions'));
   fireEvent.click(getByText('Filter Wishlist'));
-  // await wait(()=> expect(getByText('second')).toBeTruthy);
   expect(queryByText('first')).toBeNull;
 });

@@ -45,4 +45,5 @@ const prodSchema = new Schema({
 });
 
 // create mongoose model
-export default mongoose.model('Product', prodSchema);
+export const Product = mongoose.model('Product', prodSchema);
+export const Oil = mongoose.model('Oil', oilSchema);
