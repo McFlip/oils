@@ -155,6 +155,11 @@ class ProdsNew extends Component {
                 name='aromatic'
                 component={this.renderCB}
               />
+              <Field
+                label='dietary'
+                name='dietary'
+                component={this.renderCB}
+              />
             </div>
           )}
           <button type="submit" className="btn btn-primary">Submit</button>

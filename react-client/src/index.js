@@ -8,10 +8,10 @@ import promise from "redux-promise";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import reducers from "./reducers";
-import PostsIndex from "./components/posts_index";
 import PostsNew from "./components/posts_new";
 import PostsShow from "./components/posts_show";
 import ProdsIndex from "./components/prods_index";
+import ProdsShow from "./components/prods_show";
 import ProdsNew from "./components/prods_new";
 import Home from "./components/home";
 import UsesIndex from "./components/uses_index";
@@ -28,6 +28,7 @@ ReactDOM.render(
           <Route path="/posts/:id" component={PostsShow} />
           <Route path="/products/new" component={ProdsNew} />
           <Route path="/products/edit/:id" component={ProdsNew} />
+          <Route path="/products/:id" component={ProdsShow} />
           <Route path="/products" component={ProdsIndex} />
           <Route path="/uses" component={UsesIndex} />
           <Route path="/recipes" component={RecipesIndex} />

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchProds, updateProd, searchProds } from "../actions/prods";
 import ProdsList from "./prods_list";
 import Menu from "./menu";

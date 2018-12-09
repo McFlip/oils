@@ -33,6 +33,9 @@ router.post('/products/:id', ProdController.updateProduct);
 // CREATE product
 router.post('/products', ProdController.createProduct);
 
+/* Delete post */
+router.delete('/products/:id', ProdController.deleteProduct);
+
 /* GET all posts. */
 router.get('/products/:id/posts', PostController.getPosts);
 

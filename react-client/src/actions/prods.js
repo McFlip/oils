@@ -41,7 +41,7 @@ export function fetchProd(id) {
 
 export function deleteProd(id, callback) {
   const request = axios
-    .delete(`${ROOT_URL}/prods/${id}`)
+    .delete(`${ROOT_URL}/products/${id}`)
     .then(() => callback());
 
   return {

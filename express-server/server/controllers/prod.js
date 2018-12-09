@@ -54,36 +54,9 @@ export function createProduct(req, res) {
   });
 }
 
-/* GET one posts. */
-export function getPost (req, res) {
-  Post.findById(req.params.id, (error, posts) => {
-      if (error) res.status(500).send(error)
-
-      res.status(200).json(posts);
-  });
-}
-
-// TODO: convert decimal to int
-/* Create a post. */
-export function createPost (req, res) {
-  let post = new Post({
-      title: req.body.title,
-      categories: req.body.categories,
-      content: req.body.content
-  });
-
-  post.save(error => {
-    if (error) res.status(500).send(error);
-
-    res.status(201).json({
-        message: 'Post created successfully'
-    });
-  });
-}
-
-/* Delete one post. */
-export function deletePost (req, res) {
-  Post.findByIdAndRemove(req.params.id, (error, posts) => {
+/* Delete one product. */
+export function deleteProduct(req, res) {
+  Product.findByIdAndRemove(req.params.id, (error, posts) => {
     if (error) res.status(500).send(error)
 
     res.status(200).json(posts);
