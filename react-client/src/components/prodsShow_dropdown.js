@@ -12,7 +12,7 @@ const ProdsShowDropdown = (onDeleteClick, id) => {
           }
         }
       >Delete Product</a>
-    <Link className="dropdown-item" to={`/products/edit/${id}`}>Edit Product</Link>
+    <Link className="dropdown-item" to={`/products/${id}/edit`}>Edit Product</Link>
       <a className="dropdown-item" href="#"
       onClick={
         (e) => {

@@ -22,7 +22,7 @@ export function searchProds(category, term) {
 export function createProd(values, callback) {
   const request = axios
     .post(`${ROOT_URL}/products`, values)
-    .then(() => callback());
+    .then(product => callback(product.data));
 
   return {
     type: CREATE_PROD,

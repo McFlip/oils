@@ -56,3 +56,13 @@ export const updateProd = jest.fn((id, values) => {
     payload: {data: _.assignIn(testProd[id], values)}
   };
 });
+
+export const deleteProd = jest.fn((_id) => {
+  let request;
+  request = _.find(testProd2, { _id });
+  const result = request || {};
+  return {
+    type: DELETE_PROD,
+    payload: {data: result}
+  };
+});

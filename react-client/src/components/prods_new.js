@@ -54,15 +54,15 @@ class ProdsNew extends Component {
   }
 
   onSubmit(values) {
-    this.props.createProd(values, () => {
-      // TODO: go to the view product page
-      this.props.history.push("/products");
+    // TODO: updateProd
+    this.props.createProd(values, ({_id}) => {
+      this.props.history.push(`/products/${_id}`);
     });
   }
 
   render() {
     const { handleSubmit, isOil } = this.props;
-
+// TODO: canceling an edit routes back to product page
     return (
       <div>
         <Menu page='products' />

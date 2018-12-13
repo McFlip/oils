@@ -27,7 +27,7 @@ ReactDOM.render(
           <Route path="/posts/new" component={PostsNew} />
           <Route path="/posts/:id" component={PostsShow} />
           <Route path="/products/new" component={ProdsNew} />
-          <Route path="/products/edit/:id" component={ProdsNew} />
+          <Route path="/products/:id/edit" component={ProdsNew} />
           <Route path="/products/:id" component={ProdsShow} />
           <Route path="/products" component={ProdsIndex} />
           <Route path="/uses" component={UsesIndex} />

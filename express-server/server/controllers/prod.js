@@ -45,12 +45,10 @@ export function createProduct(req, res) {
     product.oil = new Oil({ photosensitive, topical, dilute, aromatic });
   }
 
-  product.save(error => {
+  product.save((error, prod) => {
     if (error) res.status(500).send(error);
 
-    res.status(201).json({
-        message: 'Product created successfully'
-    });
+    res.status(201).send(prod);
   });
 }
 
