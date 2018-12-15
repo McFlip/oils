@@ -44,8 +44,8 @@ class ProdsIndex extends Component {
 }
 
 
-function mapStateToProps(state) {
-  return { prods: state.prods };
+function mapStateToProps({ prods }) {
+  return { prods };
 }
 
 export default connect(mapStateToProps, { fetchProds, updateProd, searchProds })(ProdsIndex);

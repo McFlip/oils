@@ -55,8 +55,8 @@ class ProdsNew extends Component {
 
   onSubmit(values) {
     // TODO: updateProd
-    this.props.createProd(values, ({_id}) => {
-      this.props.history.push(`/products/${_id}`);
+    this.props.createProd(values, (id) => {
+      this.props.history.push(`/products/${id}`);
     });
   }
 

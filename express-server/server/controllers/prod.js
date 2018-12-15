@@ -48,7 +48,7 @@ export function createProduct(req, res) {
   product.save((error, prod) => {
     if (error) res.status(500).send(error);
 
-    res.status(201).send(prod);
+    res.status(201).send(prod.id);
   });
 }
 
