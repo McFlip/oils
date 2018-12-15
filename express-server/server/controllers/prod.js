@@ -11,7 +11,9 @@ export function getProducts (req, res) {
 
 /* GET one product. */
 export function getProduct (req, res) {
-  Product.findById(req.params.id).exec((error, product) => {
+  Product.findById(req.params.id).
+  populate('contains').
+  exec((error, product) => {
       if (error) res.status(500).send(error)
 
       res.status(200).send(product);

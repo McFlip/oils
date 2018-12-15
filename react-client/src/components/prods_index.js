@@ -37,7 +37,7 @@ class ProdsIndex extends Component {
         <Menu page="products" dropdown={ProdsDropdown(this.handleListAll,this.handleFilterWishlist)} />
         <h2>Inventory</h2>
         <SearchBar onSearchSubmit={this.handleSearch} />
-        <ProdsList prods={this.props.prods} updateProd={this.handleSubmit} handleSubmit={this.handleSubmit} />
+        <ProdsList prods={this.props.prods} mode='inventory' updateProd={this.handleSubmit} handleSubmit={this.handleSubmit} />
       </div>
     );
   }

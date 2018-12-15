@@ -54,14 +54,15 @@ class ProdsList extends Component {
           <span className="px-2" data-testid='size'>
             {prod.size}
           </span>
-          {prod.qty != undefined? <QTY_Button qty={prod.qty} _id={prod._id} handleClick={this.handleClick} />: ''}
-          <Checkbox _id={prod._id} checked={prod.wishlist} />
+          {prod.qty != undefined && this.props.mode == 'inventory'? <QTY_Button qty={prod.qty} _id={prod._id} handleClick={this.handleClick} />: ''}
+          {this.props.mode == 'inventory'?<Checkbox _id={prod._id} checked={prod.wishlist} />:''}
         </li>
       );
     });
   }
 
   render() {
+    if (!this.props.prods) return <div>Loading...</div>
     return (
       <div>
         <QTY_Form

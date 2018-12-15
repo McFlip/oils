@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import _ from "lodash";
 import Menu from "./menu";
 import ProdsShowDropdown from "./prodsShow_dropdown";
+import ProdsList from "./prods_list";
 import { fetchProd, deleteProd } from '../actions/prods';
 
 class ProdsShow extends Component {
@@ -46,13 +47,24 @@ class ProdsShow extends Component {
     );
   }
 
+  renderContents(contents){
+    const prods = _.mapKeys(contents, '_id');
+    console.log(prods);
+    return (
+      <div>
+        <h6>Contents:</h6>
+        <ProdsList prods={contents} />
+      </div>
+    );
+  }
+
   render() {
     const { prod, match } = this.props;
 
     if (!prod) {
       return <div>Loading...</div>;
     }else {
-      const { descr, size, unit_issue, category, wholesale, retail, pv, oil } = prod;
+      const { descr, size, unit_issue, category, wholesale, retail, pv, oil, contains } = prod;
       let oilProps = false;
       if (oil) {
         const { photosensitive, topical, dilute, aromatic, dietary } = oil;
@@ -66,6 +78,7 @@ class ProdsShow extends Component {
           <h6>Category: {category? category : ''}</h6>
           {wholesale || retail || pv ? this.renderVal(wholesale,retail,pv) : ''}
           {oil? this.renderOil(oilProps): ''}
+          {contains != undefined && contains.length > 0? this.renderContents(contains) : ''}
         </div>
       );
     }
