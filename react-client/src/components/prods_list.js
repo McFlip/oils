@@ -19,7 +19,7 @@ class ProdsList extends Component {
     // check cat and output header
     if(this.category != cat){
       this.category = cat;
-      return(<div><h4>{cat}</h4><hr /></div>);
+      return(<div><h4 className="alert alert-info">{cat}</h4><hr /></div>);
     }
     return null;
   }

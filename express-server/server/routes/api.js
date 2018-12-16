@@ -2,7 +2,6 @@
 import mongoose from 'mongoose';
 import { Router } from 'express';
 const router = new Router();
-import Post from '../models/post.js';
 import * as PostController from '../controllers/post.js';
 import * as ProdController from '../controllers/prod.js';
 

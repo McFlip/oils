@@ -13,6 +13,7 @@ export function getProducts (req, res) {
 export function getProduct (req, res) {
   Product.findById(req.params.id).
   populate('contains').
+  populate('containedIn').
   exec((error, product) => {
       if (error) res.status(500).send(error)
 
@@ -65,7 +66,10 @@ export function deleteProduct(req, res) {
 
 /* Update one product */
 export function updateProduct(req, res) {
-  Product.findByIdAndUpdate(req.params.id, { $set: req.body}, { new: true }, function (error, product) {
+  Product.findByIdAndUpdate(req.params.id, { $set: req.body}, { new: true }).
+  populate('contains').
+  populate('containedIn').
+  exec((error, product) => {
     if (error) res.status(500).send(error)
 
     res.status(200).send(product);

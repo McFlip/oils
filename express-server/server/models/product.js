@@ -41,7 +41,8 @@ const prodSchema = new Schema({
   uses: [String],
   recipes: [{ type: ObjectId, ref: 'Recipe' }],
   posts: [{ type: ObjectId, ref: 'Post'}],
-  contains: [{ type: ObjectId, ref: 'Product'}]
+  contains: [{ type: ObjectId, ref: 'Product'}],
+  containedIn: [{ type: ObjectId, ref: 'Product'}]
 });
 
 // create mongoose model
