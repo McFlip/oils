@@ -27,7 +27,8 @@ class Checkbox extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return { checked: state.prods[ownProps._id].wishlist };
+  if (state.prods[ownProps._id]) return { checked: state.prods[ownProps._id].wishlist };
+  return { checked: false }
 }
 
 export default connect(mapStateToProps, { updateProd })(Checkbox);

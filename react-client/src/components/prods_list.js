@@ -55,7 +55,7 @@ class ProdsList extends Component {
             {prod.size}
           </span>
           {prod.qty != undefined && this.props.mode == 'inventory'? <QTY_Button qty={prod.qty} _id={prod._id} handleClick={this.handleClick} />: ''}
-          {this.props.mode == 'inventory'?<Checkbox _id={prod._id} checked={prod.wishlist} />:''}
+          <Checkbox _id={prod._id} checked={prod.wishlist} />
         </li>
       );
     });
