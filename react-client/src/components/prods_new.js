@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createProd, fetchProd } from "../actions/prods";
+import { createProd, fetchProd, updateProd } from "../actions/prods";
 import Menu from "./menu";
 
 class ProdsNew extends Component {
@@ -47,6 +47,7 @@ class ProdsNew extends Component {
           type='checkbox'
           data-testid={field.testid}
           {...field.input}
+          checked={field.input.value}
         />
         <label className='form-check-label'>{field.label}</label>
       </div>
@@ -54,15 +55,24 @@ class ProdsNew extends Component {
   }
 
   onSubmit(values) {
-    // TODO: updateProd
-    this.props.createProd(values, (id) => {
-      this.props.history.push(`/products/${id}`);
-    });
+    const { id } = this.props.match.params;
+    if (id) {
+      if (values.oil) {
+        const { photosensitive, topical, dilute, aromatic, dietary } = values;
+        values.oil = { photosensitive, topical, dilute, aromatic, dietary };
+      }
+      this.props.updateProd(id, values)
+      .then(() => this.props.history.push(`/products/${id}`));
+    } else {
+      this.props.createProd(values, (id) => {
+        this.props.history.push(`/products/${id}`);
+      });
+    }
   }
 
   render() {
     const { handleSubmit, isOil } = this.props;
-// TODO: canceling an edit routes back to product page
+    const { id } = this.props.match.params;
     return (
       <div>
         <Menu page='products' />
@@ -163,7 +173,7 @@ class ProdsNew extends Component {
             </div>
           )}
           <button type="submit" className="btn btn-primary">Submit</button>
-          <Link to="/products" className="btn btn-danger">Cancel</Link>
+          <Link to={id?`/products/${id}`:"/products"} className="btn btn-danger">Cancel</Link>
         </form>
       </div>
     );
@@ -181,9 +191,18 @@ function validate(values) {
 
 function mapStateToProps(state, ownProps) {
   const selector = formValueSelector('ProdsNewForm');
+  let IV = state.prods[ownProps.match.params.id];
+  if (IV) {
+    if (IV.oil) {
+      const oilprops = IV.oil;
+      IV = {...IV, ...oilprops};
+      IV.oil = true;
+      delete IV._id;
+    }
+  }
   return {
     isOil: selector(state, 'oil'),
-    initialValues: state.prods[ownProps.match.params.id]
+    initialValues: IV
     };
 }
 
@@ -192,4 +211,4 @@ ProdsNew = reduxForm({
   form: "ProdsNewForm"
 })(ProdsNew)
 
-export default connect(mapStateToProps, { createProd, fetchProd })(ProdsNew);
+export default connect(mapStateToProps, { createProd, fetchProd, updateProd })(ProdsNew);
