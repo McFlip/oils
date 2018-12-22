@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_PRODS, FETCH_PROD, CREATE_PROD, DELETE_PROD, ROOT_URL } from "../constants/";
+import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, ROOT_URL } from "../constants/";
 
 export function fetchProds() {
   const request = axios.get(`${ROOT_URL}/products`);
@@ -22,10 +22,12 @@ export function searchProds(category, term) {
 export function createProd(values, callback) {
   const request = axios
     .post(`${ROOT_URL}/products`, values)
-    .then(product => callback(product.data));
-
+    .then(product => {
+      callback(product.data);
+      return product;
+    });
   return {
-    type: CREATE_PROD,
+    type: FETCH_PROD,
     payload: request
   };
 }
@@ -40,7 +42,7 @@ export function fetchProd(id) {
 }
 
 export function deleteProd(id, callback) {
-  const request = axios
+  axios
     .delete(`${ROOT_URL}/products/${id}`)
     .then(() => callback());
 

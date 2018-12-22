@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { FETCH_PRODS, FETCH_PROD, CREATE_PROD, DELETE_PROD, UPDATE_PROD, testState, testState2} from "constants/";
+import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, testState, testState2} from "constants/";
 
 const testProd = testState.prods;
 const testProd2 = testState2.prods; // has 2 prods
@@ -11,17 +11,23 @@ export const fetchProds = jest.fn(() => {
   }
 });
 
-export const fetchProd = jest.fn((id) => {
-  return {
-  type: FETCH_PROD,
-  payload: {data: testProd.a}
-  }
+export const fetchProd = jest.fn(() => {
+    return {
+        type: FETCH_PROD,
+        payload: { data: testProd.a }
+    };
 });
 
 export const createProd = jest.fn((values, callback) => {
+  const testid = { _id: 'testid' };
+  if (values.oil) {
+    const { photosensitive, topical, dilute, aromatic, dietary } = values;
+    values.oil = { photosensitive, topical, dilute, aromatic, dietary };
+  }
+  callback(testid);
   return {
-  type: CREATE_PROD,
-  payload: {}
+  type: FETCH_PROD,
+  payload: {data: {...values, ...testid} }
   }
 });
 
@@ -51,10 +57,10 @@ export const searchProds = jest.fn((category, term) => {
 });
 
 export const updateProd = jest.fn((id, values) => {
-  return {
+  return new Promise(resolve => resolve({
     type: FETCH_PROD,
     payload: {data: _.assignIn(testProd[id], values)}
-  };
+  }));
 });
 
 export const deleteProd = jest.fn((_id) => {

@@ -26,8 +26,9 @@ class ProdsNew extends Component {
 
     return (
       <div className={className}>
-        <label>{field.label}</label>
+        <label htmlFor={field.testid} >{field.label}</label>
         <input className="form-control"
+          id={field.testid}
           data-testid={field.testid}
           type={field.type}
           {...field.input}
@@ -45,11 +46,12 @@ class ProdsNew extends Component {
         <input
           className="form-check-input"
           type='checkbox'
+          id={field.testid}
           data-testid={field.testid}
           {...field.input}
           checked={field.input.value}
         />
-        <label className='form-check-label'>{field.label}</label>
+        <label className='form-check-label' htmlFor={field.testid} >{field.label}</label>
       </div>
     );
   }
@@ -64,8 +66,11 @@ class ProdsNew extends Component {
       this.props.updateProd(id, values)
       .then(() => this.props.history.push(`/products/${id}`));
     } else {
-      this.props.createProd(values, (id) => {
-        this.props.history.push(`/products/${id}`);
+      this.props.createProd(values, ({_id}) => {
+        this.props.history.push({
+          pathname: `/products/${_id}`,
+          state: {referer: 'ProdsNew'}
+        });
       });
     }
   }
@@ -73,6 +78,7 @@ class ProdsNew extends Component {
   render() {
     const { handleSubmit, isOil } = this.props;
     const { id } = this.props.match.params;
+    const oilProps = ['photosensitive','topical','dilute','aromatic','dietary'];
     return (
       <div>
         <Menu page='products' />
@@ -145,31 +151,7 @@ class ProdsNew extends Component {
           />
           {isOil && (
             <div>
-              <Field
-                label='photosensitive'
-                name='photosensitive'
-                component={this.renderCB}
-              />
-              <Field
-                label='topical'
-                name='topical'
-                component={this.renderCB}
-              />
-              <Field
-                label='dilute'
-                name='dilute'
-                component={this.renderCB}
-              />
-              <Field
-                label='aromatic'
-                name='aromatic'
-                component={this.renderCB}
-              />
-              <Field
-                label='dietary'
-                name='dietary'
-                component={this.renderCB}
-              />
+              {oilProps.map((i) => <Field key={i} label={i} name={i} testid={i} component={this.renderCB} />)}
             </div>
           )}
           <button type="submit" className="btn btn-primary">Submit</button>

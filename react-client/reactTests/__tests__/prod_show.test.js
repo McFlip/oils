@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent, newStore } from '../test-utils';
 
-// import ProdsNew from 'components/prods_new';
 import ProdsIndex from 'components/prods_index';
 import ProdsShow from 'components/prods_show';
 
@@ -15,7 +14,17 @@ const store = newStore();
 
 test('delete pt1', () => {
   const {getByText} = render(
-    <ProdsShow match={{params: {id: 'a'}, isExact: true, path: "", url: ""}} />,
+    <ProdsShow
+      match={{
+        params: {id: 'a'},
+        isExact: true,
+        path: "",
+        url: ""
+      }}
+      history={{
+        location: { state: undefined }
+      }}
+    />,
     { store }
   );
   expect(getByText('test 1 oz')).toBeTruthy;

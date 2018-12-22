@@ -16,7 +16,9 @@ class ProdsShow extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchProd(id);
+    const {state} = this.props.history.location;
+    // asuming only reason we have state is we are coming from ProdsNew
+    if(!state) this.props.fetchProd(id);
   }
 
   componentDidUpdate(prevProps) {
