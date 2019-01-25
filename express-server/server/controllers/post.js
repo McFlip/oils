@@ -13,7 +13,6 @@ export function getPosts (req, res) {
   select('posts').
   exec((error, posts) => {
       if (error) res.status(500).send(error)
-      console.log(req.params.sku);
       res.status(200).send(posts.posts);
   });
 }

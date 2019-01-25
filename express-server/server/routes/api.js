@@ -4,6 +4,7 @@ import { Router } from 'express';
 const router = new Router();
 import * as PostController from '../controllers/post.js';
 import * as ProdController from '../controllers/prod.js';
+import * as UseController from '../controllers/use.js';
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
@@ -46,5 +47,8 @@ router.delete('/posts/:id', PostController.deletePost);
 
 /* Create a post. */
 router.post('/posts', PostController.createPost);
+
+// Remove a product or recipe from a use
+router.post('/uses/:id/:category/:refId', UseController.removeUse);
 
 export {router as api};

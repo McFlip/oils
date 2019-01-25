@@ -14,6 +14,7 @@ export function getProduct (req, res) {
   Product.findById(req.params.id).
   populate('contains').
   populate('containedIn').
+  populate('uses').
   exec((error, product) => {
       if (error) res.status(500).send(error)
 

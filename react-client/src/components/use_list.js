@@ -12,12 +12,12 @@ class UseList extends Component {
       return (
         <li className="list-group-item input-group" key={i}>
           <span data-testid='use'>
-            <Link to={`/uses/?q=${use}`} data-testid='use'>
-              {use}
+            <Link to={`/uses/?q=${use._id}`} data-testid='use'>
+              {use.title}
             </Link>
           </span>
           <span className="px-2">
-            <button onClick={e => this.props.handleClick(e)} data-txt={use} className="btn btn-outline-danger float-right">Delete</button>
+            <button onClick={e => this.props.handleClick(e)} data-txt={use._id} className="btn btn-outline-danger float-right">Delete</button>
           </span>
         </li>
       );

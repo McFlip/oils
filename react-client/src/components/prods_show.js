@@ -7,6 +7,7 @@ import ProdsList from "./prods_list";
 import Checkbox from './checkbox';
 import UseList from './use_list';
 import { fetchProd, deleteProd, updateProd } from '../actions/prods';
+import { removeUse } from '../actions/use';
 
 class ProdsShow extends Component {
   constructor(props){
@@ -37,8 +38,10 @@ class ProdsShow extends Component {
   handleClick(e){
     const use = e.target.dataset.txt;
     const { id } = this.props.match.params;
-    const val = {uses: _.filter(this.props.prod.uses, i => i != use)};
+    const useIds = this.props.prod.uses.map(i => i._id);
+    const val = {uses: _.filter(useIds, i => i != use)};
     this.props.updateProd(id, val);
+    removeUse(use, 'product', id);
   }
 
   renderVal(wholesale, retail, pv){
@@ -98,6 +101,7 @@ class ProdsShow extends Component {
         oilProps = { photosensitive, topical, dilute, aromatic, dietary };
       }
 
+      // TODO: get uses array
       return (
         <div>
           <Menu page='products' dropdown={ProdsShowDropdown(this.onDeleteClick.bind(this), match.params.id)} />
@@ -108,7 +112,7 @@ class ProdsShow extends Component {
           {oil && this.renderOil(oilProps)}
           {contains != undefined && contains.length > 0? this.renderContents(contains) : ''}
           {containedIn != undefined && containedIn.length > 0? this.renderMembership(containedIn) : ''}
-          <UseList uses={uses} id={_id} handleClick={this.handleClick} />
+          {uses != undefined && uses.length > 0? <UseList uses={uses} id={_id} handleClick={this.handleClick} /> : ''}
         </div>
       );
     }

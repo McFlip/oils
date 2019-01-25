@@ -1,3 +1,4 @@
+import { Use } from "./use.js";
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -38,7 +39,7 @@ const prodSchema = new Schema({
   qty: Number,
   wishlist: Boolean,
   pics: [prod_gfxSchema],
-  uses: [String],
+  uses: [{ type: ObjectId, ref: 'Use'}],
   recipes: [{ type: ObjectId, ref: 'Recipe' }],
   posts: [{ type: ObjectId, ref: 'Post'}],
   contains: [{ type: ObjectId, ref: 'Product'}],
