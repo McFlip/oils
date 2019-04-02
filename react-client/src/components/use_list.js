@@ -17,7 +17,11 @@ class UseList extends Component {
             </Link>
           </span>
           <span className="px-2">
-            <button onClick={e => this.props.handleClick(e)} data-txt={use._id} className="btn btn-outline-danger float-right">Delete</button>
+            <button onClick={e => this.props.handleClick(e)} data-txt={use._id}
+              className={ this.props.btnMode == "add" ? "btn btn-outline-primary float-right" : "btn btn-outline-danger float-right"}
+            >
+              { this.props.btnMode == "add" ? 'Add' : 'Delete' }
+            </button>
           </span>
         </li>
       );
@@ -25,7 +29,6 @@ class UseList extends Component {
   }
 
   render() {
-    if (!this.props.uses) return <div>Loading...</div>
     return (
       <div>
         <h6>Uses:</h6>
@@ -36,5 +39,4 @@ class UseList extends Component {
     );
   }
 }
-
 export default UseList;

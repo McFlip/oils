@@ -41,7 +41,7 @@ class ProdsShow extends Component {
     const useIds = this.props.prod.uses.map(i => i._id);
     const val = {uses: _.filter(useIds, i => i != use)};
     this.props.updateProd(id, val);
-    removeUse(use, 'product', id);
+    this.props.removeUse(use, 'product', id);
   }
 
   renderVal(wholesale, retail, pv){
@@ -123,4 +123,4 @@ function mapStateToProps({ prods }, ownProps) {
   return { prod: prods[ownProps.match.params.id] };
 }
 
-export default connect(mapStateToProps, { fetchProd, deleteProd, updateProd })(ProdsShow);
+export default connect(mapStateToProps, { fetchProd, deleteProd, updateProd, removeUse })(ProdsShow);

@@ -4,7 +4,9 @@ export const DELETE_PROD = "delete_prod";
 export const ROOT_URL = "http://localhost:3000";
 export const FETCH_USES = "fetch_uses";
 export const FETCH_USE = "fetch_use";
+export const SEARCH_USES = "search_uses";
 export const DELETE_USE = "delete_use";
+export const ADD_USE = "add_use";
 export const testState = {
   prods: {
     a: {

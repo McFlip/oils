@@ -16,6 +16,7 @@ import ProdsNew from "./components/prods_new";
 import Home from "./components/home";
 import UsesIndex from "./components/uses_index";
 import RecipesIndex from "./components/recipes_index";
+import UsesAdd from "./components/uses_add";
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -28,6 +29,7 @@ ReactDOM.render(
           <Route path="/posts/:id" component={PostsShow} />
           <Route path="/products/new" component={ProdsNew} />
           <Route path="/products/:id/edit" component={ProdsNew} />
+          <Route path="/products/:id/adduse" component={UsesAdd} />
           <Route path="/products/:id" component={ProdsShow} />
           <Route path="/products" component={ProdsIndex} />
           <Route path="/uses" component={UsesIndex} />

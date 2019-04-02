@@ -48,7 +48,13 @@ router.delete('/posts/:id', PostController.deletePost);
 /* Create a post. */
 router.post('/posts', PostController.createPost);
 
+// GET item uses
+router.get('/uses/:id/:refType', UseController.getUses);
+
 // Remove a product or recipe from a use
-router.post('/uses/:id/:category/:refId', UseController.removeUse);
+router.delete('/uses/:id/:category/:refId', UseController.removeUse);
+
+// SEARCH through uses
+router.get('/uses/search', UseController.searchUses);
 
 export {router as api};

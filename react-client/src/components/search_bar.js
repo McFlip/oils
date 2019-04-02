@@ -14,15 +14,18 @@ class SearchBar extends Component {
         <label htmlFor='searchInput'>Search</label>
         <div className='input-group'>
           <div className='input-group-prepend'>
-            <select
-              value={this.state.category}
-              className='input-group-text'
-              onChange={event => this.onSelectChange(event.target.value)}
-              data-testid='searchSelect'
-            >
-              <option value='sku'>Item #</option>
-              <option value='descr'>Description</option>
-            </select>
+            {this.props.subject == 'uses'?
+              <span className='input-group-text'>Search Uses</span> :
+              <select
+                value={this.state.category}
+                className='input-group-text'
+                onChange={event => this.onSelectChange(event.target.value)}
+                data-testid='searchSelect'
+              >
+                <option value='sku'>Item #</option>
+                <option value='descr'>Description</option>
+              </select>
+            }
           </div>
           <input
             id='searchInput'
