@@ -37,7 +37,14 @@ class UsesAdd extends Component {
     // TODO: this is a placeholder stub; front & back end need to be wired up
     const use = e.target.dataset.txt;
     const { id } = this.props.match.params;
-    this.props.addUse(use, 'FUBAR', id);
+    var refType;
+    const path = this.props.match.path;
+    if (path.includes("products")) {
+      refType = "product";
+    } else {
+      refType = "recipe";
+    }
+    this.props.addUse(use, refType, id);
   }
 
   render(){
@@ -45,6 +52,7 @@ class UsesAdd extends Component {
     // const { match, uses, currentUses } = this.props;
     // console.log(this.props.uses);
 
+    // TODO: refactor Done link to func that checks prod vs recipe category
     return(
       <div>
         <Menu />

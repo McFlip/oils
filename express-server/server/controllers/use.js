@@ -26,13 +26,41 @@ export function removeUse( req, res ) {
     }
     if (category == 'product') {
       use.products = _.filter(use.products, i => i != refId);
+      Product.findById(refId, (err, prod) => {
+        if (err) res.status(500).send(error);
+        prod.uses = _.filter(prod.uses, i => i == refId);
+        prod.save();
+      });
     } else if (category == 'recipe') {
       use.recipes = _.filter(use.recipes, i => i != refId);
     } else {
       res.status(500).send('invalid category')
     }
     use.save();
-    res.status(200);
+    res.status(200).send({id,refId});
+  });
+}
+
+export function addUse( req, res ) {
+  const { id, category, refId } = req.params;
+  Use.findById(id, function (err, use) {
+    if (err) {
+      res.status(500).send(error);
+    }
+    if (category == 'product') {
+      use.products.push(refId);
+      Product.findById(refId, (err, prod) => {
+        if (err) res.status(500).send(error);
+        prod.uses.push(id);
+        prod.save();
+      });
+    } else if (category == 'recipe') {
+      use.recipes.push(refId);
+    } else {
+      res.status(500).send('invalid category')
+    }
+    use.save();
+    res.status(200).send(id);
   });
 }
 

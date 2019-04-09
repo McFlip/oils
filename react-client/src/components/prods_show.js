@@ -38,9 +38,9 @@ class ProdsShow extends Component {
   handleClick(e){
     const use = e.target.dataset.txt;
     const { id } = this.props.match.params;
-    const useIds = this.props.prod.uses.map(i => i._id);
-    const val = {uses: _.filter(useIds, i => i != use)};
-    this.props.updateProd(id, val);
+    // const useIds = this.props.prod.uses.map(i => i._id);
+    // const val = {uses: _.filter(useIds, i => i != use)};
+    // this.props.updateProd(id, val);
     this.props.removeUse(use, 'product', id);
   }
 
@@ -101,7 +101,6 @@ class ProdsShow extends Component {
         oilProps = { photosensitive, topical, dilute, aromatic, dietary };
       }
 
-      // TODO: get uses array
       return (
         <div>
           <Menu page='products' dropdown={ProdsShowDropdown(this.onDeleteClick.bind(this), match.params.id)} />

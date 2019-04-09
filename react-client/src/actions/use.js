@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_USES, FETCH_USE, SEARCH_USES, DELETE_USE, ADD_USE, ROOT_URL } from "../constants/";
+import { FETCH_USES, FETCH_USE, SEARCH_USES, DELETE_USE, ADD_USE, ROOT_URL, REMOVE_USE } from "../constants/";
 
 export function fetchUses(id, refType) {
   const request = axios.get(`${ROOT_URL}/uses/${id}/${refType}`);
@@ -47,12 +47,12 @@ export function deleteUse(useId) {
 }
 
 export function removeUse(id, category, refId) {
-  axios.delete(`${ROOT_URL}/uses/${id}/${category}/${refId}`);
+  const request = axios.delete(`${ROOT_URL}/uses/${id}/${category}/${refId}`);
 
 // TODO: I don't know what to return here
   return {
-    type: DELETE_USE,
-    payload: id
+    type: REMOVE_USE,
+    payload: request
   };
 }
 

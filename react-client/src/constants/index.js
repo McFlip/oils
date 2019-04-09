@@ -7,6 +7,7 @@ export const FETCH_USE = "fetch_use";
 export const SEARCH_USES = "search_uses";
 export const DELETE_USE = "delete_use";
 export const ADD_USE = "add_use";
+export const REMOVE_USE = "remove_use";
 export const testState = {
   prods: {
     a: {
