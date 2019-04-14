@@ -1,4 +1,5 @@
 import _ from "lodash";
+import produce from "immer";
 import { FETCH_USES, FETCH_USE, SEARCH_USES, DELETE_USE, ROOT_URL, ADD_USE } from "../constants/";
 
 export default function(state = {}, action) {
@@ -8,8 +9,11 @@ export default function(state = {}, action) {
     case FETCH_USES:
       return { itemUses: action.payload.data}
     case ADD_USE:
-      const newUses = _.remove(state.uses, i => i._id != action.payload);
-      return {...state, uses: newUses}
+      const newState = produce(state, draftState => {
+        const newUse = { _id: action.payload.data};
+        draftState.itemUses.push(newUse);
+        });
+      return newState;
     default:
       return state;
   }

@@ -48,6 +48,9 @@ router.delete('/posts/:id', PostController.deletePost);
 /* Create a post. */
 router.post('/posts', PostController.createPost);
 
+// CREATE a use
+router.post('/uses', UseController.createUse);
+
 // GET item uses
 router.get('/uses/:id/:refType', UseController.getUses);
 

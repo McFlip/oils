@@ -21,9 +21,10 @@ export function searchUses(term) {
 
 export function createUse(values) {
   const request = axios.post(`${ROOT_URL}/uses`, values);
+  alert(`New Use ${values.title} created`);
 
   return {
-    type: FETCH_USE,
+    type: ADD_USE,
     payload: request
   };
 }
@@ -59,9 +60,8 @@ export function removeUse(id, category, refId) {
 export function addUse(id, category, refId) {
   axios.post(`${ROOT_URL}/uses/${id}/${category}/${refId}`);
 
-// TODO: I don't know what to return here
   return {
     type: ADD_USE,
-    payload: id
+    payload: { data: id }
   };
 }

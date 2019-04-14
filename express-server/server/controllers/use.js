@@ -74,3 +74,30 @@ export function searchUses( req, res ) {
     res.status(200).send(uses);
   });
 }
+
+export function createUse( req, res) {
+  const newUse = new Use;
+  newUse.title = req.body.title;
+  if (req.body.category == "product") {
+    newUse.products.push(req.body.refId);
+  } else {
+    newUse.recipes.push(req.body.refId);
+    // TODO:  Recipe.findById
+  }
+  newUse.save((err, use) => {
+    if (err) res.status(500).send(err);
+    if (req.body.category == "product") {
+      Product.findById(req.body.refId).
+      exec((err, prod) => {
+        if (err) res.status(500).send(error)
+        prod.uses.push(use._id);
+        prod.save((err, p) => {
+          if (err) res.status(500).send(error)
+          res.status(200).send(use._id);
+        });
+      });
+    } else {
+    // TODO:  Recipe.findById
+    }
+  });
+}
