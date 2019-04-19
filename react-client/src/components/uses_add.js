@@ -29,10 +29,8 @@ class UsesAdd extends Component {
     this.props.fetchUses(id, refType);
   }
 
-  handleSearch(throwaway,term){
+  handleSearch(term){
     this.props.searchUses(term);
-    // throwaway is the category of a prod search
-    // TODO: refactor prod search to switch order of args
   }
 
   handleCreate(term){
@@ -67,13 +65,22 @@ class UsesAdd extends Component {
 
   render(){
     const { match, uses } = this.props;
+    const path = this.props.match.path;
 
-    // TODO: refactor Done link to func that checks prod vs recipe category
     return(
       <div>
         <Menu />
         <h2>Add Uses</h2>
-        <Link to={`/products/${match.params.id}`} className="btn btn-success">Done</Link>
+        <Link
+          to={
+            path.includes("products")?
+            `/products/${match.params.id}`:
+            `/recipes/${match.params.id}`
+          }
+          className="btn btn-success"
+        >
+          Done
+        </Link>
         <p>Click Search without search term to list all available uses</p>
         <CreateUse onCreateSubmit={this.handleCreate} />
         <SearchBar onSearchSubmit={this.handleSearch} subject="uses" />

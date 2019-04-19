@@ -31,7 +31,7 @@ export const createProd = jest.fn((values, callback) => {
   }
 });
 
-export const searchProds = jest.fn((category, term) => {
+export const searchProds = jest.fn((term, category) => {
   // console.log(`category: ${category}, term: ${term}`);
   let request;
   // cast to int

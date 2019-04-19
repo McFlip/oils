@@ -10,7 +10,7 @@ export function fetchProds() {
   };
 }
 
-export function searchProds(category, term) {
+export function searchProds( term, category ) {
   const request = axios.get(`${ROOT_URL}/products/search/${category}?q=${term}`);
 
   return {

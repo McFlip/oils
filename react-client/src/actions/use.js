@@ -50,7 +50,6 @@ export function deleteUse(useId) {
 export function removeUse(id, category, refId) {
   const request = axios.delete(`${ROOT_URL}/uses/${id}/${category}/${refId}`);
 
-// TODO: I don't know what to return here
   return {
     type: REMOVE_USE,
     payload: request

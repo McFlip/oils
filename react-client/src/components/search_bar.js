@@ -54,7 +54,7 @@ class SearchBar extends Component {
   // dispatch actions
   handleSubmit(e) {
     e.preventDefault();
-    this.props.onSearchSubmit(this.state.category, this.state.term);
+    this.props.onSearchSubmit( this.state.term, this.state.category );
   }
 
 }

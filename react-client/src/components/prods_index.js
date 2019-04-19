@@ -23,8 +23,8 @@ class ProdsIndex extends Component {
     this.props.searchProds('wishlist', 'true');
   }
 
-  handleSearch(category, term){
-    this.props.searchProds(category, term);
+  handleSearch(term, category){
+    this.props.searchProds(term, category);
   }
 
   handleSubmit(id, value){
