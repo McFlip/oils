@@ -21,7 +21,7 @@ export const fetchUses = jest.fn( ()=> {
   return {
     type: FETCH_USES,
     payload: {
-      data: testUses.slice(1,2)
+      data: testUses.slice(0,2)
     }
   }
 });
@@ -33,4 +33,12 @@ export const searchUses = jest.fn( ()=> {
       data: testUses
     }
   }
+});
+
+export const addUse = jest.fn( (id)=> {
+
+  return {
+    type: ADD_USE,
+    payload: { data: id }
+  };
 });

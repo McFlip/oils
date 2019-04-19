@@ -17,7 +17,7 @@ class UseList extends Component {
             </Link>
           </span>
           <span className="px-2">
-            <button onClick={e => this.props.handleClick(e)} data-txt={use._id}
+            <button onClick={e => this.props.handleClick(e)} data-txt={use._id} data-testid="use-btn"
               className={ this.props.btnMode == "add" ? "btn btn-outline-primary float-right" : "btn btn-outline-danger float-right"}
             >
               { this.props.btnMode == "add" ? 'Add' : 'Delete' }
