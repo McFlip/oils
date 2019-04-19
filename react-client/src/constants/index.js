@@ -46,3 +46,17 @@ export const testState2 = {
     }
   }
 }
+export const testUses = [
+  {
+    _id: "createdUseId",
+    title: "createdUseTitle"
+  },
+  {
+    _id: "firstUseId",
+    title: "firstUseTitle"
+  },
+  {
+    _id: "secondUseId",
+    title: "secondUseTitle"
+  }
+]

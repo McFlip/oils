@@ -84,13 +84,15 @@ class UsesAdd extends Component {
 }
 function mapStateToProps({uses}) {
   // filter out itemUses from uses so user cant add existing use
-  const u = uses.uses;
-  var filtered = [];
-  if (u) {
-    const keys = _.flatMap(uses.itemUses, use => use._id);
-    const keyed = _.keyBy(u, '_id');
-    let temp = _.omit(keyed,keys);
-    filtered = _.values(temp);
+  let filtered = [];
+  if (uses){
+    const u = uses.uses;
+    if (u) {
+      const keys = _.flatMap(uses.itemUses, use => use._id);
+      const keyed = _.keyBy(u, '_id');
+      let temp = _.omit(keyed,keys);
+      filtered = _.values(temp);
+    }
   }
   return {uses: filtered};
 }
