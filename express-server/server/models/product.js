@@ -1,4 +1,5 @@
 import { Use } from "./use.js";
+import { Recipe } from "./recipe";
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;

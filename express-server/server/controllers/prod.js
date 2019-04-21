@@ -15,6 +15,7 @@ export function getProduct (req, res) {
   populate('contains').
   populate('containedIn').
   populate('uses').
+  populate({path: "recipes", populate: {path: "uses"}}).
   exec((error, product) => {
       if (error) res.status(500).send(error)
 
