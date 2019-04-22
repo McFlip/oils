@@ -7,8 +7,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 // child schema
 const ingredientSchema = new Schema({
   product: { type: ObjectId, ref: 'Product'},
-  qty: String,
-  unit_measure: String
+  qty: String
 });
 
 // create mongoose schema

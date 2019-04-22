@@ -5,6 +5,7 @@ const router = new Router();
 import * as PostController from '../controllers/post.js';
 import * as ProdController from '../controllers/prod.js';
 import * as UseController from '../controllers/use.js';
+import * as RecipeController from "../controllers/recipe.js";
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
@@ -62,5 +63,8 @@ router.post('/uses/:id/:category/:refId', UseController.addUse);
 
 // SEARCH through uses
 router.get('/uses/search', UseController.searchUses);
+
+// GET one recipe
+router.get("/recipes/:id", RecipeController.getRecipe);
 
 export {router as api};

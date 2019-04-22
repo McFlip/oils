@@ -12,7 +12,7 @@ class RecipeList extends Component {
       return (
         <div className="card" style={{width: '18rem'}} key={i}>
           <div className="card-header">
-            <Link to={`/recipes/?q=${recipe._id}`} data-testid='recipe'>
+            <Link to={`/recipes/${recipe._id}`} data-testid='recipe'>
               {recipe.title}
             </Link>
           </div>
@@ -25,6 +25,7 @@ class RecipeList extends Component {
   }
 
   renderUses(uses){
+    if(!uses) return(<div>no uses</div>)
     return uses.map( (use, i) => {
       return (
         <li className="list-group-item" key={i}>
@@ -39,7 +40,7 @@ class RecipeList extends Component {
       <div>
         <h6>Recipes:</h6>
         <div>
-          {this.renderRecipes()}
+          {this.props.recipes? this.renderRecipes(): null}
         </div>
       </div>
     );

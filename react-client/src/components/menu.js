@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Menu = ({page, dropdown}) => {
   const brandLogo = { width : '40px' };
   const pages = ['products','uses','recipes'];
-  const pagesDropDown = ['products'];
 
   function pageLinks(p) {
     let isActive = '';
@@ -17,7 +16,6 @@ const Menu = ({page, dropdown}) => {
   }
 
   function renderDropDown() {
-    if (pagesDropDown.find(p => p == page)) {
       return (
         <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown">
@@ -26,9 +24,6 @@ const Menu = ({page, dropdown}) => {
           {dropdown}
         </li>
       );
-    } else {
-      return null;
-    }
   }
 
   return (
@@ -42,7 +37,7 @@ const Menu = ({page, dropdown}) => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav">
           { pages.map(pageLinks) }
-          { renderDropDown() }
+          { dropdown? renderDropDown(): null }
         </ul>
       </div>
     </nav>

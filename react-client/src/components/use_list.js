@@ -12,7 +12,7 @@ class UseList extends Component {
       return (
         <li className="list-group-item input-group" key={i}>
           <span data-testid='use'>
-            <Link to={`/uses/?q=${use._id}`} data-testid='use'>
+            <Link to={`/uses/${use._id}`} data-testid='use'>
               {use.title}
             </Link>
           </span>
