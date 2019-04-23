@@ -15,6 +15,7 @@ import ProdsIndex from "./components/prods_index";
 import ProdsShow from "./components/prods_show";
 import ProdsNew from "./components/prods_new";
 import UsesIndex from "./components/uses_index";
+import UsesShow from "./components/uses_show";
 import UsesAdd from "./components/uses_add";
 import RecipesIndex from "./components/recipes_index";
 import RecipesShow from "./components/recipes_show";
@@ -33,6 +34,7 @@ ReactDOM.render(
           <Route path="/products/:id/adduse" component={UsesAdd} />
           <Route path="/products/:id" component={ProdsShow} />
           <Route path="/products" component={ProdsIndex} />
+          <Route path="/uses/:id" component={UsesShow} />
           <Route path="/uses" component={UsesIndex} />
           <Route path="/recipes/:id" component={RecipesShow} />
           <Route path="/recipes" component={RecipesIndex} />

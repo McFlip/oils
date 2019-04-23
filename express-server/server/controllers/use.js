@@ -17,6 +17,17 @@ export function getUses( req, res) {
   }
 }
 
+// get single use
+export function getUse( req, res ) {
+  const { id } = req.params;
+  Use.findById(id).populate("products").
+  populate("recipes").
+  exec((err, use) => {
+    if (err) res.status(500).send(error)
+    res.status(200).send(use);
+  });
+}
+
 // remove a reference to a product or recipe
 export function removeUse( req, res ) {
   const { id, category, refId } = req.params;

@@ -31,11 +31,12 @@ export function createUse(values) {
 
 export function fetchUse(id) {
   const request = axios.get(`${ROOT_URL}/uses/${id}`);
+  return request;
 
-  return {
+  /*return {
     type: FETCH_USE,
     payload: request
-  };
+  };*/
 }
 
 export function deleteUse(useId) {
