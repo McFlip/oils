@@ -9,7 +9,7 @@ export function getUses( req, res) {
     Product.findById(id).
     populate('uses').
     exec((err, prod) => {
-      if (err) res.status(500).send(error)
+      if (err) res.status(500).send(err)
       res.status(200).send(prod.uses);
     });
   } else {
@@ -23,7 +23,7 @@ export function getUse( req, res ) {
   Use.findById(id).populate("products").
   populate("recipes").
   exec((err, use) => {
-    if (err) res.status(500).send(error)
+    if (err) res.status(500).send(err)
     res.status(200).send(use);
   });
 }
@@ -33,12 +33,12 @@ export function removeUse( req, res ) {
   const { id, category, refId } = req.params;
   Use.findById(id, function (err, use) {
     if (err) {
-      res.status(500).send(error);
+      res.status(500).send(err);
     }
     if (category == 'product') {
       use.products = _.filter(use.products, i => i != refId);
       Product.findById(refId, (err, prod) => {
-        if (err) res.status(500).send(error);
+        if (err) res.status(500).send(err);
         prod.uses = _.filter(prod.uses, i => i == refId);
         prod.save();
       });
@@ -56,12 +56,12 @@ export function addUse( req, res ) {
   const { id, category, refId } = req.params;
   Use.findById(id, function (err, use) {
     if (err) {
-      res.status(500).send(error);
+      res.status(500).send(err);
     }
     if (category == 'product') {
       use.products.push(refId);
       Product.findById(refId, (err, prod) => {
-        if (err) res.status(500).send(error);
+        if (err) res.status(500).send(err);
         prod.uses.push(id);
         prod.save();
       });
@@ -80,7 +80,7 @@ export function searchUses( req, res ) {
   const search = {'title': { "$regex": q, "$options": "i" } };
   Use.find(search).exec((err, uses) => {
     if (err) {
-      res.status(500).send(error);
+      res.status(500).send(err);
     }
     res.status(200).send(uses);
   });
@@ -100,10 +100,10 @@ export function createUse( req, res) {
     if (req.body.category == "product") {
       Product.findById(req.body.refId).
       exec((err, prod) => {
-        if (err) res.status(500).send(error)
+        if (err) res.status(500).send(err)
         prod.uses.push(use._id);
         prod.save((err, p) => {
-          if (err) res.status(500).send(error)
+          if (err) res.status(500).send(err)
           res.status(200).send(use._id);
         });
       });

@@ -55,9 +55,6 @@ router.post('/uses', UseController.createUse);
 // GET item uses
 router.get('/uses/:id/:refType', UseController.getUses);
 
-// GET one use
-router.get('/uses/:id', UseController.getUse);
-
 // Remove a product or recipe from a use
 router.delete('/uses/:id/:category/:refId', UseController.removeUse);
 
@@ -66,6 +63,9 @@ router.post('/uses/:id/:category/:refId', UseController.addUse);
 
 // SEARCH through uses
 router.get('/uses/search', UseController.searchUses);
+
+// GET one use
+router.get('/uses/:id', UseController.getUse);
 
 // GET one recipe
 router.get("/recipes/:id", RecipeController.getRecipe);
