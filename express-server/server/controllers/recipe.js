@@ -39,3 +39,14 @@ export function getRecipe(req, res) {
     res.status(200).send(r);
   });
 }
+
+export function searchRecipes( req, res ) {
+  const { q } = req.query;
+  const search = {'title': { "$regex": q, "$options": "i" } };
+  Recipe.find(search).exec((err, recipes) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.status(200).send(recipes);
+  });
+}

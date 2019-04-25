@@ -67,6 +67,9 @@ router.get('/uses/search', UseController.searchUses);
 // GET one use
 router.get('/uses/:id', UseController.getUse);
 
+// SEARCH recipes
+router.get("/recipes/search", RecipeController.searchRecipes);
+
 // GET one recipe
 router.get("/recipes/:id", RecipeController.getRecipe);
 
