@@ -39,7 +39,7 @@ export function getRecipe(req, res) {
     res.status(200).send(r);
   });
 }
-
+// GET search results
 export function searchRecipes( req, res ) {
   const { q } = req.query;
   const search = {'title': { "$regex": q, "$options": "i" } };
@@ -49,4 +49,13 @@ export function searchRecipes( req, res ) {
     }
     res.status(200).send(recipes);
   });
+}
+// CREATE a recipe
+export function createRecipe( req, res ) {
+  const { title } = req.body
+  let recipe = new Recipe({title})
+  recipe.save((err, r) => {
+    if (err) res.status(500).send(err)
+    res.status(201).send(r)
+  })
 }

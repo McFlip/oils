@@ -9,6 +9,7 @@ class RecipesIndex extends Component {
   constructor (props) {
     super(props)
     this.handleSearch = this.handleSearch.bind(this)
+    this.handleCreate = this.handleCreate.bind(this)
     this.state = { recipes: [] }
   }
   handleSearch (term) {
@@ -16,7 +17,7 @@ class RecipesIndex extends Component {
   }
   handleCreate (title) {
     // jump to newly created recipe
-    createRecipe({ title }, recipe => console.log(recipe))
+    createRecipe({ title }, recipe => this.props.history.push(`/recipes/${recipe._id}`))
   }
   renderRecipes (recipes) {
     if (!recipes) return null

@@ -73,4 +73,7 @@ router.get("/recipes/search", RecipeController.searchRecipes);
 // GET one recipe
 router.get("/recipes/:id", RecipeController.getRecipe);
 
+// CREATE recipe
+router.post("/recipes/create", RecipeController.createRecipe)
+
 export {router as api};
