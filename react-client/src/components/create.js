@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class CreateUse extends Component {
+class Create extends Component {
   constructor(props) {
     super(props);
 
@@ -13,7 +13,7 @@ class CreateUse extends Component {
       <form onSubmit={this.handleSubmit}>
         <div className='input-group'>
           <div className='input-group-prepend'>
-            <span className='input-group-text'>Create Use</span>
+            <span className='input-group-text'>Create</span>
           </div>
           <input
             id='createUseInput'
@@ -43,4 +43,4 @@ class CreateUse extends Component {
 
 }
 
-export default CreateUse;
+export default Create;

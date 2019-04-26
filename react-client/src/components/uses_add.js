@@ -5,7 +5,7 @@ import _ from "lodash";
 import Menu from "./menu";
 import UseList from './use_list';
 import SearchBar from './search_bar';
-import CreateUse from './create_use';
+import CreateUse from './create';
 import { Link } from "react-router-dom";
 import { fetchUses, searchUses, createUse, addUse } from "../actions/use";
 

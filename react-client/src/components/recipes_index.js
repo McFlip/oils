@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Menu from "./menu";
 import SearchBar from './search_bar';
-import { searchRecipes } from "../actions/recipes";
+import CreateRecipe from "./create";
+import { searchRecipes, createRecipe } from "../actions/recipes";
 
 class RecipesIndex extends Component {
   constructor(props){
@@ -12,6 +13,10 @@ class RecipesIndex extends Component {
   }
   handleSearch(term){
     searchRecipes(term).then(q => this.setState({recipes: q.data}));
+  }
+  handleCreate(title){
+    // jump to newly created recipe
+    createRecipe({title}, recipe => console.log(recipe));
   }
   renderRecipes(recipes){
     if(!recipes) return null;
@@ -25,6 +30,7 @@ class RecipesIndex extends Component {
     return(
       <div>
         <Menu page='recipes' />
+        <CreateRecipe onCreateSubmit={this.handleCreate} />
         <p>Click Search without search term to list all available recipes</p>
         <SearchBar onSearchSubmit={this.handleSearch} subject="uses" />
         <h2>Recipes Found</h2>
