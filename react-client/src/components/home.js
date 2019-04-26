@@ -1,7 +1,7 @@
-import React from "react";
-import Menu from "./menu";
+import React from 'react'
+import Menu from './menu'
 
-const Home = () =>{
+const Home = () => {
   return (
     <div>
       <Menu page='home' />
@@ -12,7 +12,7 @@ const Home = () =>{
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

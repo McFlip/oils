@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
 class Create extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
-    this.state = { term: "" };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { term: '' }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  render() {
+  render () {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className='input-group'>
@@ -19,28 +19,27 @@ class Create extends Component {
             id='createUseInput'
             value={this.state.term}
             onChange={event => this.onInputChange(event.target.value)}
-            className="form-control"
+            className='form-control'
             data-testid='createUseInput'
           />
-          <div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="submit" data-testid="Create">Create</button>
+          <div className='input-group-append'>
+            <button className='btn btn-outline-secondary' type='submit' data-testid='Create'>Create</button>
           </div>
         </div>
       </form>
-    );
+    )
   }
 
   // controlled component
-  onInputChange(term) {
-    this.setState({ term });
+  onInputChange (term) {
+    this.setState({ term })
   }
 
   // dispatch actions
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.onCreateSubmit(this.state.term);
+  handleSubmit (e) {
+    e.preventDefault()
+    this.props.onCreateSubmit(this.state.term)
   }
-
 }
 
-export default Create;
+export default Create

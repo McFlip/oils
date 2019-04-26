@@ -1,22 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
 class SearchBar extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
-    this.state = { term: "", category: "sku" };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { term: '', category: 'sku' }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  render() {
+  render () {
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor='searchInput'>Search</label>
         <div className='input-group'>
           <div className='input-group-prepend'>
-            {this.props.subject == 'uses'?
-              <span className='input-group-text'>Search Uses</span> :
-              <select
+            {this.props.subject == 'uses'
+              ? <span className='input-group-text'>Search Uses</span>
+              : <select
                 value={this.state.category}
                 className='input-group-text'
                 onChange={event => this.onSelectChange(event.target.value)}
@@ -31,32 +31,31 @@ class SearchBar extends Component {
             id='searchInput'
             value={this.state.term}
             onChange={event => this.onInputChange(event.target.value)}
-            className="form-control"
+            className='form-control'
             data-testid='searchInput'
           />
-          <div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="submit" data-testid="Search">Search</button>
+          <div className='input-group-append'>
+            <button className='btn btn-outline-secondary' type='submit' data-testid='Search'>Search</button>
           </div>
         </div>
       </form>
-    );
+    )
   }
 
   // controlled component
-  onInputChange(term) {
-    this.setState({ term });
+  onInputChange (term) {
+    this.setState({ term })
   }
 
-  onSelectChange(category) {
-    this.setState({ category });
+  onSelectChange (category) {
+    this.setState({ category })
   }
 
   // dispatch actions
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.onSearchSubmit( this.state.term, this.state.category );
+  handleSubmit (e) {
+    e.preventDefault()
+    this.props.onSearchSubmit(this.state.term, this.state.category)
   }
-
 }
 
-export default SearchBar;
+export default SearchBar

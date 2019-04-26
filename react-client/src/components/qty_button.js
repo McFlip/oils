@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import ReactDOM from 'react-dom';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 
 export default class QTY_Button extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleClick = this.handleClick.bind(this);
+  constructor (props) {
+    super(props)
+    this.state = {}
+    this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(e){
-    e.stopPropagation();
+  handleClick (e) {
+    e.stopPropagation()
     this.props.handleClick(this.props._id, this.props.qty)
   }
 
-  render(){
-    return(
+  render () {
+    return (
       <button
-        type="button"
-        className="btn btn-primary px-2"
-        data-toggle="modal"
-        data-target="#qtyModal"
-        data-testid="qtyButton"
+        type='button'
+        className='btn btn-primary px-2'
+        data-toggle='modal'
+        data-target='#qtyModal'
+        data-testid='qtyButton'
         onClick={this.handleClick}
       >
         QTY:
@@ -28,6 +28,6 @@ export default class QTY_Button extends Component {
           {this.props.qty}
         </span>
       </button>
-    );
+    )
   }
 }

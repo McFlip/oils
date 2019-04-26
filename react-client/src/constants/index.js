@@ -1,14 +1,14 @@
-export const FETCH_PRODS = "fetch_prods";
-export const FETCH_PROD = "fetch_prod";
-export const DELETE_PROD = "delete_prod";
-export const ROOT_URL = "http://localhost:3000";
-export const FETCH_USES = "fetch_uses";
-export const FETCH_USE = "fetch_use";
-export const SEARCH_USES = "search_uses";
-export const DELETE_USE = "delete_use";
-export const ADD_USE = "add_use";
-export const REMOVE_USE = "remove_use";
-export const FETCH_RECIPE = "fetch_recipe";
+export const FETCH_PRODS = 'fetch_prods'
+export const FETCH_PROD = 'fetch_prod'
+export const DELETE_PROD = 'delete_prod'
+export const ROOT_URL = 'http://localhost:3000'
+export const FETCH_USES = 'fetch_uses'
+export const FETCH_USE = 'fetch_use'
+export const SEARCH_USES = 'search_uses'
+export const DELETE_USE = 'delete_use'
+export const ADD_USE = 'add_use'
+export const REMOVE_USE = 'remove_use'
+export const FETCH_RECIPE = 'fetch_recipe'
 export const testState = {
   prods: {
     a: {
@@ -23,7 +23,7 @@ export const testState = {
         topical: true,
         dilute: true
       },
-      uses: ["test use"]
+      uses: ['test use']
     }
   }
 }
@@ -49,15 +49,15 @@ export const testState2 = {
 }
 export const testUses = [
   {
-    _id: "createdUseId",
-    title: "createdUseTitle"
+    _id: 'createdUseId',
+    title: 'createdUseTitle'
   },
   {
-    _id: "firstUseId",
-    title: "firstUseTitle"
+    _id: 'firstUseId',
+    title: 'firstUseTitle'
   },
   {
-    _id: "secondUseId",
-    title: "secondUseTitle"
+    _id: 'secondUseId',
+    title: 'secondUseTitle'
   }
 ]
