@@ -2,17 +2,25 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Menu from './menu'
-import { fetchRecipe } from '../actions/recipes'
+import RecipeTitle from './recipe_title'
+import { fetchRecipe, updateRecipe } from '../actions/recipes'
 
 class RecipesShow extends Component {
   constructor (props) {
     super(props)
     this.renderIngredients = this.renderIngredients.bind(this)
     this.renderUses = this.renderUses.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount () {
     const { id } = this.props.match.params
     this.props.fetchRecipe(id)
+  }
+  handleSubmit (title) {
+    const { id } = this.props.match.params 
+    // console.log(title);
+    
+    this.props.updateRecipe(id, title)
   }
   renderIngredients (ingredients) {
     if (!ingredients) return null
@@ -74,7 +82,7 @@ class RecipesShow extends Component {
     return (
       <div>
         <Menu page='recipes' />
-        <h3>Recipe {recipe.title} Details</h3>
+        <RecipeTitle title={recipe.title} handleSubmit={this.handleSubmit} />
         {this.renderUses(recipe.uses)}
         <h4>Ingredients</h4>
         {this.renderIngredients(recipe.ingredients)}
@@ -89,4 +97,4 @@ class RecipesShow extends Component {
 
 const mapStateToProps = ({recipes: {recipe}}) => ({ recipe })
 
-export default connect(mapStateToProps, { fetchRecipe })(RecipesShow)
+export default connect(mapStateToProps, { fetchRecipe, updateRecipe })(RecipesShow)

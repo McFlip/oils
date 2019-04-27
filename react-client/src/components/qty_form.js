@@ -9,6 +9,9 @@ class QTY_Form extends Component {
     this.state = { value: this.props.value }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = {
+      value: props.value
+    }
   }
 
   componentDidUpdate (prevProps) {

@@ -60,3 +60,37 @@ export function createRecipe( req, res ) {
     res.status(201).send(r)
   })
 }
+// UPDATE recipe
+export function updateRecipe(req, res) {
+  Recipe.findByIdAndUpdate(req.params.id, { $set: req.body}, { new: true }).
+  populate("ingredients.product").
+  populate("uses").
+  exec((err, recipe) => {
+    if (err) res.status(500).send(err)
+    const md = marked(recipe.directions);
+    let r = {
+      title: recipe.title,
+      directions: md,
+      uses: [],
+      ingredients: []
+    };
+    recipe.uses.map((use) => {
+      let u = {
+        _id: use._id,
+        title: use.title
+      };
+      r.uses.push(u);
+    });
+    recipe.ingredients.map((ingredient) => {
+      let i = {
+        qty: ingredient.qty,
+        product: {
+          _id: ingredient.product._id,
+          descr: ingredient.product.descr
+        }
+      };
+      r.ingredients.push(i);
+    })
+    res.status(200).send(r);
+  });
+}

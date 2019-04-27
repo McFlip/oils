@@ -76,4 +76,7 @@ router.get("/recipes/:id", RecipeController.getRecipe);
 // CREATE recipe
 router.post("/recipes/create", RecipeController.createRecipe)
 
+// UPDATE recipe
+router.post('/recipes/:id', RecipeController.updateRecipe)
+
 export {router as api};

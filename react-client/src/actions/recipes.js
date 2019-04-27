@@ -19,3 +19,11 @@ export function createRecipe (recipe, callback) {
     .post(`${ROOT_URL}/recipes/create`, recipe)
     .then(r => callback(r.data))
 }
+
+export function updateRecipe(id, value) {
+  const request = axios.post(`${ROOT_URL}/recipes/${id}/`, value)
+  return {
+    type: FETCH_RECIPE,
+    payload: request
+  }
+}
