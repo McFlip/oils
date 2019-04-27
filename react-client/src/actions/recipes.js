@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ROOT_URL, FETCH_RECIPE } from '../constants'
+import { ROOT_URL } from '../constants'
 
 export function fetchRecipe (id) {
   const request = axios.get(`${ROOT_URL}/recipes/${id}`)
@@ -12,7 +12,7 @@ export function searchRecipes (term) {
 }
 
 export function createRecipe (recipe, callback) {
-  const request = axios
+  axios
     .post(`${ROOT_URL}/recipes/create`, recipe)
     .then(r => callback(r.data))
 }

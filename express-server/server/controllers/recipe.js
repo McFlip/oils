@@ -54,6 +54,7 @@ export function searchRecipes( req, res ) {
 export function createRecipe( req, res ) {
   const { title } = req.body
   let recipe = new Recipe({title})
+  recipe.directions = 'brand new recipe'
   recipe.save((err, r) => {
     if (err) res.status(500).send(err)
     res.status(201).send(r)
