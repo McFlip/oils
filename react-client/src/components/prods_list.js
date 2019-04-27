@@ -69,7 +69,6 @@ class ProdsList extends Component {
           close={this.handleClose}
           value={this.state.sel_prod ? this.state.sel_prod.qty : 0}
           _id={this.state.sel_prod ? this.state.sel_prod._id : 0}
-          close={this.handleClose}
           handleSubmit={this.handleSubmit}
         />
         <ul className='list-group'>
