@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Menu from './menu'
 import { fetchRecipe } from '../actions/recipes'
@@ -6,15 +7,12 @@ import { fetchRecipe } from '../actions/recipes'
 class RecipesShow extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      recipe: {}
-    }
     this.renderIngredients = this.renderIngredients.bind(this)
     this.renderUses = this.renderUses.bind(this)
   }
   componentDidMount () {
     const { id } = this.props.match.params
-    fetchRecipe(id).then(res => this.setState({ recipe: res.data }))
+    this.props.fetchRecipe(id)
   }
   renderIngredients (ingredients) {
     if (!ingredients) return null
@@ -71,7 +69,7 @@ class RecipesShow extends Component {
     )
   }
   render () {
-    const { recipe } = this.state
+    const { recipe } = this.props
     if (!recipe) return (<div>Loading</div>)
     return (
       <div>
@@ -89,4 +87,6 @@ class RecipesShow extends Component {
   }
 }
 
-export default RecipesShow
+const mapStateToProps = ({recipes: {recipe}}) => ({ recipe })
+
+export default connect(mapStateToProps, { fetchRecipe })(RecipesShow)
