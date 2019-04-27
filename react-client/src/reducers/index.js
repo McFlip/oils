@@ -4,7 +4,6 @@ import PostsReducer from './reducer_posts'
 import ProdsReducer from './prods'
 import UsesReducer from './uses'
 import RecipesReducer from './recipes'
-import recipes from './recipes';
 
 const rootReducer = combineReducers({
   posts: PostsReducer,
