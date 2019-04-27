@@ -16,8 +16,12 @@ class RecipesIndex extends Component {
     searchRecipes(term).then(q => this.setState({ recipes: q.data }))
   }
   handleCreate (title) {
-    // jump to newly created recipe
-    createRecipe({ title }, recipe => this.props.history.push(`/recipes/${recipe._id}`))
+    if (title === '') {
+      alert("recipe title can't be blank")
+    } else {
+      // jump to newly created recipe
+      createRecipe({ title }, recipe => this.props.history.push(`/recipes/${recipe._id}`))
+    }
   }
   renderRecipes (recipes) {
     if (!recipes) return null
