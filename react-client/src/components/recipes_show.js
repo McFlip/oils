@@ -3,24 +3,30 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Menu from './menu'
 import RecipeTitle from './recipe_title'
+import UseList from './use_list'
 import { fetchRecipe, updateRecipe } from '../actions/recipes'
+import { removeUse } from '../actions/use'
 
 class RecipesShow extends Component {
   constructor (props) {
     super(props)
     this.renderIngredients = this.renderIngredients.bind(this)
-    this.renderUses = this.renderUses.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleRemoveUse = this.handleRemoveUse.bind(this)
+    const {id}  = this.props.match.params
+    this.state = {
+      id
+    }
   }
   componentDidMount () {
-    const { id } = this.props.match.params
-    this.props.fetchRecipe(id)
+    this.props.fetchRecipe(this.state.id)
   }
   handleSubmit (title) {
-    const { id } = this.props.match.params 
-    // console.log(title);
-    
-    this.props.updateRecipe(id, title)
+    this.props.updateRecipe(this.state.id, {title})
+  }
+  handleRemoveUse (e){
+    const use = e.target.dataset.txt
+    this.props.removeUse(use, 'recipe', this.state.id)
   }
   renderIngredients (ingredients) {
     if (!ingredients) return null
@@ -53,42 +59,23 @@ class RecipesShow extends Component {
       </table>
     )
   }
-  renderUses (uses) {
-    if (!uses) return null
-    return (
-      <div className='card'>
-        <h5 className='card-header'>
-          Uses
-        </h5>
-        <ul className='list-group list-group-flush'>
-          {
-            uses.map((use, i) => {
-              return (
-                <li className='list-group-item' key={i}>
-                  <Link to={`/uses/${use._id}`} data-testid='use'>
-                    {use.title}
-                  </Link>
-                </li>
-              )
-            })
-          }
-        </ul>
-      </div>
-    )
-  }
+
   render () {
     const { recipe } = this.props
     if (!recipe) return (<div>Loading</div>)
+    const { title, uses, ingredients, directions } = recipe
     return (
       <div>
         <Menu page='recipes' />
-        <RecipeTitle title={recipe.title} handleSubmit={this.handleSubmit} />
-        {this.renderUses(recipe.uses)}
+        <RecipeTitle title={title} handleSubmit={this.handleSubmit} />
+        <h4>Uses</h4>
+        <Link to={`/recipes/${this.state.id}/adduse`} className='btn btn-secondary'>Edit</Link>
+        <UseList uses={uses} id={this.state.id} handleClick={this.handleRemoveUse} />
         <h4>Ingredients</h4>
-        {this.renderIngredients(recipe.ingredients)}
+        {this.renderIngredients(ingredients)}
         <div className='card'>
           <h4 className='card-header'>Directions</h4>
-          <div className='card-body' dangerouslySetInnerHTML={{ __html: recipe.directions }} />
+          <div className='card-body' dangerouslySetInnerHTML={{ __html: directions }} />
         </div>
       </div>
     )
@@ -97,4 +84,4 @@ class RecipesShow extends Component {
 
 const mapStateToProps = ({recipes: {recipe}}) => ({ recipe })
 
-export default connect(mapStateToProps, { fetchRecipe, updateRecipe })(RecipesShow)
+export default connect(mapStateToProps, { fetchRecipe, updateRecipe, removeUse })(RecipesShow)

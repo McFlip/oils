@@ -36,6 +36,7 @@ ReactDOM.render(
           <Route path='/products' component={ProdsIndex} />
           <Route path='/uses/:id' component={UsesShow} />
           <Route path='/uses' component={UsesIndex} />
+          <Route path='/recipes/:id/adduse' component={UsesAdd} />
           <Route path='/recipes/:id' component={RecipesShow} />
           <Route path='/recipes' component={RecipesIndex} />
           <Route path='/' component={Home} />

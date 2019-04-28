@@ -10,13 +10,18 @@ export default function (state = {}, action) {
       return { ...state, [action.payload.data._id]: action.payload.data }
     case FETCH_PRODS:
       return _.mapKeys(action.payload.data, '_id')
-    case REMOVE_USE:
+    case REMOVE_USE: {
       const newState = produce(state, draftState => {
-        const refId = action.payload.data.refId
-        const prod = draftState[refId]
-        prod.uses = _.remove(prod.uses, i => i._id != action.payload.data.id)
+        const { id, refId, category } = action.payload.data
+        if (category === 'product') {
+          const prod = draftState[refId]
+          prod.uses = _.remove(prod.uses, i => i._id != id)
+        } else {
+          return state
+        }
       })
       return newState
+    }
     default:
       return state
   }
