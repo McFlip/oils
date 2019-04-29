@@ -31,7 +31,7 @@ export class  ProdsAdd extends Component {
         <h1>Add products to ingredients list</h1>
         <Link to={`/recipes/${this.state.id}`} className='btn btn-success'>Done</Link>
         <h2>Existing ingredients</h2>
-        <IngredientsList ingredients={ingredients} mode='edit' />
+        <IngredientsList ingredients={ingredients} mode='edit' id={this.state.id} />
         <SearchBar onSearchSubmit={this.handleSearch} />
       </div>
     )
