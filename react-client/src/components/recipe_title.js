@@ -34,7 +34,7 @@ class RecipeTitle extends Component {
   }
 
   // launch modal
-  handleClick(){
+  handleClick () {
     $('#titleModal').modal('toggle')
   }
 

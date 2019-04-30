@@ -13,7 +13,7 @@ class RecipesShow extends Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleRemoveUse = this.handleRemoveUse.bind(this)
-    const {id}  = this.props.match.params
+    const { id } = this.props.match.params
     this.state = {
       id
     }
@@ -22,9 +22,9 @@ class RecipesShow extends Component {
     this.props.fetchRecipe(this.state.id)
   }
   handleSubmit (title) {
-    this.props.updateRecipe(this.state.id, {title})
+    this.props.updateRecipe(this.state.id, { title })
   }
-  handleRemoveUse (e){
+  handleRemoveUse (e) {
     const use = e.target.dataset.txt
     this.props.removeUse(use, 'recipe', this.state.id)
   }
@@ -52,6 +52,6 @@ class RecipesShow extends Component {
   }
 }
 
-const mapStateToProps = ({recipes: {recipe}}) => ({ recipe })
+const mapStateToProps = ({ recipes: { recipe } }) => ({ recipe })
 
 export default connect(mapStateToProps, { fetchRecipe, updateRecipe, removeUse })(RecipesShow)

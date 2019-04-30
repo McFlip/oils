@@ -20,7 +20,7 @@ export function createRecipe (recipe, callback) {
     .then(r => callback(r.data))
 }
 
-export function updateRecipe(id, value) {
+export function updateRecipe (id, value) {
   const request = axios.post(`${ROOT_URL}/recipes/${id}/`, value)
   return {
     type: FETCH_RECIPE,
