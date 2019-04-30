@@ -31,10 +31,10 @@ export class ProdsAdd extends Component {
         <h1>Add products to ingredients list</h1>
         <Link to={`/recipes/${this.state.id}`} className='btn btn-success'>Done</Link>
         <h2>Existing ingredients</h2>
-        <IngredientsList ingredients={ingredients} mode='edit' id={this.state.id} />
+        <IngredientsList ingredients={ingredients} mode='edit' id={this.state.id} updateRecipe={this.props.updateRecipe} />
         <h2>Add new ingredients</h2>
         <SearchBar onSearchSubmit={this.handleSearch} />
-        <IngredientsList prods={this.props.prods} ingredients={ingredients} mode='add' id={this.state.id} />
+        <IngredientsList prods={this.props.prods} ingredients={ingredients} mode='add' id={this.state.id} updateRecipe={this.props.updateRecipe} />
       </div>
     )
   }
@@ -42,4 +42,4 @@ export class ProdsAdd extends Component {
 function mapStateToProps({ prods, recipes }) {
   return { prods, recipe: recipes.recipe }
 }
-export default connect(mapStateToProps, { searchProds, fetchRecipe })(ProdsAdd)
+export default connect(mapStateToProps, { searchProds, fetchRecipe, updateRecipe })(ProdsAdd)

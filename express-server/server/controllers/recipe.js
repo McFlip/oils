@@ -28,6 +28,7 @@ export function getRecipe(req, res) {
     });
     recipe.ingredients.map((ingredient) => {
       let i = {
+        _id: ingredient._id,
         qty: ingredient.qty,
         product: {
           _id: ingredient.product._id,
@@ -83,6 +84,7 @@ export function updateRecipe(req, res) {
     });
     recipe.ingredients.map((ingredient) => {
       let i = {
+        _id: ingredient._id,
         qty: ingredient.qty,
         product: {
           _id: ingredient.product._id,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
-import { updateRecipe } from '../actions/recipes'
+// import { updateRecipe } from '../actions/recipes'
 
 class IngredientsList extends Component {
   constructor (props) {
@@ -25,12 +25,12 @@ class IngredientsList extends Component {
         'qty': val,
         'product': ingrId
       })
-      updateRecipe(id, { ingredients })
+      this.props.updateRecipe(id, { ingredients })
     } else {
-      const keyed = _.keyBy(this.props.ingredients, 'product._id')
+      const keyed = _.keyBy(this.props.ingredients, '_id')
       keyed[ingrId].qty = val
       ingredients = _.values(keyed)
-      updateRecipe(id, { ingredients }).then(alert('quantity updated'))
+      this.props.updateRecipe(id, { ingredients }).then(alert('quantity updated'))
     }
   }
   handleClick () {
@@ -62,7 +62,7 @@ class IngredientsList extends Component {
               {ingredient.product.descr}
             </Link>
           </td>
-          <td>{this.renderQty(ingredient.qty, ingredient.product._id)}</td>
+          <td>{this.renderQty(ingredient.qty, ingredient._id)}</td>
           {this.props.mode === 'edit' ? <td><button onClick={this.handleClick}>Delete</button></td> : null}
         </tr>
       )
@@ -70,7 +70,7 @@ class IngredientsList extends Component {
   }
   renderProds (prods) {
     if (!prods) return null
-    return _.map(prods, (prod, i) => {
+    return _.map(prods, (prod) => {
       return (
         <tr key={prod._id}>
           <th scope='row'>{prod.sku}</th>
