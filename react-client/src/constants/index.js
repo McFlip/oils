@@ -9,6 +9,7 @@ export const DELETE_USE = 'delete_use'
 export const ADD_USE = 'add_use'
 export const REMOVE_USE = 'remove_use'
 export const FETCH_RECIPE = 'fetch_recipe'
+export const DELETE_RECIPE = 'DELETE_RECIPE'
 export const testState = {
   prods: {
     a: {

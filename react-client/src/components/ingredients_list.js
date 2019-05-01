@@ -27,6 +27,7 @@ class IngredientsList extends Component {
         'product': ingrId
       })
       this.props.updateRecipe(id, { ingredients })
+      // TODO: updateProd to add recipes ref
     } else {
       const keyed = _.keyBy(this.props.ingredients, '_id')
       keyed[ingrId].qty = val

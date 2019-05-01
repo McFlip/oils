@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ROOT_URL, FETCH_RECIPE } from '../constants'
+import { ROOT_URL, FETCH_RECIPE, DELETE_RECIPE } from '../constants'
 
 export function fetchRecipe (id) {
   const request = axios.get(`${ROOT_URL}/recipes/${id}`)
@@ -25,5 +25,15 @@ export function updateRecipe (id, value) {
   return {
     type: FETCH_RECIPE,
     payload: request
+  }
+}
+
+export function deleteRecipe (id, callback) {
+  axios
+    .delete(`${ROOT_URL}/recipes/${id}`)
+    .then(() => callback())
+  return {
+    type: DELETE_RECIPE,
+    payload: id
   }
 }

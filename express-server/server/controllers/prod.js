@@ -59,11 +59,11 @@ export function createProduct(req, res) {
 
 /* Delete one product. */
 export function deleteProduct(req, res) {
-  Product.findByIdAndRemove(req.params.id, (error, posts) => {
+  Product.findByIdAndRemove(req.params.id, (error) => {
     if (error) res.status(500).send(error)
 
-    res.status(200).json(posts);
-  });
+    res.status(204)
+  })
 }
 
 /* Update one product */

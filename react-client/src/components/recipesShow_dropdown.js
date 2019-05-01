@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import $ from 'jquery'
 
-const RecipesShowDropdown = (id) => {
+const RecipesShowDropdown = (onDeleteClick,id) => {
   return (
     <div>
       <div className='dropdown-menu'>
@@ -24,6 +24,14 @@ const RecipesShowDropdown = (id) => {
             }
           }
         >Edit directions</a>
+        <a className='dropdown-item' href='#'
+          onClick={
+            (e) => {
+              e.preventDefault()
+              if (confirm("Are you sure? This can't be undone")) onDeleteClick()
+            }
+          }
+        >Delete Recipe</a>
       </div>
     </div>
   )
