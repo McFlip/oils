@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import $ from 'jquery'
+import DOMPurify from 'dompurify'
+import marked from 'marked'
 
 class RecipeDirections extends Component {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.renderDirections = this.renderDirections.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
     this.state = {
       value: props.value
     }
@@ -23,22 +27,30 @@ class RecipeDirections extends Component {
   // dispatch actions
   handleSubmit (e) {
     e.preventDefault()
-    this.props.handleSubmit(this.state.value)
+    const clean = DOMPurify.sanitize(this.state.value) 
+    this.props.handleSubmit(clean)
     $('#editModal').modal('toggle')
   }
   // launch modal
   handleClick () {
     $('#editModal').modal('toggle')
   }
+  handleCancel () {
+    this.setState({ value: this.props.value })
+    this.handleClick()
+  }
+  renderDirections () {
+    const clean = DOMPurify.sanitize(this.state.value)
+    const md = marked(clean)
+    return (<div className='card-body' dangerouslySetInnerHTML={{ __html: md }} />)
+  }
   render () {
     return (
       <div>
         <div className='card'>
           <h4 className='card-header'>Directions</h4>
-          <div className='card-body'>
-            <p>sanatize and call marked</p>
-            <button type='button' className='btn btn-secondary' onClick={this.handleClick}>Edit</button> 
-          </div>
+          <button type='button' className='btn btn-secondary' onClick={this.handleClick}>Edit</button> 
+          {this.renderDirections()}
         </div>
         <div className='modal fade' id='editModal' tabIndex='-1' role='dialog'>
           <div className='modal-dialog' role='document'>
@@ -55,7 +67,7 @@ class RecipeDirections extends Component {
                   <textarea className='form-control' id='dirInput' value={this.state.value} onChange={this.handleChange} />
                 </div>
                 <div className='modal-footer'>
-                  <button type='button' className='btn btn-secondary' data-dismiss='modal' onClick={this.props.close}>Close</button>
+                  <button type='button' className='btn btn-danger' data-dismiss='modal' onClick={this.handleCancel}>Cancel</button>
                   <button type='submit' className='btn btn-primary' >Save changes</button>
                 </div>
               </form>

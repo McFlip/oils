@@ -2,7 +2,6 @@
 // import {Product} from "../models/product.js";
 import Recipe from "../models/recipe.js";
 import _ from "lodash";
-import marked from "marked";
 
 // get recipe
 export function getRecipe(req, res) {
@@ -12,10 +11,10 @@ export function getRecipe(req, res) {
   populate("uses").
   exec((err, recipe) => {
     if (err) res.status(500).send(err)
-    const md = marked(recipe.directions);
+    // const md = marked(recipe.directions);
     let r = {
       title: recipe.title,
-      directions: md,
+      directions: recipe.directions,
       uses: [],
       ingredients: []
     };
@@ -68,10 +67,10 @@ export function updateRecipe(req, res) {
   populate("uses").
   exec((err, recipe) => {
     if (err) res.status(500).send(err)
-    const md = marked(recipe.directions);
+    // const md = marked(recipe.directions);
     let r = {
       title: recipe.title,
-      directions: md,
+      directions: recipe.directions,
       uses: [],
       ingredients: []
     };
