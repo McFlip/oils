@@ -14,6 +14,7 @@ class IngredientsList extends Component {
     this.state = {}
   }
   handleSubmit (e) {
+    // add ingredient or update quantity
     e.preventDefault()
     const ingrId = e.target.dataset.txt
     const val = this.state[ingrId]
@@ -33,8 +34,12 @@ class IngredientsList extends Component {
       this.props.updateRecipe(id, { ingredients }).then(alert('quantity updated'))
     }
   }
-  handleClick () {
-    // TODO: remove ingredient
+  handleClick (e) {
+    // remove ingredient
+    const { id } = this.props
+    const ingrId = e.target.dataset.txt
+    const ingredients = _(this.props.ingredients).keyBy('_id').omit(ingrId).values().value()
+    this.props.updateRecipe(id, { ingredients })
   }
   renderQty (qty, id) {
     if (this.props.mode === 'read') return qty
@@ -63,7 +68,7 @@ class IngredientsList extends Component {
             </Link>
           </td>
           <td>{this.renderQty(ingredient.qty, ingredient._id)}</td>
-          {this.props.mode === 'edit' ? <td><button onClick={this.handleClick}>Delete</button></td> : null}
+          {this.props.mode === 'edit' ? <td><button onClick={e => this.handleClick(e)} data-txt={ingredient._id}>Delete</button></td> : null}
         </tr>
       )
     })
