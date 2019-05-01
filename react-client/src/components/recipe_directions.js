@@ -1,62 +1,58 @@
 import React, { Component } from 'react'
 import $ from 'jquery'
-import Popper from 'popper.js'
 
-class RecipeTitle extends Component {
+class RecipeDirections extends Component {
   constructor (props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
-      value: props.title
+      value: props.value
     }
   }
-
   componentDidUpdate (prevProps) {
-  // compare props and force update to state on prop update
+    // compare props and force update to state on prop update
     if (this.props.value !== prevProps.value) {
       this.setState({ value: this.props.value })
     }
   }
-
   // controlled component
   handleChange (event) {
     this.setState({ value: event.target.value })
   }
-
   // dispatch actions
   handleSubmit (e) {
     e.preventDefault()
     this.props.handleSubmit(this.state.value)
-    $('#titleModal').modal('toggle')
+    $('#editModal').modal('toggle')
   }
-
   // launch modal
   handleClick () {
-    $('#titleModal').modal('toggle')
+    $('#editModal').modal('toggle')
   }
-
   render () {
     return (
       <div>
-        <div>
-          <h1>Recipe Details</h1>
-          <h2>{this.props.title}</h2>
-          <button type='button' className='btn btn-secondary' onClick={this.handleClick}>Edit</button>
+        <div className='card'>
+          <h4 className='card-header'>Directions</h4>
+          <div className='card-body'>
+            <p>sanatize and call marked</p>
+            <button type='button' className='btn btn-secondary' onClick={this.handleClick}>Edit</button> 
+          </div>
         </div>
-        <div className='modal fade' id='titleModal' tabIndex='-1' role='dialog'>
+        <div className='modal fade' id='editModal' tabIndex='-1' role='dialog'>
           <div className='modal-dialog' role='document'>
             <div className='modal-content'>
               <form onSubmit={this.handleSubmit}>
                 <div className='modal-header'>
-                  <h5 className='modal-title' id='qtyModalTitle'>Update Title</h5>
+                  <h5 className='modal-title' id='editModalTitle'>Update Directions</h5>
                   <button type='button' className='close' data-dismiss='modal' data-testid='xButton'>
                     <span aria-hidden='true'>&times;</span>
                   </button>
                 </div>
                 <div className='modal-body form-group'>
-                  <label htmlFor='titleInput'>Title:</label>
-                  <input type='text' className='form-control' id='titleInput' value={this.state.value} onChange={this.handleChange} />
+                  <label htmlFor='dirInput'>Markdown <a href='https://guides.github.com/features/mastering-markdown/'>tutorial</a></label>
+                  <textarea className='form-control' id='dirInput' value={this.state.value} onChange={this.handleChange} />
                 </div>
                 <div className='modal-footer'>
                   <button type='button' className='btn btn-secondary' data-dismiss='modal' onClick={this.props.close}>Close</button>
@@ -71,4 +67,4 @@ class RecipeTitle extends Component {
   }
 }
 
-export default RecipeTitle
+export default RecipeDirections

@@ -5,14 +5,16 @@ import Menu from './menu'
 import RecipeTitle from './recipe_title'
 import UseList from './use_list'
 import IngredientsList from './ingredients_list'
+import RecipeDirections from './recipe_directions'
 import { fetchRecipe, updateRecipe } from '../actions/recipes'
 import { removeUse } from '../actions/use'
 
 class RecipesShow extends Component {
   constructor (props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleTitleSubmit = this.handleTitleSubmit.bind(this)
     this.handleRemoveUse = this.handleRemoveUse.bind(this)
+    this.handleDirectionsSubmit = this.handleDirectionsSubmit.bind(this)
     const { id } = this.props.match.params
     this.state = {
       id
@@ -21,8 +23,11 @@ class RecipesShow extends Component {
   componentDidMount () {
     this.props.fetchRecipe(this.state.id)
   }
-  handleSubmit (title) {
+  handleTitleSubmit (title) {
     this.props.updateRecipe(this.state.id, { title })
+  }
+  handleDirectionsSubmit (directions) {
+    this.props.updateRecipe(this.state.id, { directions })
   }
   handleRemoveUse (e) {
     const use = e.target.dataset.txt
@@ -36,17 +41,14 @@ class RecipesShow extends Component {
     return (
       <div>
         <Menu page='recipes' />
-        <RecipeTitle title={title} handleSubmit={this.handleSubmit} />
+        <RecipeTitle title={title} handleSubmit={this.handleTitleSubmit} />
         <h4>Uses</h4>
         <Link to={`/recipes/${this.state.id}/adduse`} className='btn btn-secondary'>Edit</Link>
         <UseList uses={uses} id={this.state.id} handleClick={this.handleRemoveUse} />
         <h4>Ingredients</h4>
         <Link to={`/recipes/${this.state.id}/editingredients`} className='btn btn-secondary'>Edit</Link>
         <IngredientsList ingredients={ingredients} mode='read' />
-        <div className='card'>
-          <h4 className='card-header'>Directions</h4>
-          <div className='card-body' dangerouslySetInnerHTML={{ __html: directions }} />
-        </div>
+        <RecipeDirections value={directions} handleSubmit={this.handleDirectionsSubmit} />
       </div>
     )
   }
