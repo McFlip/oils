@@ -49,7 +49,6 @@ class RecipeDirections extends Component {
       <div>
         <div className='card'>
           <h4 className='card-header'>Directions</h4>
-          <button type='button' className='btn btn-secondary' onClick={this.handleClick}>Edit</button> 
           {this.renderDirections()}
         </div>
         <div className='modal fade' id='editModal' tabIndex='-1' role='dialog'>

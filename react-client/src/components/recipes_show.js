@@ -8,6 +8,7 @@ import IngredientsList from './ingredients_list'
 import RecipeDirections from './recipe_directions'
 import { fetchRecipe, updateRecipe } from '../actions/recipes'
 import { removeUse } from '../actions/use'
+import RecipesShowDropdown from './recipesShow_dropdown';
 
 class RecipesShow extends Component {
   constructor (props) {
@@ -40,13 +41,10 @@ class RecipesShow extends Component {
     const { title, uses, ingredients, directions } = recipe
     return (
       <div>
-        <Menu page='recipes' />
+        <Menu page='recipes' dropdown={RecipesShowDropdown(this.state.id)} />
         <RecipeTitle title={title} handleSubmit={this.handleTitleSubmit} />
-        <h4>Uses</h4>
-        <Link to={`/recipes/${this.state.id}/adduse`} className='btn btn-secondary'>Edit</Link>
         <UseList uses={uses} id={this.state.id} handleClick={this.handleRemoveUse} />
         <h4>Ingredients</h4>
-        <Link to={`/recipes/${this.state.id}/editingredients`} className='btn btn-secondary'>Edit</Link>
         <IngredientsList ingredients={ingredients} mode='read' />
         <RecipeDirections value={directions} handleSubmit={this.handleDirectionsSubmit} />
       </div>

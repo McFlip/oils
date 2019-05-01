@@ -30,7 +30,7 @@ class UseList extends Component {
   render () {
     return (
       <div>
-        <h6>Uses:</h6>
+        <h4>Uses:</h4>
         <ul className='list-group'>
           {this.renderUses()}
         </ul>

@@ -31,18 +31,12 @@ class RecipeTitle extends Component {
     $('#titleModal').modal('toggle')
   }
 
-  // launch modal
-  handleClick () {
-    $('#titleModal').modal('toggle')
-  }
-
   render () {
     return (
       <div>
         <div>
           <h1>Recipe Details</h1>
           <h2>{this.props.title}</h2>
-          <button type='button' className='btn btn-secondary' onClick={this.handleClick}>Edit</button>
         </div>
         <div className='modal fade' id='titleModal' tabIndex='-1' role='dialog'>
           <div className='modal-dialog' role='document'>
