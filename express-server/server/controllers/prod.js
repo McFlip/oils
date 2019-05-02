@@ -1,4 +1,6 @@
 import { Product, Oil } from '../models/product.js';
+import mongoose from 'mongoose'
+// import Recipe from '../models/recipe'
 
 /* GET all products. */
 export function getProducts (req, res) {
@@ -11,16 +13,48 @@ export function getProducts (req, res) {
 
 /* GET one product. */
 export function getProduct (req, res) {
-  Product.findById(req.params.id).
-  populate('contains').
-  populate('containedIn').
-  populate('uses').
-  populate({path: "recipes", populate: {path: "uses"}}).
+  const id = mongoose.Types.ObjectId(req.params.id)
+  // Product.findById(id).
+  Product.aggregate([
+    { $match: { _id: id } }, 
+    {
+      $lookup: {
+        from: 'recipes',
+        localField: '_id',
+        foreignField: 'ingredients.product',
+        as: 'recipes'
+      },
+    }, 
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'contains',
+        foreignField: '_id',
+        as: 'contains'
+      }, 
+    },
+    {
+      $lookup: {
+        from: 'products',
+        localField: 'containedIn',
+        foreignField: '_id',
+        as: 'containedIn'
+      }
+    },
+    
+    {
+      $lookup: {
+        from: 'uses',
+        localField: 'uses',
+        foreignField: '_id',
+        as: 'uses'
+      }
+    }
+  ]).
   exec((error, product) => {
-      if (error) res.status(500).send(error)
-
-      res.status(200).send(product);
-  });
+    if (error) res.status(500).send(error)
+    res.status(200).send(product[0]);
+  })
 }
 
 /* GET product search results. */

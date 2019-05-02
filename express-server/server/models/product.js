@@ -1,5 +1,4 @@
 import { Use } from "./use.js";
-import { Recipe } from "./recipe";
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -41,7 +40,6 @@ const prodSchema = new Schema({
   wishlist: Boolean,
   pics: [prod_gfxSchema],
   uses: [{ type: ObjectId, ref: 'Use'}],
-  recipes: [{ type: ObjectId, ref: 'Recipe' }],
   posts: [{ type: ObjectId, ref: 'Post'}],
   contains: [{ type: ObjectId, ref: 'Product'}],
   containedIn: [{ type: ObjectId, ref: 'Product'}]
