@@ -99,27 +99,6 @@ export function updateRecipe(req, res) {
 export function deleteRecipe (req, res) {
   const { id } = req.params
   // cascade delete ref
-  Recipe.findById(id).exec((err, recipe) => {
-    if (err) res.status(500).send(err) 
-    recipe.uses.map((useId) => {
-      Use.findById(useId).exec((err, use) => {
-        if (err) res.status(500).send(err)  
-        use.recipes = _.filter(use.recipes, i => i != id)
-        use.save((err) => {
-          if (err) res.status(500).send(err)
-        })
-      })
-    })
-    recipe.ingredients.map((ingredient) => {
-      Product.findById(ingredient.product).exec((err, prod) => {
-        if (err) res.status(500).send(err)   
-        prod.recipes = _.filter(prod.recipes, i => i != id)
-        prod.save((err) => {
-          if (err) res.status(500).send(err)
-        })
-      })
-    })
-  })
   Recipe.findByIdAndRemove(id, (error) => {
     if (error) res.status(500).send(error)
     res.status(204)

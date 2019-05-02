@@ -35,9 +35,8 @@ class RecipesShow extends Component {
     this.props.removeUse(use, 'recipe', this.state.id)
   }
   onDeleteClick () {
-    this.props.deleteRecipe(this.state.id, () => {
-      this.props.history.push('/recipes')
-    })
+    this.props.deleteRecipe(this.state.id)
+      .then(this.props.history.push('/recipes'))
   }
   render () {
     const { recipe } = this.props

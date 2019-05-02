@@ -79,4 +79,7 @@ router.post("/recipes/create", RecipeController.createRecipe)
 // UPDATE recipe
 router.post('/recipes/:id', RecipeController.updateRecipe)
 
+// DELETE recipe
+router.delete('/recipes/:id', RecipeController.deleteRecipe)
+
 export {router as api};

@@ -41,14 +41,13 @@ export function fetchProd (id) {
   }
 }
 
-export function deleteProd (id, callback) {
-  axios
+export function deleteProd (id) {
+  const request = axios
     .delete(`${ROOT_URL}/products/${id}`)
-    .then(() => callback())
 
   return {
     type: DELETE_PROD,
-    payload: id
+    payload: request
   }
 }
 

@@ -14,6 +14,7 @@ class ProdsShow extends Component {
   constructor (props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
+    this.onDeleteClick = this.onDeleteClick.bind(this)
   }
 
   componentDidMount () {
@@ -31,17 +32,13 @@ class ProdsShow extends Component {
   onDeleteClick () {
     const { id } = this.props.match.params
 
-    this.props.deleteProd(id, () => {
-      this.props.history.push('/products')
-    })
+    this.props.deleteProd(id)
+      .then(this.props.history.push('/products'))
   }
 
   handleClick (e) {
     const use = e.target.dataset.txt
     const { id } = this.props.match.params
-    // const useIds = this.props.prod.uses.map(i => i._id);
-    // const val = {uses: _.filter(useIds, i => i != use)};
-    // this.props.updateProd(id, val);
     this.props.removeUse(use, 'product', id)
   }
 
@@ -95,7 +92,7 @@ class ProdsShow extends Component {
     if (!prod) {
       return <div>Loading...</div>
     } else {
-      const { _id, descr, size, unit_issue, category, wholesale, retail, pv, oil, contains, containedIn, wishlist, uses, recipes } = prod
+      const { _id, descr, size, unit_issue, category, wholesale, retail, pv, oil, contains, containedIn, wishlist, uses, recipes, useTitles } = prod
       let oilProps = false
       if (oil) {
         const { photosensitive, topical, dilute, aromatic, dietary } = oil
@@ -104,7 +101,7 @@ class ProdsShow extends Component {
 
       return (
         <div>
-          <Menu page='products' dropdown={ProdsShowDropdown(this.onDeleteClick.bind(this), match.params.id)} />
+          <Menu page='products' dropdown={ProdsShowDropdown(this.onDeleteClick, match.params.id)} />
           <h3>{`${descr} ${size || ''} ${unit_issue || ''}`}</h3>
           <Checkbox _id={_id} checked={wishlist} readOnly />
           <h6>Category: {category}</h6>
@@ -113,7 +110,7 @@ class ProdsShow extends Component {
           {contains != undefined && contains.length > 0 ? this.renderContents(contains) : ''}
           {containedIn != undefined && containedIn.length > 0 ? this.renderMembership(containedIn) : ''}
           {uses != undefined && uses.length > 0 ? <UseList uses={uses} id={_id} handleClick={this.handleClick} /> : ''}
-          {recipes != undefined && recipes.length > 0 ? <RecipeList recipes={recipes} /> : ''}
+          {recipes != undefined && recipes.length > 0 ? <RecipeList recipes={recipes} titles={useTitles} /> : ''}
         </div>
       )
     }

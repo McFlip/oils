@@ -24,6 +24,14 @@ export function getProduct (req, res) {
         foreignField: 'ingredients.product',
         as: 'recipes'
       },
+    },
+    {
+      $lookup: {
+        from: 'uses',
+        localField: 'recipes.uses',
+        foreignField: '_id',
+        as: 'useTitles'
+      }
     }, 
     {
       $lookup: {
@@ -41,7 +49,6 @@ export function getProduct (req, res) {
         as: 'containedIn'
       }
     },
-    
     {
       $lookup: {
         from: 'uses',
@@ -96,7 +103,7 @@ export function deleteProduct(req, res) {
   Product.findByIdAndRemove(req.params.id, (error) => {
     if (error) res.status(500).send(error)
 
-    res.status(204)
+    res.status(200).send(req.params.id)
   })
 }
 

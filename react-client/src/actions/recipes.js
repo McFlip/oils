@@ -29,11 +29,10 @@ export function updateRecipe (id, value) {
 }
 
 export function deleteRecipe (id, callback) {
-  axios
+  const request = axios
     .delete(`${ROOT_URL}/recipes/${id}`)
-    .then(() => callback())
   return {
     type: DELETE_RECIPE,
-    payload: id
+    payload: request
   }
 }

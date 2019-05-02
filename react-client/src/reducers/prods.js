@@ -5,7 +5,7 @@ import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, REMOVE_USE } from '../constants/'
 export default function (state = {}, action) {
   switch (action.type) {
     case DELETE_PROD:
-      return _.omit(state, action.payload)
+      return _.omit(state, action.payload.data)
     case FETCH_PROD:
       return { ...state, [action.payload.data._id]: action.payload.data }
     case FETCH_PRODS:
