@@ -1,4 +1,5 @@
 import { Product, Oil } from '../models/product.js';
+import Recipe from '../models/recipe'
 
 /* GET all products. */
 export function getProducts (req, res) {
@@ -11,15 +12,21 @@ export function getProducts (req, res) {
 
 /* GET one product. */
 export function getProduct (req, res) {
-  Product.findById(req.params.id).
+  const { id } = req.params
+  Product.findById(id).
   populate('contains').
   populate('containedIn').
   populate('uses').
-  populate({path: "recipes", populate: {path: "uses"}}).
+  // populate({path: "recipes", populate: {path: "uses"}}).
   exec((error, product) => {
-      if (error) res.status(500).send(error)
-
-      res.status(200).send(product);
+    if (error) res.status(500).send(error)
+    Recipe.find({ingredients: {product: id}})
+      .populate('uses')  
+      .exec((error, recipes) => {
+        if (error) res.status(500).send(error)
+        product.recipes = recipes
+        res.status(200).send(product);
+      }) 
   });
 }
 
