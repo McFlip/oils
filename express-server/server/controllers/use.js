@@ -2,6 +2,7 @@ import Use from "../models/use.js";
 import {Product} from "../models/product.js";
 import Recipe from '../models/recipe.js'
 import _ from "lodash";
+import mongoose from 'mongoose'
 
 // get uses for item
 export function getUses( req, res) {
@@ -25,78 +26,76 @@ export function getUses( req, res) {
 
 // get single use
 export function getUse( req, res ) {
-  const { id } = req.params;
-  Use.findById(id).populate("products").
-  populate("recipes").
-  exec((err, use) => {
-    if (err) res.status(500).send(err)
-    res.status(200).send(use);
-  });
+  const id = mongoose.Types.ObjectId(req.params.id)
+  Use
+    .aggregate([
+      { $match: { _id: id } },
+      {
+        $lookup: {
+          from: 'products',
+          localField: '_id',
+          foreignField: 'uses',
+          as: 'products'
+        }
+      },
+      {
+        $lookup: {
+          from: 'recipes',
+          localField: '_id',
+          foreignField: 'uses',
+          as: 'recipes'
+        } 
+      }
+    ])
+    .exec((err, use) => {
+      if (err) res.status(500).send(err)
+      res.status(200).send(use[0]);
+    });
 }
 
 // remove a reference to a product or recipe
 export function removeUse( req, res ) {
   const { id, category, refId } = req.params;
-  Use.findById(id, function (err, use) {
-    if (err) {
-      res.status(500).send(err);
-    }
-    if (category == 'product') {
-      _.remove(use.products, i => i == refId);
-      use.markModified('product')
-      Product.findById(refId, (err, prod) => {
-        if (err) res.status(500).send(err);
-        _.remove(prod.uses, i => i == id);
-        prod.markModified('uses')
-        prod.save();
-      });
-    } else if (category == 'recipe') {
-      _.remove(use.recipes, i => i == refId);
-      use.markModified('recipes')
-      Recipe.findById(refId, (err, recipe) => {
-        if (err) res.status(500).send(err); 
-        _.remove(recipe.uses, i => i == id)
-        recipe.markModified('uses')
-        recipe.save()
-      })
-    } else {
-      res.status(500).send('invalid category')
-    }
-    use.save();
-    res.status(200).send({ id, refId, category });
-  });
+  if (category == 'product') {
+    Product.findById(refId, (err, prod) => {
+      if (err) res.status(500).send(err);
+      _.remove(prod.uses, i => i == id);
+      prod.markModified('uses')
+      prod.save();
+    });
+  } else if (category == 'recipe') {
+    Recipe.findById(refId, (err, recipe) => {
+      if (err) res.status(500).send(err); 
+      _.remove(recipe.uses, i => i == id)
+      recipe.markModified('uses')
+      recipe.save()
+    })
+  } else {
+    res.status(500).send('invalid category')
+  }
+  res.status(200).send({ id, refId, category });
 }
 
 export function addUse( req, res ) {
   const { id, category, refId } = req.params;
-  Use.findById(id, function (err, use) {
-    if (err) {
-      res.status(500).send(err);
-    }
-    if (category == 'product') {
-      use.products.push(refId);
-      use.markModified('products')
-      Product.findById(refId, (err, prod) => {
-        if (err) res.status(500).send(err);
-        prod.uses.push(id);
-        prod.markModified('uses')
-        prod.save();
-      });
-    } else if (category == 'recipe') {
-      use.recipes.push(refId);
-      use.markModified('recipes')
-      Recipe.findById(refId, (err, recipe) => {
-        if (err) res.status(500).send(err); 
-        recipe.uses.push(id)
-        recipe.markModified('uses')
-        recipe.save()
-      })
-    } else {
-      res.status(500).send('invalid category')
-    }
-    use.save((err) => {if (err) res.status(500).send('didnt save')});
-    res.status(200).send(id);
-  });
+  if (category == 'product') {
+    Product.findById(refId, (err, prod) => {
+      if (err) res.status(500).send(err);
+      prod.uses.push(id);
+      prod.markModified('uses')
+      prod.save();
+    });
+  } else if (category == 'recipe') {
+    Recipe.findById(refId, (err, recipe) => {
+      if (err) res.status(500).send(err); 
+      recipe.uses.push(id)
+      recipe.markModified('uses')
+      recipe.save()
+    })
+  } else {
+    res.status(500).send('invalid category')
+  }
+  res.status(200).send(id);
 }
 
 export function searchUses( req, res ) {
@@ -113,12 +112,6 @@ export function searchUses( req, res ) {
 export function createUse( req, res) {
   const newUse = new Use;
   newUse.title = req.body.title;
-  if (req.body.category == "product") {
-    newUse.products.push(req.body.refId);
-  } else {
-    newUse.recipes.push(req.body.refId);
-    // TODO:  Recipe.findById
-  }
   newUse.save((err, use) => {
     if (err) res.status(500).send(err);
     if (req.body.category == "product") {
