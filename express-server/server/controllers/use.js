@@ -137,3 +137,29 @@ export function createUse( req, res) {
     }
   });
 }
+
+export function deleteUse( req, res ) {
+  const { id } = req.params
+  Product.find({ uses: id }, (err, prods) => {
+    if (err) res.status(500).send(err)
+    prods.map( p => {
+      p.uses = _.filter(p.uses, i => i != id)
+      p.save((err) => {
+        if (err) res.status(500).send(err) 
+      })
+    })
+  })
+  Recipe.find({ uses: id }, (err, recipes) => {
+    if (err) res.status(500).send(err)
+    recipes.map( r => {
+      r.uses = _.filter(r.uses, i => i != id)
+      r.save((err) => {
+        if (err) res.status(500).send(err)
+      })
+    })
+  })
+  Use.findByIdAndRemove(id,(err) => {
+    if (err) res.status(500).send(err) 
+    res.status(200).send(id)
+  })
+}

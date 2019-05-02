@@ -40,12 +40,9 @@ export function fetchUse (id) {
 }
 
 export function deleteUse (useId) {
-  axios.delete(`${ROOT_URL}/uses/${useId}`)
+  const request = axios.delete(`${ROOT_URL}/uses/${useId}`)
 
-  return {
-    type: DELETE_USE,
-    payload: id
-  }
+  return request
 }
 
 export function removeUse (id, category, refId) {

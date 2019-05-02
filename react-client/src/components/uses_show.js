@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Menu from './menu'
-import { fetchUse } from '../actions/use'
+import { fetchUse, deleteUse } from '../actions/use'
+import usesShowDropdown from './usesShow_dropdown'
 
 class UsesShow extends Component {
   constructor (props) {
@@ -11,10 +12,16 @@ class UsesShow extends Component {
     }
     this.renderProducts = this.renderProducts.bind(this)
     this.renderRecipes = this.renderRecipes.bind(this)
+    this.onDeleteClick = this.onDeleteClick.bind(this)
   }
   componentDidMount () {
     const { id } = this.props.match.params
     fetchUse(id).then(res => this.setState({ use: res.data }))
+  }
+  onDeleteClick () {
+    const { id } = this.props.match.params
+    deleteUse(id)
+      .then(this.props.history.push('/uses'))
   }
   renderProducts (prods) {
     if (!prods) return null
@@ -67,7 +74,7 @@ class UsesShow extends Component {
     if (!use) return (<div>Loading</div>)
     return (
       <div>
-        <Menu page='uses' />
+        <Menu page='uses' dropdown={usesShowDropdown(this.onDeleteClick)} />
         <h4>Use {use.title} Product and Recipe Listing</h4>
         {this.renderProducts(use.products)}
         {this.renderRecipes(use.recipes)}

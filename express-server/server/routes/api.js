@@ -67,6 +67,9 @@ router.get('/uses/search', UseController.searchUses);
 // GET one use
 router.get('/uses/:id', UseController.getUse);
 
+// DELETE use
+router.delete('/uses/:id', UseController.deleteUse)
+
 // SEARCH recipes
 router.get("/recipes/search", RecipeController.searchRecipes);
 
