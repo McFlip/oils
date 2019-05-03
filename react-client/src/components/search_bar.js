@@ -10,35 +10,37 @@ class SearchBar extends Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor='searchInput'>Search</label>
-        <div className='input-group'>
-          <div className='input-group-prepend'>
-            {this.props.subject == 'uses'
-              ? <span className='input-group-text'>Search Uses</span>
-              : <select
-                value={this.state.category}
-                className='input-group-text'
-                onChange={event => this.onSelectChange(event.target.value)}
-                data-testid='searchSelect'
-              >
-                <option value='sku'>Item #</option>
-                <option value='descr'>Description</option>
-              </select>
-            }
+      <div className='card'>
+        <form onSubmit={this.handleSubmit}>
+          {this.props.subject === 'inventory' ? <label htmlFor='searchInput'>Search</label> : null}
+          <div className='input-group'>
+            <div className='input-group-prepend'>
+              {this.props.subject === 'inventory'
+                ? <select
+                  value={this.state.category}
+                  className='input-group-text'
+                  onChange={event => this.onSelectChange(event.target.value)}
+                  data-testid='searchSelect'
+                >
+                  <option value='sku'>Item #</option>
+                  <option value='descr'>Description</option>
+                </select>
+                : <span className='input-group-text'>Search</span>
+              }
+            </div>
+            <input
+              id='searchInput'
+              value={this.state.term}
+              onChange={event => this.onInputChange(event.target.value)}
+              className='form-control'
+              data-testid='searchInput'
+            />
+            <div className='input-group-append'>
+              <button className='btn btn-outline-secondary' type='submit' data-testid='Search'>Search</button>
+            </div>
           </div>
-          <input
-            id='searchInput'
-            value={this.state.term}
-            onChange={event => this.onInputChange(event.target.value)}
-            className='form-control'
-            data-testid='searchInput'
-          />
-          <div className='input-group-append'>
-            <button className='btn btn-outline-secondary' type='submit' data-testid='Search'>Search</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     )
   }
 

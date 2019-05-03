@@ -10,23 +10,25 @@ class Create extends Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className='input-group'>
-          <div className='input-group-prepend'>
-            <span className='input-group-text'>Create</span>
+      <div className='card'>
+        <form onSubmit={this.handleSubmit}>
+          <div className='input-group'>
+            <div className='input-group-prepend'>
+              <span className='input-group-text'>Create</span>
+            </div>
+            <input
+              id='createUseInput'
+              value={this.state.term}
+              onChange={event => this.onInputChange(event.target.value)}
+              className='form-control'
+              data-testid='createUseInput'
+            />
+            <div className='input-group-append'>
+              <button className='btn btn-outline-secondary' type='submit' data-testid='Create'>Create</button>
+            </div>
           </div>
-          <input
-            id='createUseInput'
-            value={this.state.term}
-            onChange={event => this.onInputChange(event.target.value)}
-            className='form-control'
-            data-testid='createUseInput'
-          />
-          <div className='input-group-append'>
-            <button className='btn btn-outline-secondary' type='submit' data-testid='Create'>Create</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     )
   }
 

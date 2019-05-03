@@ -104,23 +104,25 @@ class IngredientsList extends Component {
   }
   render () {
     return (
-      <table className='table table-sm'>
-        <thead className='thead-dark'>
-          <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>Ingredient</th>
-            <th scope='col'>Quantity</th>
-            {this.props.mode === 'edit' ? <th scope='col'>Action</th> : null}
-          </tr>
-        </thead>
-        <tbody>
-          {
-            this.props.mode === 'add'
-              ? this.renderProds(this.props.prods)
-              : this.renderIngredients(this.props.ingredients)
-          }
-        </tbody>
-      </table>
+      <div className='card'>
+        <table className='table table-sm'>
+          <thead className='thead-dark'>
+            <tr>
+              <th scope='col'>#</th>
+              <th scope='col'>Ingredient</th>
+              <th scope='col'>Quantity</th>
+              {this.props.mode === 'edit' ? <th scope='col'>Action</th> : null}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              this.props.mode === 'add'
+                ? this.renderProds(this.props.prods)
+                : this.renderIngredients(this.props.ingredients)
+            }
+          </tbody>
+        </table>
+      </div>
     )
   }
 }
