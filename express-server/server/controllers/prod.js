@@ -1,6 +1,7 @@
 import { Product, Oil } from '../models/product.js';
 import mongoose from 'mongoose'
-// import Recipe from '../models/recipe'
+import Recipe from '../models/recipe'
+import _ from 'lodash'
 
 /* GET all products. */
 export function getProducts (req, res) {
@@ -100,10 +101,23 @@ export function createProduct(req, res) {
 
 /* Delete one product. */
 export function deleteProduct(req, res) {
-  Product.findByIdAndRemove(req.params.id, (error) => {
+  const { id } = req.params
+  Product.findByIdAndRemove(id, (error) => {
     if (error) res.status(500).send(error)
-
-    res.status(200).send(req.params.id)
+  })
+  Recipe.find({ 'ingredients.product' : id })
+    .exec((error, recipes) => {
+    if (error) res.status(500).send(error)
+    recipes.map(recipe => {
+      recipe
+        .populate('ingredients', (error, r) => {
+          if (error) res.status(500).send(error)
+          r.ingredients = _.filter(r.ingredients, i => i.product != id)
+          r.markModified('ingredients')
+          r.save()
+        })
+    })
+    res.status(200).send(id)
   })
 }
 

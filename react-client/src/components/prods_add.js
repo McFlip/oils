@@ -33,7 +33,7 @@ export class ProdsAdd extends Component {
         <h2>Existing ingredients</h2>
         <IngredientsList ingredients={ingredients} mode='edit' id={this.state.id} updateRecipe={this.props.updateRecipe} />
         <h2>Add new ingredients</h2>
-        <SearchBar onSearchSubmit={this.handleSearch} />
+        <SearchBar onSearchSubmit={this.handleSearch} subject='inventory' />
         <IngredientsList prods={this.props.prods} ingredients={ingredients} mode='add' id={this.state.id} updateRecipe={this.props.updateRecipe} />
       </div>
     )

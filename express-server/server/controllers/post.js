@@ -1,5 +1,5 @@
 import Post from '../models/post.js';
-import Product from '../models/product.js';
+import {Product} from '../models/product.js';
 
 /* GET api listing. */
 export function ping (req, res) {
