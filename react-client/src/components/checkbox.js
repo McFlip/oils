@@ -21,7 +21,7 @@ class Checkbox extends Component {
     return (
       <span className='form-group form-check-inline px-2'>
         <label className='form-check-label' htmlFor={`checkbox_${this._id}`}> wishlist </label>
-        <input className='form-check-input ml-2' type='checkbox' checked={this.props.checked} id={`checkbox_${this._id}`} onChange={this.toggle} readOnly={this.props.readOnly || false} />
+        <input className='form-check-input ml-2' type='checkbox' checked={!!this.props.checked} id={`checkbox_${this._id}`} onChange={this.toggle} readOnly={this.props.readOnly || false} />
       </span>
     )
   }

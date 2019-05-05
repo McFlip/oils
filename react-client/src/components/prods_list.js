@@ -39,9 +39,9 @@ class ProdsList extends Component {
 
   renderProds () {
     this.category = ''
-    return _.map(this.props.prods, prod => {
+    return _.map(this.props.prods, (prod, i) => {
       return (
-        <li className='list-group-item input-group' key={prod._id}>
+        <li className='list-group-item input-group' key={i}>
           {this.categorize(prod.category)}
           <span data-testid='sku'>
             {prod.sku}

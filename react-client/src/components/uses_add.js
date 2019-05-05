@@ -36,7 +36,7 @@ class UsesAdd extends Component {
   handleCreate (term) {
     let refType
     const { id } = this.props.match.params
-    const path = this.props.match.path
+    const { path } = this.props.match
     if (path.includes('products')) {
       refType = 'product'
     } else {

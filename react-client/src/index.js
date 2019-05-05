@@ -31,6 +31,7 @@ ReactDOM.render(
           <Route path='/posts/new' component={PostsNew} />
           <Route path='/posts/:id' component={PostsShow} />
           <Route path='/products/new' component={ProdsNew} />
+          <Route path='/products/:id/editingredients' component={ProdsAdd} />
           <Route path='/products/:id/edit' component={ProdsNew} />
           <Route path='/products/:id/adduse' component={UsesAdd} />
           <Route path='/products/:id' component={ProdsShow} />

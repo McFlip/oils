@@ -45,8 +45,8 @@ export function getProduct (req, res) {
     {
       $lookup: {
         from: 'products',
-        localField: 'containedIn',
-        foreignField: '_id',
+        localField: '_id',
+        foreignField: 'contains',
         as: 'containedIn'
       }
     },

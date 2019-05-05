@@ -64,8 +64,8 @@ class IngredientsList extends Component {
         <tr key={i}>
           <th scope='row'>{i + 1}</th>
           <td>
-            <Link to={`/products/${ingredient.product._id}`} data-testid='prod'>
-              {ingredient.product.descr}
+            <Link to={`/products/${ingredient.product ? ingredient.product._id : ingredient._id}`} data-testid='prod'>
+              {ingredient.product ? ingredient.product.descr : ingredient.descr}
             </Link>
           </td>
           <td>{this.renderQty(ingredient.qty, ingredient._id)}</td>
