@@ -1,4 +1,5 @@
-import { Use } from "./use.js";
+// import { Use } from "./use.js";
+import { Ingredient } from './recipe'
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -41,8 +42,7 @@ const prodSchema = new Schema({
   pics: [prod_gfxSchema],
   uses: [{ type: ObjectId, ref: 'Use'}],
   posts: [{ type: ObjectId, ref: 'Post'}],
-  contains: [{ type: ObjectId, ref: 'Product'}],
-  containedIn: [{ type: ObjectId, ref: 'Product'}]
+  ingredients: [Ingredient.schema],
 });
 
 // create mongoose model

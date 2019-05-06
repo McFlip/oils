@@ -32,7 +32,6 @@ export const createProd = jest.fn((values, callback) => {
 })
 
 export const searchProds = jest.fn((term, category) => {
-  // console.log(`category: ${category}, term: ${term}`);
   let request
   // cast to int
   if (!isNaN(term)) {
@@ -67,8 +66,8 @@ export const deleteProd = jest.fn((_id) => {
   let request
   request = _.find(testProd2, { _id })
   const result = request || {}
-  return {
+  return Promise.resolve({
     type: DELETE_PROD,
     payload: { data: result }
-  }
+  })
 })

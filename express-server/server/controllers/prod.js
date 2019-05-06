@@ -37,7 +37,7 @@ export function getProduct (req, res) {
     {
       $lookup: {
         from: 'products',
-        localField: 'contains',
+        localField: 'ingredients.product',
         foreignField: '_id',
         as: 'contains'
       }, 
@@ -46,7 +46,7 @@ export function getProduct (req, res) {
       $lookup: {
         from: 'products',
         localField: '_id',
-        foreignField: 'contains',
+        foreignField: 'ingredients.product',
         as: 'containedIn'
       }
     },
@@ -124,11 +124,8 @@ export function deleteProduct(req, res) {
 /* Update one product */
 export function updateProduct(req, res) {
   Product.findByIdAndUpdate(req.params.id, { $set: req.body}, { new: true }).
-  populate('contains').
-  populate('containedIn').
-  exec((error, product) => {
+  exec((error) => {
     if (error) res.status(500).send(error)
-
-    res.status(200).send(product);
+    getProduct( req, res)
 });
 }

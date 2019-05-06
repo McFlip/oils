@@ -25,7 +25,8 @@ test('delete pt1', () => {
         url: ''
       }}
       history={{
-        location: { state: undefined }
+        location: { state: undefined },
+        push: () => null
       }}
     />,
     { store }

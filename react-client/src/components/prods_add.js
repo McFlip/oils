@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import Menu from './menu'
 import SearchBar from './search_bar'
 import { Link } from 'react-router-dom'
 import { fetchRecipe, updateRecipe } from '../actions/recipes'
-import { searchProds, fetchProd } from '../actions/prods'
+import { searchProds, fetchProd, updateProd } from '../actions/prods'
 import IngredientsList from './ingredients_list'
 
 export class ProdsAdd extends Component {
@@ -29,24 +30,42 @@ export class ProdsAdd extends Component {
     this.props.searchProds(term, category)
   }
   render () {
-    if (!this.props.recipe && !this.props.prod) return (<div>loading</div>)
+    if (!this.props.recipe && !this.props.prods.prod) return (<div>loading</div>)
+    // recipes have ingredients and kits have contents
     const ingredients = this.props.recipe ? this.props.recipe.ingredients : null
-    const contains = this.props.prod ? this.props.prod.contains : null
+    const contains = this.props.prods.prod ? this.props.prods.prod.contains : null
+    const containsId = this.props.prods.prod ? this.props.prods.prod.ingredients : null
     return (
       <div>
         <Menu page={`${this.state.mode}`} />
         <h1>Edit ingredients list</h1>
         <Link to={`/${this.state.mode}/${this.state.id}`} className='btn btn-success'>Done</Link>
         <h2>Existing ingredients</h2>
-        <IngredientsList ingredients={ingredients || contains} mode='edit' id={this.state.id} updateRecipe={this.props.updateRecipe} />
+        <IngredientsList
+          ingredients={ingredients || contains}
+          containsId={containsId}
+          path={this.state.mode}
+          mode='edit'
+          id={this.state.id}
+          updateRecipe={this.state.mode === 'recipes' ? this.props.updateRecipe : this.props.updateProd}
+        />
         <h2>Add new ingredients</h2>
         <SearchBar onSearchSubmit={this.handleSearch} subject='inventory' />
-        <IngredientsList prods={this.props.prods} ingredients={ingredients || contains} mode='add' id={this.state.id} updateRecipe={this.props.updateRecipe} />
+        <IngredientsList
+          ingredients={ingredients || containsId}
+          prods={_.omit(this.props.prods, 'prod')}
+          path={this.state.mode}
+          mode='add'
+          id={this.state.id}
+          updateRecipe={this.state.mode === 'recipes' ? this.props.updateRecipe : this.props.updateProd}
+        />
       </div>
     )
   }
 }
-function mapStateToProps ({ prods, recipes }, ownProps) {
-  return { prod: prods[ownProps.match.params.id], prods, recipe: recipes.recipe }
+const mapStateToProps = ({ prods, recipes: { recipe } }, ownProps) => {
+  prods = _.omit(prods, ownProps.match.params.id)
+  return { prods, recipe }
 }
-export default connect(mapStateToProps, { searchProds, fetchProd, fetchRecipe, updateRecipe })(ProdsAdd)
+
+export default connect(mapStateToProps, { searchProds, fetchProd, updateProd, fetchRecipe, updateRecipe })(ProdsAdd)

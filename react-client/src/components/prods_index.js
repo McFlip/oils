@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import { fetchProds, updateProd, searchProds } from '../actions/prods'
 import ProdsList from './prods_list'
 import Menu from './menu'
@@ -44,7 +45,7 @@ class ProdsIndex extends Component {
 }
 
 function mapStateToProps ({ prods }) {
-  return { prods }
+  return { prods: _.omit(prods, 'prod') }
 }
 
 export default connect(mapStateToProps, { fetchProds, updateProd, searchProds })(ProdsIndex)

@@ -73,7 +73,7 @@ test('Search Bar', async () => {
   // check bad sku
   fireEvent.change(getByTestId('searchInput'), { target: { value: '2' } })
   fireEvent.click(getByTestId('Search'))
-  await wait(() => expect(queryByTestId('sku')).toBeNull())
+  await wait(() => expect(queryByTestId('sku').innerHTML).toBe(''))
   // check correct descr
   fireEvent.change(getByTestId('searchSelect'), { target: { value: 'descr' } })
   fireEvent.change(getByTestId('searchInput'), { target: { value: 'test' } })
@@ -82,7 +82,7 @@ test('Search Bar', async () => {
   // check bad descr
   fireEvent.change(getByTestId('searchInput'), { target: { value: 'fake news' } })
   fireEvent.click(getByTestId('Search'))
-  await wait(() => expect(queryByTestId('sku')).toBeNull())
+  await wait(() => expect(queryByTestId('sku').innerHTML).toBe(''))
   expect(prodsActionMock.searchProds).toHaveBeenCalledTimes(4)
 })
 

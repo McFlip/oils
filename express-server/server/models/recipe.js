@@ -20,3 +20,4 @@ const recipeSchema = new Schema({
 
 // create mongoose model
 export default mongoose.model('Recipe', recipeSchema)
+export const Ingredient = mongoose.model('Ingredient', ingredientSchema)

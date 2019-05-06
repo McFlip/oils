@@ -7,9 +7,9 @@ export default function (state = {}, action) {
     case DELETE_PROD:
       return _.omit(state, action.payload.data)
     case FETCH_PROD:
-      return { ...state, [action.payload.data._id]: action.payload.data }
-    case FETCH_PRODS:
-      return _.mapKeys(action.payload.data, '_id')
+      return { ...state, prod: action.payload.data, [action.payload.data._id]: action.payload.data }
+    case FETCH_PRODS: 
+      return { ..._.mapKeys(action.payload.data, '_id'), prod: { ...state.prod } }
     case REMOVE_USE: {
       const newState = produce(state, draftState => {
         const { id, refId, category } = action.payload.data
