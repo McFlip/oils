@@ -8,8 +8,8 @@ services:
     ports:
       - "8080:8080" # specify port forewarding
     volumes:
-      - './react-client:/usr/src/app'
-      #- '/usr/src/app/node_modules'
+      - './react-client/src:/usr/src/app/src'
+      - './react-client/style:/usr/src/app/style'
     environment:
       - NODE_ENV=development
     links:
