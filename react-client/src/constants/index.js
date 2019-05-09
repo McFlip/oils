@@ -54,6 +54,26 @@ export const testState = {
       contains: [],
       containedIn: []
     }
+  },
+  recipes: {
+    testRecipe: {
+      title: 'test recipe',
+      directions: 'test directions',
+      uses: [
+        {
+          _id: 'useId',
+          title: 'recipe use'
+        }
+      ],
+      ingredients: [{
+        _id: 'ingrId1',
+        qty: '1 drop',
+        product: {
+          _id: 'prodId1',
+          descr: 'test prod ingredient'
+        }
+      }]
+    }
   }
 }
 export const testContains = {

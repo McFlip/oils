@@ -72,12 +72,9 @@ export const updateProd = jest.fn((id, values) => {
   }))
 })
 
-export const deleteProd = jest.fn((_id) => {
-  let request
-  request = _.find(testProd2, { _id })
-  const result = request || {}
+export const deleteProd = jest.fn((id) => {
   return Promise.resolve({
     type: DELETE_PROD,
-    payload: { data: result }
+    payload: { data: id }
   })
 })
