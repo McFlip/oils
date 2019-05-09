@@ -1,0 +1,837 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`recipe render 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div>
+        <nav
+          class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top"
+        >
+          <a
+            class="navbar-brand"
+            href="/"
+          >
+            <img
+              alt="Home"
+              src="/favicon.ico"
+              style="width: 40px;"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            data-target="#navbarNavDropdown"
+            data-toggle="collapse"
+            type="button"
+          >
+            <span
+              class="navbar-toggler-icon"
+            />
+          </button>
+          <div
+            class="collapse navbar-collapse"
+            id="navbarNavDropdown"
+          >
+            <ul
+              class="navbar-nav"
+            >
+              <li
+                class="nav-item "
+              >
+                <a
+                  class="nav-link"
+                  href="/products"
+                >
+                  products
+                </a>
+              </li>
+              <li
+                class="nav-item "
+              >
+                <a
+                  class="nav-link"
+                  href="/uses"
+                >
+                  uses
+                </a>
+              </li>
+              <li
+                class="nav-item active"
+              >
+                <a
+                  class="nav-link"
+                  href="/recipes"
+                >
+                  recipes
+                </a>
+              </li>
+              <li
+                class="nav-item dropdown"
+              >
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                >
+                  Actions
+                </a>
+                <div>
+                  <div
+                    class="dropdown-menu"
+                  >
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                    >
+                      Edit Title
+                    </a>
+                    <a
+                      class="dropdown-item"
+                      href="/recipes/testRecipe/adduse"
+                    >
+                      Add use
+                    </a>
+                    <a
+                      class="dropdown-item"
+                      href="/recipes/testRecipe/editingredients"
+                    >
+                      Edit ingredients
+                    </a>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                    >
+                      Edit directions
+                    </a>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                    >
+                      Delete Recipe
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div>
+          <div>
+            <h1>
+              Recipe Details
+            </h1>
+            <h2>
+              test recipe
+            </h2>
+          </div>
+          <div
+            class="modal fade"
+            id="titleModal"
+            role="dialog"
+            tabindex="-1"
+          >
+            <div
+              class="modal-dialog"
+              role="document"
+            >
+              <div
+                class="modal-content"
+              >
+                <form>
+                  <div
+                    class="modal-header"
+                  >
+                    <h5
+                      class="modal-title"
+                      id="qtyModalTitle"
+                    >
+                      Update Title
+                    </h5>
+                    <button
+                      class="close"
+                      data-dismiss="modal"
+                      data-testid="xButton"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="modal-body form-group"
+                  >
+                    <label
+                      for="titleInput"
+                    >
+                      Title:
+                    </label>
+                    <input
+                      class="form-control"
+                      id="titleInput"
+                      type="text"
+                      value="test recipe"
+                    />
+                  </div>
+                  <div
+                    class="modal-footer"
+                  >
+                    <button
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                      type="button"
+                    >
+                      Close
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4>
+            Uses:
+          </h4>
+          <ul
+            class="list-group"
+          >
+            <li
+              class="list-group-item input-group"
+            >
+              <span
+                data-testid="use"
+              >
+                <a
+                  data-testid="use"
+                  href="/uses/useId"
+                >
+                  recipe use
+                </a>
+              </span>
+              <span
+                class="px-2"
+              >
+                <button
+                  class="btn btn-outline-danger float-right"
+                  data-testid="use-btn"
+                  data-txt="useId"
+                >
+                  Delete
+                </button>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <h4>
+          Ingredients
+        </h4>
+        <div
+          class="card"
+        >
+          <table
+            class="table table-sm"
+          >
+            <thead
+              class="thead-dark"
+            >
+              <tr>
+                <th
+                  scope="col"
+                >
+                  #
+                </th>
+                <th
+                  scope="col"
+                >
+                  Ingredient
+                </th>
+                <th
+                  scope="col"
+                >
+                  Quantity
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th
+                  scope="row"
+                >
+                  1
+                </th>
+                <td>
+                  <a
+                    data-testid="prod"
+                    href="/products/prodId1"
+                  >
+                    test prod ingredient
+                  </a>
+                </td>
+                <td>
+                  1 drop
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <div
+            class="card"
+          >
+            <h4
+              class="card-header"
+            >
+              Directions
+            </h4>
+            <div
+              class="card-body"
+            >
+              <p>
+                test directions
+              </p>
+              
+
+            </div>
+          </div>
+          <div
+            class="modal fade"
+            id="editModal"
+            role="dialog"
+            tabindex="-1"
+          >
+            <div
+              class="modal-dialog"
+              role="document"
+            >
+              <div
+                class="modal-content"
+              >
+                <form>
+                  <div
+                    class="modal-header"
+                  >
+                    <h5
+                      class="modal-title"
+                      id="editModalTitle"
+                    >
+                      Update Directions
+                    </h5>
+                    <button
+                      class="close"
+                      data-dismiss="modal"
+                      data-testid="xButton"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="modal-body form-group"
+                  >
+                    <label
+                      for="dirInput"
+                    >
+                      Markdown 
+                      <a
+                        href="https://guides.github.com/features/mastering-markdown/"
+                      >
+                        tutorial
+                      </a>
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="dirInput"
+                    >
+                      test directions
+                    </textarea>
+                  </div>
+                  <div
+                    class="modal-footer"
+                  >
+                    <button
+                      class="btn btn-danger"
+                      data-dismiss="modal"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div>
+      <nav
+        class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top"
+      >
+        <a
+          class="navbar-brand"
+          href="/"
+        >
+          <img
+            alt="Home"
+            src="/favicon.ico"
+            style="width: 40px;"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          data-target="#navbarNavDropdown"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse"
+          id="navbarNavDropdown"
+        >
+          <ul
+            class="navbar-nav"
+          >
+            <li
+              class="nav-item "
+            >
+              <a
+                class="nav-link"
+                href="/products"
+              >
+                products
+              </a>
+            </li>
+            <li
+              class="nav-item "
+            >
+              <a
+                class="nav-link"
+                href="/uses"
+              >
+                uses
+              </a>
+            </li>
+            <li
+              class="nav-item active"
+            >
+              <a
+                class="nav-link"
+                href="/recipes"
+              >
+                recipes
+              </a>
+            </li>
+            <li
+              class="nav-item dropdown"
+            >
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+              >
+                Actions
+              </a>
+              <div>
+                <div
+                  class="dropdown-menu"
+                >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                  >
+                    Edit Title
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="/recipes/testRecipe/adduse"
+                  >
+                    Add use
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="/recipes/testRecipe/editingredients"
+                  >
+                    Edit ingredients
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                  >
+                    Edit directions
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                  >
+                    Delete Recipe
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div>
+        <div>
+          <h1>
+            Recipe Details
+          </h1>
+          <h2>
+            test recipe
+          </h2>
+        </div>
+        <div
+          class="modal fade"
+          id="titleModal"
+          role="dialog"
+          tabindex="-1"
+        >
+          <div
+            class="modal-dialog"
+            role="document"
+          >
+            <div
+              class="modal-content"
+            >
+              <form>
+                <div
+                  class="modal-header"
+                >
+                  <h5
+                    class="modal-title"
+                    id="qtyModalTitle"
+                  >
+                    Update Title
+                  </h5>
+                  <button
+                    class="close"
+                    data-dismiss="modal"
+                    data-testid="xButton"
+                    type="button"
+                  >
+                    <span
+                      aria-hidden="true"
+                    >
+                      ×
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="modal-body form-group"
+                >
+                  <label
+                    for="titleInput"
+                  >
+                    Title:
+                  </label>
+                  <input
+                    class="form-control"
+                    id="titleInput"
+                    type="text"
+                    value="test recipe"
+                  />
+                </div>
+                <div
+                  class="modal-footer"
+                >
+                  <button
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                    type="button"
+                  >
+                    Close
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                  >
+                    Save changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4>
+          Uses:
+        </h4>
+        <ul
+          class="list-group"
+        >
+          <li
+            class="list-group-item input-group"
+          >
+            <span
+              data-testid="use"
+            >
+              <a
+                data-testid="use"
+                href="/uses/useId"
+              >
+                recipe use
+              </a>
+            </span>
+            <span
+              class="px-2"
+            >
+              <button
+                class="btn btn-outline-danger float-right"
+                data-testid="use-btn"
+                data-txt="useId"
+              >
+                Delete
+              </button>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <h4>
+        Ingredients
+      </h4>
+      <div
+        class="card"
+      >
+        <table
+          class="table table-sm"
+        >
+          <thead
+            class="thead-dark"
+          >
+            <tr>
+              <th
+                scope="col"
+              >
+                #
+              </th>
+              <th
+                scope="col"
+              >
+                Ingredient
+              </th>
+              <th
+                scope="col"
+              >
+                Quantity
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th
+                scope="row"
+              >
+                1
+              </th>
+              <td>
+                <a
+                  data-testid="prod"
+                  href="/products/prodId1"
+                >
+                  test prod ingredient
+                </a>
+              </td>
+              <td>
+                1 drop
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div
+          class="card"
+        >
+          <h4
+            class="card-header"
+          >
+            Directions
+          </h4>
+          <div
+            class="card-body"
+          >
+            <p>
+              test directions
+            </p>
+            
+
+          </div>
+        </div>
+        <div
+          class="modal fade"
+          id="editModal"
+          role="dialog"
+          tabindex="-1"
+        >
+          <div
+            class="modal-dialog"
+            role="document"
+          >
+            <div
+              class="modal-content"
+            >
+              <form>
+                <div
+                  class="modal-header"
+                >
+                  <h5
+                    class="modal-title"
+                    id="editModalTitle"
+                  >
+                    Update Directions
+                  </h5>
+                  <button
+                    class="close"
+                    data-dismiss="modal"
+                    data-testid="xButton"
+                    type="button"
+                  >
+                    <span
+                      aria-hidden="true"
+                    >
+                      ×
+                    </span>
+                  </button>
+                </div>
+                <div
+                  class="modal-body form-group"
+                >
+                  <label
+                    for="dirInput"
+                  >
+                    Markdown 
+                    <a
+                      href="https://guides.github.com/features/mastering-markdown/"
+                    >
+                      tutorial
+                    </a>
+                  </label>
+                  <textarea
+                    class="form-control"
+                    id="dirInput"
+                  >
+                    test directions
+                  </textarea>
+                </div>
+                <div
+                  class="modal-footer"
+                >
+                  <button
+                    class="btn btn-danger"
+                    data-dismiss="modal"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                  >
+                    Save changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllBySelectText": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getAllByValue": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getBySelectText": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "getByValue": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllBySelectText": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryAllByValue": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryBySelectText": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "queryByValue": [Function],
+  "rerender": [Function],
+  "store": Object {
+    "dispatch": [Function],
+    "getState": [Function],
+    "replaceReducer": [Function],
+    "subscribe": [Function],
+    Symbol(observable): [Function],
+  },
+  "unmount": [Function],
+}
+`;
