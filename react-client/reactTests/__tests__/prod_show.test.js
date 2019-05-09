@@ -49,3 +49,27 @@ test('delete pt2', () => {
   expect(queryByTestId('sku')).toBeNull()
 })
 */
+
+// check render
+test('display kit contents, membership', () => {
+  const store = newStore()
+  const { getByText } = render(
+    <ProdsShow
+      match={{
+        params: { id: 'a' },
+        isExact: true,
+        path: '',
+        url: ''
+      }}
+      history={{
+        location: { state: undefined },
+        push: () => null
+      }}
+    />,
+    { store }
+  )
+  expect(getByText('content 1')).toBeTruthy()
+  expect(getByText('content category')).toBeTruthy()
+  expect(getByText('container')).toBeTruthy()
+  expect(getByText('container category')).toBeTruthy()
+})

@@ -24,8 +24,48 @@ export const testState = {
         topical: true,
         dilute: true
       },
-      uses: ['test use']
+      uses: ['test use'],
+      contains: [
+        {
+          _id: 'contentId',
+          descr: 'content 1',
+          category: 'content category'
+        }
+      ],
+      ingredients: [
+        {
+          _id: 'ingredient',
+          product: 'contentId',
+          qty: 'n/a'
+        }
+      ],
+      containedIn: [
+        {
+          _id: 'containerId',
+          descr: 'container',
+          category: 'container category'
+        }
+      ]
+    },
+    b: {
+      _id: 'b',
+      sku: 2,
+      descr: 'test2',
+      contains: [],
+      containedIn: []
     }
+  }
+}
+export const testContains = {
+  contentId: {
+    _id: 'contentId',
+    descr: 'content 1',
+    category: 'content category'
+  },
+  b: {
+    _id: 'b',
+    descr: 'test2',
+    category: 'content category'
   }
 }
 export const testState2 = {

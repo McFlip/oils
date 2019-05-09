@@ -92,7 +92,7 @@ class IngredientsList extends Component {
     return _.map(prods, (prod) => {
       return (
         <tr key={prod._id}>
-          <th scope='row'>{prod.sku}</th>
+          <th scope='row' data-testid='sku'>{prod.sku}</th>
           <td>
             <Link to={`/products/${prod._id}`} data-testid='descr'>
               {prod.descr}
