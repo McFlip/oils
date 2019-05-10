@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import 'bootstrap'
 import $ from 'jquery'
 import Popper from 'popper.js'
-
 class RecipeTitle extends Component {
   constructor (props) {
     super(props)
@@ -14,8 +14,8 @@ class RecipeTitle extends Component {
 
   componentDidUpdate (prevProps) {
   // compare props and force update to state on prop update
-    if (this.props.value !== prevProps.value) {
-      this.setState({ value: this.props.value })
+    if (this.props.title !== prevProps.title) {
+      this.setState({ value: this.props.title })
     }
   }
 
@@ -36,7 +36,7 @@ class RecipeTitle extends Component {
       <div>
         <div>
           <h1>Recipe Details</h1>
-          <h2>{this.props.title}</h2>
+          <h2 data-testid='titleDisplay'>{this.props.title}</h2>
         </div>
         <div className='modal fade' id='titleModal' tabIndex='-1' role='dialog'>
           <div className='modal-dialog' role='document'>

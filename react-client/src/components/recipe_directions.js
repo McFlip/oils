@@ -63,11 +63,11 @@ class RecipeDirections extends Component {
                 </div>
                 <div className='modal-body form-group'>
                   <label htmlFor='dirInput'>Markdown <a href='https://guides.github.com/features/mastering-markdown/'>tutorial</a></label>
-                  <textarea className='form-control' id='dirInput' value={this.state.value} onChange={this.handleChange} />
+                  <textarea className='form-control' id='dirInput' data-testid='directions' value={this.state.value} onChange={this.handleChange} />
                 </div>
                 <div className='modal-footer'>
                   <button type='button' className='btn btn-danger' data-dismiss='modal' onClick={this.handleCancel}>Cancel</button>
-                  <button type='submit' className='btn btn-primary' >Save changes</button>
+                  <button type='submit' className='btn btn-primary' data-testid='dirSubmit' >Save changes</button>
                 </div>
               </form>
             </div>
