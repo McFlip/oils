@@ -41,18 +41,14 @@ services:
       - type: volume
         source: dbvol
         target: /data/db
-  adminmongo:
-    container_name: adminmongo
-    image: mrvautin/adminmongo
-    ports:
-      - "1234:1234"
+  mongoku:
+    container_name: mongoku
+    image: huggingface/mongoku
+    ports: 
+      - "3100:3100"
     links:
       - "database"
     depends_on:
       - "database"
-    environment:
-      - CONN_NAME="mean-docker"
-      - DB_HOST="database"
-      - DB_NAME="mean-docker"
 volumes:
   dbvol:
