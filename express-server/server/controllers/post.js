@@ -28,9 +28,10 @@ export function getPost (req, res) {
 
 /* Create a post. */
 export function createPost (req, res) {
+  console.log(req);
+  
   let post = new Post({
       title: req.body.title,
-      categories: req.body.categories,
       content: req.body.content
   });
 

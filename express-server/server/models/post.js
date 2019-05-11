@@ -5,8 +5,8 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 // create mongoose schema
 const postSchema = new Schema({
   title: String,
-  product: { type: ObjectId, ref: 'Product'},
-  content: String
+  content: String,
+  image: String
 });
 
 // create mongoose model

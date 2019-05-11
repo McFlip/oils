@@ -6,6 +6,8 @@ import * as PostController from '../controllers/post.js';
 import * as ProdController from '../controllers/prod.js';
 import * as UseController from '../controllers/use.js';
 import * as RecipeController from "../controllers/recipe.js";
+import multer from 'multer'
+const upload = multer({ dest: 'uploads/' })
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
@@ -47,7 +49,7 @@ router.get('/posts/:id', PostController.getPost);
 router.delete('/posts/:id', PostController.deletePost);
 
 /* Create a post. */
-router.post('/posts', PostController.createPost);
+router.post('/posts', upload.single('image'), PostController.createPost);
 
 // CREATE a use
 router.post('/uses', UseController.createUse);

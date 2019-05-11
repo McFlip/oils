@@ -8,20 +8,14 @@ const ProdsShowDropdown = (onDeleteClick, id) => {
         onClick={
           (e) => {
             e.preventDefault()
-            if (confirm("Are you sure? This can't be undone")) onDeleteClick()
+            if (window.confirm("Are you sure? This can't be undone")) onDeleteClick()
           }
         }
       >Delete Product</a>
       <Link className='dropdown-item' to={`/products/${id}/edit`}>Edit Product</Link>
       <Link className='dropdown-item' to={`/products/${id}/editingredients`}>Edit Contents</Link>
       <Link className='dropdown-item' to={`/products/${id}/adduse`}>Add Use</Link>
-      <a className='dropdown-item' href='#'
-        onClick={
-          (e) => {
-            e.preventDefault()
-          }
-        }
-      >Add Picture</a>
+      <Link className='dropdown-item' to={`/products/${id}/addpost`}>Add Post</Link>
     </div>
   )
 }

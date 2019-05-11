@@ -17,14 +17,25 @@ export function fetchPosts () {
 }
 
 export function createPost (values, callback) {
+  // console.log(values)
+  const config = {     
+    headers: { 'content-type': 'multipart/form-data' }
+  }
+  /*
+  return {
+    type: 'fubar', payload: null
+  }
+  */
+  
   const request = axios
-    .post(`${ROOT_URL}/posts`, values)
-    .then(() => callback())
+    .post(`${ROOT_URL}/posts`, values, config)
+    // .then(() => callback())
 
   return {
     type: CREATE_POST,
     payload: request
   }
+
 }
 
 export function fetchPost (id) {
