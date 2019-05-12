@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createPost } from '../actions/posts'
 import FieldFileInput from './posts_imgField'
+import Menu from './menu'
 import _ from 'lodash'
 
 class PostsNew extends Component {
@@ -11,9 +12,7 @@ class PostsNew extends Component {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
-    this.state = {
-      file: ''
-    }
+    this.file = null
   }
   renderField (field) {
     const { meta: { touched, error } } = field
@@ -30,53 +29,52 @@ class PostsNew extends Component {
     )
   }
 
-  onSubmit (values, event) {
-    console.log(event)
+  onSubmit (event) {
+    event.preventDefault()
     const { id } = this.props.match.params
-    const formData = new FormData()
-    formData.append('image', this.state.file)
-    _.map(values, (v, k) => formData.append(k, v))
-    for (var value of formData.values()) {
-      console.log(value); 
-   }
+    const formData = new FormData(event.target)
+    formData.append('id', id)
+    formData.append('image', this.file)
     this.props.createPost(formData, () => {
       this.props.history.push(`/products/${id}`)
     })
   }
 
   onChange (file) {
-    // load a preview
-    console.log(file)
-    // this.setState({ file })
+    // TODO: load a preview
+    // console.log(file)
+    this.file = file
   }
 
   render () {
-    const { handleSubmit } = this.props
     const { id } = this.props.match.params
 
     return (
-      <Form
-        onSubmit={this.onSubmit}
-        encType='multipart/form-data'
-      >
-        <Field
-          label='Title For Post'
-          name='title'
-          component={this.renderField}
-        />
-        <Field
-          label='Image'
-          name='image'
-          component={() => <FieldFileInput onChange={this.onChange} />}
-        />
-        <Field
-          label='Post Content'
-          name='content'
-          component={this.renderField}
-        />
-        <button type='submit' className='btn btn-primary'>Submit</button>
-        <Link to={`/products/${id}`} className='btn btn-danger'>Cancel</Link>
-      </Form>
+      <div>
+        <Menu page='products' />
+        <Form
+          onSubmit={this.onSubmit}
+          encType='multipart/form-data'
+        >
+          <Field
+            label='Title For Post'
+            name='title'
+            component={this.renderField}
+          />
+          <Field
+            label='Image'
+            name='image'
+            component={() => <FieldFileInput onChange={this.onChange} />}
+          />
+          <Field
+            label='Post Content'
+            name='content'
+            component={this.renderField}
+          />
+          <button type='submit' className='btn btn-primary'>Submit</button>
+          <Link to={`/products/${id}`} className='btn btn-danger'>Cancel</Link>
+        </Form>
+      </div>
     )
   }
 }

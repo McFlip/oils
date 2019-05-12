@@ -28,11 +28,10 @@ export function getPost (req, res) {
 
 /* Create a post. */
 export function createPost (req, res) {
-  console.log(req);
-  
   let post = new Post({
       title: req.body.title,
-      content: req.body.content
+      content: req.body.content,
+      image: req.file.path
   });
 
   post.save(error => {

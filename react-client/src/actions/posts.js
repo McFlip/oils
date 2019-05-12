@@ -29,7 +29,7 @@ export function createPost (values, callback) {
   
   const request = axios
     .post(`${ROOT_URL}/posts`, values, config)
-    // .then(() => callback())
+    .then(() => callback())
 
   return {
     type: CREATE_POST,

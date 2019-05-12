@@ -7,7 +7,7 @@ import * as ProdController from '../controllers/prod.js';
 import * as UseController from '../controllers/use.js';
 import * as RecipeController from "../controllers/recipe.js";
 import multer from 'multer'
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: './uploads' })
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
