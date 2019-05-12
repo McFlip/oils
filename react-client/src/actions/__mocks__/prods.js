@@ -1,5 +1,6 @@
+/* eslint-env jest */
 import _ from 'lodash'
-import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, testState, testState2 } from 'constants/'
+import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, testState, testState2, testContains } from 'constants/'
 
 const testProd = testState.prods
 const testProd2 = testState2.prods // has 2 prods
@@ -56,18 +57,24 @@ export const searchProds = jest.fn((term, category) => {
 })
 
 export const updateProd = jest.fn((id, values) => {
+  if (values.ingredients) {
+    let prod = _.assignIn(testProd[id], values)
+    const keys = _(values.ingredients).keyBy('product').keys().value()
+    prod.contains = _(testContains).pick(keys).values().value()
+    return new Promise(resolve => resolve({
+      type: FETCH_PROD,
+      payload: { data: prod }
+    }))
+  }
   return new Promise(resolve => resolve({
     type: FETCH_PROD,
     payload: { data: _.assignIn(testProd[id], values) }
   }))
 })
 
-export const deleteProd = jest.fn((_id) => {
-  let request
-  request = _.find(testProd2, { _id })
-  const result = request || {}
+export const deleteProd = jest.fn((id) => {
   return Promise.resolve({
     type: DELETE_PROD,
-    payload: { data: result }
+    payload: { data: id }
   })
 })

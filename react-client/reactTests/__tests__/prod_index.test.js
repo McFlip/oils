@@ -21,7 +21,7 @@ test('can render with initial state', () => {
 
 test('List All, qty button, wishlist', async () => {
   const store = newStore()
-  const { getByTestId, queryByTestId, getByLabelText, getByText } = render(<ProdsIndex />, { store })
+  const { getByTestId, queryByTestId, queryByText, getByLabelText, getByText } = render(<ProdsIndex />, { store })
   // check render
   expect(queryByTestId('sku')).toBeNull()
   fireEvent.click(getByText('Actions'))
@@ -44,15 +44,10 @@ test('List All, qty button, wishlist', async () => {
   await wait(() => expect(getByLabelText('QTY:').value).toBe('9'))
   fireEvent.change(getByLabelText('QTY:'), { target: { value: '10' } })
   fireEvent.click(getByText('Close'))
-  // TODO: this test is failing but works IRL
-  // expect(getByText('Save changes')).toBeFalsy()
   fireEvent.click(getByTestId('qtyButton'))
-  expect(getByText('Save changes')).toBeTruthy()
   await wait(() => expect(getByLabelText('QTY:').value).toBe('9'))
   fireEvent.change(getByLabelText('QTY:'), { target: { value: '11' } })
   fireEvent.click(getByTestId('xButton'))
-  // TODO: this test is failing but works IRL
-  // expect(getByText('Save changes')).toBeFalsy()
   fireEvent.click(getByTestId('qtyButton'))
   await wait(() => expect(getByLabelText('QTY:').value).toBe('9'))
   // check submit
@@ -71,9 +66,9 @@ test('Search Bar', async () => {
   fireEvent.click(getByTestId('Search'))
   await wait(() => expect(getByTestId('sku').textContent).toBe('1'))
   // check bad sku
-  fireEvent.change(getByTestId('searchInput'), { target: { value: '2' } })
+  fireEvent.change(getByTestId('searchInput'), { target: { value: '69' } })
   fireEvent.click(getByTestId('Search'))
-  await wait(() => expect(queryByTestId('sku').innerHTML).toBe(''))
+  await wait(() => expect(queryByTestId('sku')).toBeNull())
   // check correct descr
   fireEvent.change(getByTestId('searchSelect'), { target: { value: 'descr' } })
   fireEvent.change(getByTestId('searchInput'), { target: { value: 'test' } })
@@ -82,7 +77,7 @@ test('Search Bar', async () => {
   // check bad descr
   fireEvent.change(getByTestId('searchInput'), { target: { value: 'fake news' } })
   fireEvent.click(getByTestId('Search'))
-  await wait(() => expect(queryByTestId('sku').innerHTML).toBe(''))
+  await wait(() => expect(queryByTestId('sku')).toBeNull())
   expect(prodsActionMock.searchProds).toHaveBeenCalledTimes(4)
 })
 

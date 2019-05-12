@@ -48,7 +48,7 @@ class RecipesShow extends Component {
         <RecipeTitle title={title} handleSubmit={this.handleTitleSubmit} />
         <UseList uses={uses} id={this.state.id} handleClick={this.handleRemoveUse} />
         <h4>Ingredients</h4>
-        <IngredientsList ingredients={ingredients} mode='read' />
+        <IngredientsList ingredients={ingredients} mode='read' path='recipes' />
         <RecipeDirections value={directions} handleSubmit={this.handleDirectionsSubmit} />
       </div>
     )

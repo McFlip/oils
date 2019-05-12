@@ -7,6 +7,7 @@ import ProdsList from './prods_list'
 import Checkbox from './checkbox'
 import UseList from './use_list'
 import RecipeList from './recipe_list'
+import PostList from './posts_list'
 import { fetchProd, deleteProd, updateProd } from '../actions/prods'
 import { removeUse } from '../actions/use'
 
@@ -92,7 +93,7 @@ class ProdsShow extends Component {
     if (!prod) {
       return <div>Loading...</div>
     } else {
-      const { _id, descr, size, unit_issue, category, wholesale, retail, pv, oil, contains, containedIn, wishlist, uses, recipes, useTitles } = prod
+      const { _id, descr, size, unit_issue, category, wholesale, retail, pv, oil, contains, containedIn, wishlist, uses, recipes, useTitles, posts } = prod
       let oilProps = false
       if (oil) {
         const { photosensitive, topical, dilute, aromatic, dietary } = oil
@@ -111,6 +112,7 @@ class ProdsShow extends Component {
           {containedIn != undefined && containedIn.length > 0 ? this.renderMembership(containedIn) : ''}
           {uses != undefined && uses.length > 0 ? <UseList uses={uses} id={_id} handleClick={this.handleClick} /> : ''}
           {recipes != undefined && recipes.length > 0 ? <RecipeList recipes={recipes} titles={useTitles} /> : ''}
+          {posts != undefined && posts.length > 0 ? <PostList posts={posts} /> : ''}
         </div>
       )
     }

@@ -31,7 +31,7 @@ class IngredientsList extends Component {
       const keyed = _.keyBy(this.props.ingredients, '_id')
       keyed[ingrId].qty = val
       ingredients = _.values(keyed)
-      this.props.updateRecipe(id, { ingredients }).then(alert('quantity updated'))
+      this.props.updateRecipe(id, { ingredients }).then(window.alert('quantity updated'))
     }
   }
   handleClick (e) {
@@ -59,6 +59,7 @@ class IngredientsList extends Component {
               className='form-control'
               defaultValue={qty}
               onChange={e => this.setState({ [id]: e.target.value })}
+              data-testid='qty'
             />
             : null
         }
@@ -92,7 +93,7 @@ class IngredientsList extends Component {
     return _.map(prods, (prod) => {
       return (
         <tr key={prod._id}>
-          <th scope='row'>{prod.sku}</th>
+          <th scope='row' data-testid='sku'>{prod.sku}</th>
           <td>
             <Link to={`/products/${prod._id}`} data-testid='descr'>
               {prod.descr}

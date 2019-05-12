@@ -1,9 +1,8 @@
 /* eslint-env jest */
 import React from 'react'
-import { render, fireEvent, newStore } from '../test-utils'
+import { render, fireEvent, newStore, wait } from '../test-utils'
 
-// TODO: this test is failing, but works IRL
-// import ProdsIndex from 'components/prods_index'
+import ProdsIndex from 'components/prods_index'
 import ProdsShow from 'components/prods_show'
 
 import * as prodsActionMock from 'actions/prods'
@@ -39,13 +38,32 @@ test('delete pt1', () => {
   expect(prodsActionMock.deleteProd.mock.calls[0][0]).toBe('a')
 })
 
-// TODO: this test is failing, but works IRL
-/*
-test('delete pt2', () => {
-  const { queryByTestId, getByText } = render(<ProdsIndex />, { store })
-  // we should fail to show the deleted item
-  fireEvent.click(getByText('Actions'))
-  fireEvent.click(getByText('List All'))
-  expect(queryByTestId('sku')).toBeNull()
+// we should fail to show the deleted item
+test('delete pt2', async () => {
+  const { queryByTestId } = render(<ProdsIndex />, { store })
+  await wait(() => expect(queryByTestId('sku')).toBeNull())
 })
-*/
+
+// check render
+test('display kit contents, membership', () => {
+  const store = newStore()
+  const { getByText } = render(
+    <ProdsShow
+      match={{
+        params: { id: 'a' },
+        isExact: true,
+        path: '',
+        url: ''
+      }}
+      history={{
+        location: { state: undefined },
+        push: () => null
+      }}
+    />,
+    { store }
+  )
+  expect(getByText('content 1')).toBeTruthy()
+  expect(getByText('content category')).toBeTruthy()
+  expect(getByText('container')).toBeTruthy()
+  expect(getByText('container category')).toBeTruthy()
+})
