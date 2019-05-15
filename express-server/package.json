@@ -8,8 +8,10 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "gridfs-stream": "^1.1.1",
     "mongoose": "^5.3.10",
     "multer": "^1.4.1",
+    "multer-gridfs-storage": "^3.2.3",
     "start-server-webpack-plugin": "^2.2.5",
     "webpack-cli": "^3.1.2",
     "webpack-node-externals": "^1.7.2"

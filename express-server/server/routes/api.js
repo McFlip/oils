@@ -7,19 +7,61 @@ import * as ProdController from '../controllers/prod.js';
 import * as UseController from '../controllers/use.js';
 import * as RecipeController from "../controllers/recipe.js";
 import multer from 'multer'
-const upload = multer({ dest: './uploads' })
+import GridFSStorage from 'multer-gridfs-storage'
+let Grid = require('gridfs-stream');
+Grid.mongo = mongoose.mongo;
 
 // MongoDB URL from the docker-compose file
 const dbHost = 'mongodb://database/mean-docker';
 const dbOpts = { useNewUrlParser: true };
-
+let gfs = null
 // Connect to mongodb
-mongoose.connect(dbHost, dbOpts)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+const conn = mongoose.connect(dbHost, dbOpts)
+.then(() => {
+  // stream reader for downloads
+  gfs = Grid(mongoose.connection.db)
+  
+  console.log('MongoDB Connected')
+  return mongoose.connection
+})
+.catch(err => console.log(err));
+
+// Setting up the storage element
+let storage = new GridFSStorage({ db: conn })
+
+// Multer configuration for single file uploads
+let upload = multer({
+  storage: storage
+}).single('image');
 
 /* GET api listing. */
 router.get('/', PostController.ping);
+
+/* Create a post. */
+router.post('/posts', upload, PostController.createPost);
+
+// Downloading a single file
+router.get('/images/:filename', (req, res) => {
+  console.log('fu fucking bar!')
+  gfs.collection('fs')
+  gfs.files.find({ filename: req.params.filename }).toArray(function (err, files) {
+    if (!files || files.length === 0) {
+      return res.status(404).json({
+        responseCode: 1,
+        responseMessage: "error"
+      });
+    }
+    // create read stream
+    var readstream = gfs.createReadStream({
+      filename: files[0].filename,
+      root: "fs"
+    });
+    // set the proper content type 
+    res.set('Content-Type', files[0].contentType)
+    // Return response
+    return readstream.pipe(res);
+  });
+});
 
 /* GET all products. */
 router.get('/products', ProdController.getProducts);
@@ -47,9 +89,6 @@ router.get('/posts/:id', PostController.getPost);
 
 /* Delete post */
 router.delete('/posts/:id', PostController.deletePost);
-
-/* Create a post. */
-router.post('/posts', upload.single('image'), PostController.createPost);
 
 // CREATE a use
 router.post('/uses', UseController.createUse);
