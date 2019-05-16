@@ -22,6 +22,12 @@ const oilSchema = new Schema({
   dietary: Boolean
 });
 
+const postSchema = new Schema({
+  title: String,
+  content: String,
+  image: String
+});
+
 // create mongoose schema
 const prodSchema = new Schema({
   sku: {
@@ -41,10 +47,11 @@ const prodSchema = new Schema({
   wishlist: Boolean,
   pics: [prod_gfxSchema],
   uses: [{ type: ObjectId, ref: 'Use'}],
-  posts: [{ type: ObjectId, ref: 'Post'}],
+  posts: [postSchema],
   ingredients: [Ingredient.schema],
 });
 
 // create mongoose model
 export const Product = mongoose.model('Product', prodSchema);
 export const Oil = mongoose.model('Oil', oilSchema);
+export const Post = mongoose.model('Post', postSchema)

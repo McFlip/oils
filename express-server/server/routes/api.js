@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 import { Router } from 'express';
 const router = new Router();
-import * as PostController from '../controllers/post.js';
+// import * as PostController from '../controllers/post.js';
 import * as ProdController from '../controllers/prod.js';
 import * as UseController from '../controllers/use.js';
 import * as RecipeController from "../controllers/recipe.js";
@@ -35,14 +35,13 @@ let upload = multer({
 }).single('image');
 
 /* GET api listing. */
-router.get('/', PostController.ping);
+// router.get('/', PostController.ping);
 
 /* Create a post. */
-router.post('/posts', upload, PostController.createPost);
+router.post('/posts', upload, ProdController.createPost);
 
 // Downloading a single file
 router.get('/images/:filename', (req, res) => {
-  console.log('fu fucking bar!')
   gfs.collection('fs')
   gfs.files.find({ filename: req.params.filename }).toArray(function (err, files) {
     if (!files || files.length === 0) {
@@ -82,13 +81,13 @@ router.post('/products', ProdController.createProduct);
 router.delete('/products/:id', ProdController.deleteProduct);
 
 /* GET all posts. */
-router.get('/products/:id/posts', PostController.getPosts);
+// router.get('/products/:id/posts', PostController.getPosts);
 
 /* GET one posts. */
-router.get('/posts/:id', PostController.getPost);
+// router.get('/posts/:id', PostController.getPost);
 
 /* Delete post */
-router.delete('/posts/:id', PostController.deletePost);
+// router.delete('/posts/:id', PostController.deletePost);
 
 // CREATE a use
 router.post('/uses', UseController.createUse);

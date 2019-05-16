@@ -10,6 +10,7 @@ export const ADD_USE = 'add_use'
 export const REMOVE_USE = 'remove_use'
 export const FETCH_RECIPE = 'fetch_recipe'
 export const DELETE_RECIPE = 'DELETE_RECIPE'
+export const IMG_HOST = 'http://localhost:3000/images/'
 export const testState = {
   prods: {
     a: {

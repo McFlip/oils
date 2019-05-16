@@ -1,4 +1,4 @@
-import { Product, Oil } from '../models/product.js';
+import { Product, Oil, Post } from '../models/product.js';
 import mongoose from 'mongoose'
 import Recipe from '../models/recipe'
 import _ from 'lodash'
@@ -128,4 +128,27 @@ export function updateProduct(req, res) {
     if (error) res.status(500).send(error)
     getProduct( req, res)
 });
+}
+
+/* Create a post. */
+export function createPost (req, res) {
+  const image = req.file ? req.file.filename : null
+  let post = new Post({
+      title: req.body.title,
+      content: req.body.content,
+      image
+  });
+
+  Product.findById(req.body.id)
+    .exec((err, prod) => {
+      if (err) res.status(500).send(err)
+      prod.posts.push(post)
+      prod.save(err => {
+        if (err) res.status(500).send(err)
+        res.status(201).json({
+            message: 'Post created successfully'
+        });
+      })
+    })
+
 }

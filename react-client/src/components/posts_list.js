@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
-// {require(post.image)}
-// import logo from '../../favicon.ico'
+import { IMG_HOST } from '../constants';
 class PostList extends Component {
   renderPosts () {
     return this.props.posts.map((post, i) => {
       return (
-        <div className='card' style={{ width: '18rem' }} key={i}>
-          {post.image ? <img className='card-img-top' alt='posted image' src={post.image} /> : null}
+        <div className='card' key={i}>
+          {post.image ? <img className='card-img-top' alt='posted image' src={IMG_HOST + post.image} /> : null}
           <div className='card-body'>
             <div className='card-header'>
               {post.title}
