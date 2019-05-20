@@ -34,11 +34,22 @@ let upload = multer({
   storage: storage
 }).single('image');
 
+const gfsMidWare = (req, res, next) => {
+  req.gfs = gfs
+  next()
+}
+
 /* GET api listing. */
 // router.get('/', PostController.ping);
 
+// GET a single post
+router.get('/products/:prodId/posts/:postId', ProdController.getPost)
+
+/* UPDATE a post. */
+router.post('/posts/:postId', upload, gfsMidWare, ProdController.updatePost)
+
 /* Create a post. */
-router.post('/posts', upload, ProdController.createPost);
+router.post('/posts', upload, ProdController.createPost)
 
 // Downloading a single file
 router.get('/images/:filename', (req, res) => {

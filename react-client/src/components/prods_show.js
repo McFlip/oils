@@ -112,7 +112,7 @@ class ProdsShow extends Component {
           {containedIn != undefined && containedIn.length > 0 ? this.renderMembership(containedIn) : ''}
           {uses != undefined && uses.length > 0 ? <UseList uses={uses} id={_id} handleClick={this.handleClick} /> : ''}
           {recipes != undefined && recipes.length > 0 ? <RecipeList recipes={recipes} titles={useTitles} /> : ''}
-          {posts != undefined && posts.length > 0 ? <PostList posts={posts} /> : ''}
+          {posts != undefined && posts.length > 0 ? <PostList posts={posts} id={_id} /> : ''}
         </div>
       )
     }

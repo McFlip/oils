@@ -21,12 +21,6 @@ export function createPost (values, callback) {
   const config = {     
     headers: { 'content-type': 'multipart/form-data' }
   }
-  /*
-  return {
-    type: 'fubar', payload: null
-  }
-  */
-  
   const request = axios
     .post(`${ROOT_URL}/posts`, values, config)
     .then(() => callback())
@@ -35,11 +29,25 @@ export function createPost (values, callback) {
     type: CREATE_POST,
     payload: request
   }
-
 }
 
-export function fetchPost (id) {
-  const request = axios.get(`${ROOT_URL}/posts/${id}`)
+export function updatePost (values, callback) {
+  console.log(values)
+  const config = {     
+    headers: { 'content-type': 'multipart/form-data' }
+  }
+  const request = axios
+    .post(`${ROOT_URL}/posts/${values.get('postId')}`, values, config)
+    .then(() => callback())
+
+  return {
+    type: CREATE_POST,
+    payload: request
+  }
+}
+
+export function fetchPost (prodId, postId) {
+  const request = axios.get(`${ROOT_URL}/products/${prodId}/posts/${postId}`)
 
   return {
     type: FETCH_POST,

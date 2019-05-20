@@ -150,5 +150,40 @@ export function createPost (req, res) {
         });
       })
     })
+}
 
+// Get a post
+export function getPost (req, res) {
+  const { prodId, postId } = req.params
+  Product.findById(prodId)
+    .exec((err, prod) => {
+      if (err) res.status(500).send(err) 
+      const post = prod.posts.id(postId)
+      res.status(200).send(post)
+    })
+}
+
+// UPDATE a post
+export function updatePost (req, res) {
+  const { postId } = req.params
+  const { id, title, content, deleteImg } = req.body
+  const image = req.file ? req.file.filename : null
+  Product.findById(id).exec((err, prod) => {
+    if (err) res.status(500).send(err)
+    const post = prod.posts.id(postId)
+    // set the text fields
+    post.title = title
+    post.content = content
+    // set the image
+    if (image || deleteImg) {
+      req.gfs.remove({ filename: post.image })
+      post.image = image
+    }
+    prod.save(err => {
+      if (err) res.status(500).send(err)
+      res.status(201).json({
+        message: 'Post updated successfully'
+      })
+    })
+  })
 }

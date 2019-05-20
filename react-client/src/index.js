@@ -28,6 +28,7 @@ ReactDOM.render(
     <HashRouter>
       <div>
         <Switch>
+          <Route path='/products/:id/editpost/:postId' component={PostsNew} />
           <Route path='/products/:id/addpost' component={PostsNew} />
           <Route path='/posts/:id' component={PostsShow} />
           <Route path='/products/new' component={ProdsNew} />
