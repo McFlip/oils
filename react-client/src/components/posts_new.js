@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { createPost, fetchPost, updatePost } from '../actions/posts'
+import { createPost, fetchPost, updatePost, deletePost } from '../actions/posts'
 import FieldFileInput from './posts_imgField'
 import Menu from './menu'
 import { IMG_HOST } from '../constants'
@@ -13,7 +13,8 @@ class PostsNew extends Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this)
-    this.onDelete = this.onDelete.bind(this)
+    this.onDeleteImg = this.onDeleteImg.bind(this)
+    this.onDeletePost = this.onDeletePost.bind(this)
     this.file = null
     this.state = { deleteImg: false }
   }
@@ -61,8 +62,6 @@ class PostsNew extends Component {
   }
   // handle file selection
   onChange (file) {
-    // TODO: load a preview
-    // console.log(file)
     this.file = file
   }
   // show existing image in edit mode
@@ -72,20 +71,28 @@ class PostsNew extends Component {
       <div className='card'>
         <h3>Existing Image</h3>
         <p>click delete to remove the image or select a new image to replace it</p>
-        <button className='btn btn-danger' onClick={this.onDelete}>{this.state.deleteImg ? 'Keep Image' : 'Delete'}</button>
-        <img src={IMG_HOST + img} style={this.state.deleteImg ? { filter: 'grayscale(100%)' } : {}} />
+        <button className='btn btn-danger' onClick={this.onDeleteImg}>{this.state.deleteImg ? 'Keep Image' : 'Delete'}</button>
+        <img src={IMG_HOST + img} style={this.state.deleteImg ? { filter: 'grayscale(100%) blur(5px)' } : {}} />
       </div>
     )
   }
-
-  onDelete (e) {
+  // Delete a post image
+  onDeleteImg (e) {
     e.preventDefault()
-    // TODO: mark the image for deletion
     this.setState({ deleteImg: !this.state.deleteImg })
   }
-
+  // Delete the entire post
+  onDeletePost (e) {
+    const { id, postId } = this.props.match.params
+    e.preventDefault()
+    if (window.confirm('Are you sure? This cannot be undone!')) {
+      this.props.deletePost(id, postId, () => {
+        this.props.history.push(`/products/${id}`)
+      })
+    }
+  }
   render () {
-    const { id } = this.props.match.params
+    const { id, postId } = this.props.match.params
 
     return (
       <div>
@@ -111,7 +118,8 @@ class PostsNew extends Component {
             component={this.renderField}
           />
           <button type='submit' className='btn btn-primary'>Submit</button>
-          <Link to={`/products/${id}`} className='btn btn-danger'>Cancel</Link>
+          <Link to={`/products/${id}`} className='btn btn-secondary'>Cancel</Link>
+          {postId ? <button onClick={this.onDeletePost} className='btn btn-danger float-right'>Delete Post</button> : null}
         </Form>
       </div>
     )
@@ -148,4 +156,4 @@ let myForm = reduxForm({
   form: 'PostsNewForm'
 })(PostsNew)
 
-export default connect(mapStateToProps, { createPost, fetchPost, updatePost })(myForm)
+export default connect(mapStateToProps, { createPost, fetchPost, updatePost, deletePost })(myForm)

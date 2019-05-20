@@ -45,6 +45,9 @@ const gfsMidWare = (req, res, next) => {
 // GET a single post
 router.get('/products/:prodId/posts/:postId', ProdController.getPost)
 
+// DELTEE a single post
+router.delete('/products/:prodId/posts/:postId', gfsMidWare, ProdController.deletePost)
+
 /* UPDATE a post. */
 router.post('/posts/:postId', upload, gfsMidWare, ProdController.updatePost)
 

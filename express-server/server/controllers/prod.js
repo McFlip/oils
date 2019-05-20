@@ -187,3 +187,20 @@ export function updatePost (req, res) {
     })
   })
 }
+
+// DELETE a post
+export function deletePost (req, res) {
+  const { prodId, postId } = req.params
+Product.findById(prodId).exec((err, prod) => {
+  if (err) res.status(500).send(err)
+  const post = prod.posts.id(postId)
+  if (post.image) req.gfs.remove({ filename: post.image })
+  post.remove()
+  prod.save(err => {
+    if (err) res.status(500).send(err)
+    res.status(200).json({
+      message: 'Post deleted successfully'
+    })
+  })
+}) 
+}

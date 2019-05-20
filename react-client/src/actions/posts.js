@@ -55,13 +55,13 @@ export function fetchPost (prodId, postId) {
   }
 }
 
-export function deletePost (id, callback) {
+export function deletePost (prodId, postId, callback) {
   const request = axios
-    .delete(`${ROOT_URL}/posts/${id}`)
+    .delete(`${ROOT_URL}/products/${prodId}/posts/${postId}`)
     .then(() => callback())
 
   return {
     type: DELETE_POST,
-    payload: id
+    payload: request
   }
 }
