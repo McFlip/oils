@@ -175,8 +175,9 @@ export function updatePost (req, res) {
     post.title = title
     post.content = content
     // set the image
-    if (image || deleteImg) {
+    if (!!image || deleteImg === 'true') {
       req.gfs.remove({ filename: post.image })
+        .catch(err => console.log(err))
       post.image = image
     }
     prod.save(err => {
