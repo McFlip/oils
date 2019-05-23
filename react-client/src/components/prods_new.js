@@ -22,7 +22,7 @@ class ProdsNew extends Component {
 
   renderField (field) {
     const { meta: { touched, error } } = field
-    const className = `form-group ${touched && error ? 'has-danger' : ''}`
+    const className = `form-group ${touched && error ? 'alert alert-danger' : ''}`
 
     return (
       <div className={className}>
@@ -82,7 +82,7 @@ class ProdsNew extends Component {
     return (
       <div>
         <Menu page='products' />
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))} >
           <Field
             label='Item Number'
             name='sku'
@@ -96,6 +96,7 @@ class ProdsNew extends Component {
             testid='descr'
             component={this.renderField}
             type='text'
+            required
           />
           <Field
             label='Size'

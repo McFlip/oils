@@ -25,3 +25,13 @@ form a {
 body {
   padding-top: 70px;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-edit-img {
+  max-width: 50%;
+  height: auto; 
+}

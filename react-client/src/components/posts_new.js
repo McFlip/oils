@@ -26,7 +26,7 @@ class PostsNew extends Component {
 
   renderField (field) {
     const { meta: { touched, error } } = field
-    const className = `form-group ${touched && error ? 'has-danger' : ''}`
+    const className = `form-group ${touched && error ? 'alert alert-danger' : ''}`
     return (
       <div className={className}>
         <label>{field.label}</label>
@@ -72,7 +72,7 @@ class PostsNew extends Component {
         <h3>Existing Image</h3>
         <p>click delete to remove the image or select a new image to replace it</p>
         <button className='btn btn-danger' onClick={this.onDeleteImg}>{this.state.deleteImg ? 'Keep Image' : 'Delete'}</button>
-        <img src={IMG_HOST + img} style={this.state.deleteImg ? { filter: 'grayscale(100%) blur(5px)' } : {}} />
+        <img src={IMG_HOST + img} className='post-edit-img' style={this.state.deleteImg ? { filter: 'grayscale(100%) blur(5px)' } : {}} />
       </div>
     )
   }
@@ -133,12 +133,6 @@ function validate (values) {
   if (!values.title) {
     errors.title = 'Enter a title'
   }
-  if (!values.content) {
-    errors.content = 'Enter some content please'
-  }
-
-  // If errors is empty, the form is fine to submit
-  // If errors has *any* properties, redux form assumes form is invalid
   return errors
 }
 
