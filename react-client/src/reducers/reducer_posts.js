@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { FETCH_POSTS, FETCH_POST, DELETE_POST } from '../actions/posts'
+import { FETCH_POSTS, FETCH_POST, DELETE_POST } from '../constants'
 
 export default function (state = {}, action) {
   switch (action.type) {

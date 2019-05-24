@@ -1,6 +1,10 @@
 export const FETCH_PRODS = 'fetch_prods'
 export const FETCH_PROD = 'fetch_prod'
 export const DELETE_PROD = 'delete_prod'
+export const FETCH_POSTS = 'fetch_posts'
+export const FETCH_POST = 'fetch_post'
+export const CREATE_POST = 'create_post'
+export const DELETE_POST = 'delete_post'
 export const ROOT_URL = 'http://localhost:3000'
 export const FETCH_USES = 'fetch_uses'
 export const FETCH_USE = 'fetch_use'
@@ -45,6 +49,14 @@ export const testState = {
           _id: 'containerId',
           descr: 'container',
           category: 'container category'
+        }
+      ],
+      posts: [
+        {
+          _id: 'postId',
+          title: 'postTitle',
+          content: 'postContent',
+          image: 'postImage'
         }
       ]
     },

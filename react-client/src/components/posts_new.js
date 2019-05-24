@@ -29,11 +29,11 @@ class PostsNew extends Component {
     const className = `form-group ${touched && error ? 'alert alert-danger' : ''}`
     return (
       <div className={className}>
-        <label>{field.label}</label>
+        <label htmlFor={field.id} >{field.label}</label>
         {
           field.input.name === 'title'
-            ? <input className='form-control' type='text' {...field.input} />
-            : <textarea className='form-control' {...field.input} />
+            ? <input id={field.id} className='form-control' type='text' required {...field.input} />  
+            : <textarea id={field.id} className='form-control' {...field.input} />
         }
         <div className='text-help'>
           {touched ? error : ''}
@@ -104,6 +104,7 @@ class PostsNew extends Component {
           <Field
             label='Title For Post'
             name='title'
+            id='title'
             component={this.renderField}
           />
           { this.props.initialValues ? this.renderImg(this.props.initialValues.image) : null }
@@ -115,6 +116,7 @@ class PostsNew extends Component {
           <Field
             label='Post Content'
             name='content'
+            id='content'
             component={this.renderField}
           />
           <button type='submit' className='btn btn-primary'>Submit</button>
