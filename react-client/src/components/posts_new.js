@@ -72,7 +72,7 @@ class PostsNew extends Component {
         <h3>Existing Image</h3>
         <p>click delete to remove the image or select a new image to replace it</p>
         <button className='btn btn-danger' onClick={this.onDeleteImg}>{this.state.deleteImg ? 'Keep Image' : 'Delete'}</button>
-        <img src={IMG_HOST + img} className='post-edit-img' style={this.state.deleteImg ? { filter: 'grayscale(100%) blur(5px)' } : {}} />
+        <img src={IMG_HOST + img} alt='post image' className='post-edit-img' style={this.state.deleteImg ? { filter: 'grayscale(100%) blur(5px)' } : {}} />
       </div>
     )
   }

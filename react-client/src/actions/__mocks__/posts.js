@@ -6,7 +6,7 @@ const { prods: { a: { posts } } } = testState
 export const fetchPost = jest.fn(() => {
   return {
     type: FETCH_POST,
-    payload: posts[0]
+    payload: { data: posts[0] }
   }
 })
 
@@ -21,5 +21,12 @@ export const deletePost = jest.fn(() => {
   return {
     type: DELETE_POST,
     payload: 'post deleted'
+  }
+})
+
+export const updatePost = jest.fn(() => {
+  return {
+    type: CREATE_POST,
+    payload: 'post created'
   }
 })
