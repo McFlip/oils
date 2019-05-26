@@ -7,8 +7,6 @@ import * as recipesActionMock from 'actions/recipes'
 
 jest.mock('actions/prods')
 jest.mock('actions/recipes')
-// eslint-disable-next-line no-undef
-global.confirm = () => true
 const store = newStore()
 
 // kit tests

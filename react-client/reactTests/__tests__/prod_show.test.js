@@ -8,8 +8,6 @@ import ProdsShow from 'components/prods_show'
 import * as prodsActionMock from 'actions/prods'
 
 jest.mock('actions/prods')
-// eslint-disable-next-line no-undef
-global.confirm = () => true
 
 // check delete
 const store = newStore()
@@ -45,9 +43,9 @@ test('delete pt2', async () => {
 })
 
 // check render
-test('display kit contents, membership', () => {
+test('render product', () => {
   const store = newStore()
-  const { getByText } = render(
+  const product = render(
     <ProdsShow
       match={{
         params: { id: 'a' },
@@ -62,8 +60,5 @@ test('display kit contents, membership', () => {
     />,
     { store }
   )
-  expect(getByText('content 1')).toBeTruthy()
-  expect(getByText('content category')).toBeTruthy()
-  expect(getByText('container')).toBeTruthy()
-  expect(getByText('container category')).toBeTruthy()
+  expect(product).toMatchSnapshot()
 })

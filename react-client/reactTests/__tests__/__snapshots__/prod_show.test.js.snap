@@ -1,0 +1,1175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render product 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div>
+        <nav
+          class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top"
+        >
+          <a
+            class="navbar-brand"
+            href="/"
+          >
+            <img
+              alt="Home"
+              src="/favicon.ico"
+              style="width: 40px;"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            data-target="#navbarNavDropdown"
+            data-toggle="collapse"
+            type="button"
+          >
+            <span
+              class="navbar-toggler-icon"
+            />
+          </button>
+          <div
+            class="collapse navbar-collapse"
+            id="navbarNavDropdown"
+          >
+            <ul
+              class="navbar-nav"
+            >
+              <li
+                class="nav-item active"
+              >
+                <a
+                  class="nav-link"
+                  href="/products"
+                >
+                  products
+                </a>
+              </li>
+              <li
+                class="nav-item "
+              >
+                <a
+                  class="nav-link"
+                  href="/uses"
+                >
+                  uses
+                </a>
+              </li>
+              <li
+                class="nav-item "
+              >
+                <a
+                  class="nav-link"
+                  href="/recipes"
+                >
+                  recipes
+                </a>
+              </li>
+              <li
+                class="nav-item dropdown"
+              >
+                <a
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                >
+                  Actions
+                </a>
+                <div
+                  class="dropdown-menu"
+                >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                  >
+                    Delete Product
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="/products/a/edit"
+                  >
+                    Edit Product
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="/products/a/editingredients"
+                  >
+                    Edit Contents
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="/products/a/adduse"
+                  >
+                    Add Use
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    href="/products/a/addpost"
+                  >
+                    Add Post
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <h3>
+          test 1 oz 
+        </h3>
+        <span
+          class="form-group form-check-inline px-2"
+        >
+          <label
+            class="form-check-label"
+            for="checkbox_a"
+          >
+             wishlist 
+          </label>
+          <input
+            class="form-check-input ml-2"
+            id="checkbox_a"
+            readonly=""
+            type="checkbox"
+          />
+        </span>
+        <h6>
+          Category: 
+        </h6>
+        
+        <div
+          class="form-group"
+        >
+          <div
+            class="form-check"
+          >
+            <input
+              checked=""
+              class="form-check-input"
+              id="photosensitive"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="photosensitive"
+            >
+              photosensitive
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              checked=""
+              class="form-check-input"
+              id="topical"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="topical"
+            >
+              topical
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              checked=""
+              class="form-check-input"
+              id="dilute"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="dilute"
+            >
+              dilute
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              class="form-check-input"
+              id="aromatic"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="aromatic"
+            >
+              aromatic
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              class="form-check-input"
+              id="dietary"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="dietary"
+            >
+              dietary
+            </label>
+          </div>
+        </div>
+        <div>
+          <h6>
+            Contents:
+          </h6>
+          <div>
+            <div
+              class="modal fade"
+              id="qtyModal"
+              role="dialog"
+              tabindex="-1"
+            >
+              <div
+                class="modal-dialog"
+                role="document"
+              >
+                <div
+                  class="modal-content"
+                >
+                  <form>
+                    <div
+                      class="modal-header"
+                    >
+                      <h5
+                        class="modal-title"
+                        id="qtyModalTitle"
+                      >
+                        Update Quantity
+                      </h5>
+                      <button
+                        class="close"
+                        data-dismiss="modal"
+                        data-testid="xButton"
+                        type="button"
+                      >
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <div
+                      class="modal-body form-group"
+                    >
+                      <label
+                        for="qtyInput"
+                      >
+                         QTY: 
+                      </label>
+                      <input
+                        class="form-control"
+                        id="qtyInput"
+                        type="number"
+                        value="0"
+                      />
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <button
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                        type="button"
+                      >
+                        Close
+                      </button>
+                      <button
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <ul
+              class="list-group"
+            >
+              <li
+                class="list-group-item input-group"
+              >
+                <div>
+                  <h4
+                    class="alert alert-info"
+                  >
+                    content category
+                  </h4>
+                  <hr />
+                </div>
+                <span
+                  data-testid="sku"
+                />
+                <span
+                  class="px-2"
+                >
+                  <a
+                    data-testid="descr"
+                    href="/products/contentId"
+                  >
+                    content 1
+                  </a>
+                </span>
+                <span
+                  class="px-2"
+                  data-testid="size"
+                />
+                
+                <span
+                  class="form-group form-check-inline px-2"
+                >
+                  <label
+                    class="form-check-label"
+                    for="checkbox_contentId"
+                  >
+                     wishlist 
+                  </label>
+                  <input
+                    class="form-check-input ml-2"
+                    id="checkbox_contentId"
+                    type="checkbox"
+                  />
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <h6>
+            Contained In:
+          </h6>
+          <div>
+            <div
+              class="modal fade"
+              id="qtyModal"
+              role="dialog"
+              tabindex="-1"
+            >
+              <div
+                class="modal-dialog"
+                role="document"
+              >
+                <div
+                  class="modal-content"
+                >
+                  <form>
+                    <div
+                      class="modal-header"
+                    >
+                      <h5
+                        class="modal-title"
+                        id="qtyModalTitle"
+                      >
+                        Update Quantity
+                      </h5>
+                      <button
+                        class="close"
+                        data-dismiss="modal"
+                        data-testid="xButton"
+                        type="button"
+                      >
+                        <span
+                          aria-hidden="true"
+                        >
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <div
+                      class="modal-body form-group"
+                    >
+                      <label
+                        for="qtyInput"
+                      >
+                         QTY: 
+                      </label>
+                      <input
+                        class="form-control"
+                        id="qtyInput"
+                        type="number"
+                        value="0"
+                      />
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <button
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                        type="button"
+                      >
+                        Close
+                      </button>
+                      <button
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <ul
+              class="list-group"
+            >
+              <li
+                class="list-group-item input-group"
+              >
+                <div>
+                  <h4
+                    class="alert alert-info"
+                  >
+                    container category
+                  </h4>
+                  <hr />
+                </div>
+                <span
+                  data-testid="sku"
+                />
+                <span
+                  class="px-2"
+                >
+                  <a
+                    data-testid="descr"
+                    href="/products/containerId"
+                  >
+                    container
+                  </a>
+                </span>
+                <span
+                  class="px-2"
+                  data-testid="size"
+                />
+                
+                <span
+                  class="form-group form-check-inline px-2"
+                >
+                  <label
+                    class="form-check-label"
+                    for="checkbox_containerId"
+                  >
+                     wishlist 
+                  </label>
+                  <input
+                    class="form-check-input ml-2"
+                    id="checkbox_containerId"
+                    type="checkbox"
+                  />
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="card"
+          style="width: 25rem;"
+        >
+          <h4>
+            Uses:
+          </h4>
+          <ul
+            class="list-group"
+          >
+            <li
+              class="list-group-item input-group"
+            >
+              <span
+                data-testid="use"
+              >
+                <a
+                  data-testid="use"
+                  href="/uses/undefined"
+                />
+              </span>
+              <span
+                class="px-2"
+              >
+                <button
+                  class="btn btn-outline-danger float-right"
+                  data-testid="use-btn"
+                >
+                  Delete
+                </button>
+              </span>
+            </li>
+          </ul>
+        </div>
+        
+        <div>
+          <h6>
+            Posts:
+          </h6>
+          <div>
+            <div
+              class="card"
+            >
+              <img
+                alt="posted image"
+                class="card-img-top"
+                src="http://localhost:3000/images/postImage"
+              />
+              <div
+                class="card-body"
+              >
+                <div
+                  class="card-header"
+                >
+                  postTitle
+                  <a
+                    class="btn float-right"
+                    href="/products/a/editpost/postId"
+                  >
+                    ...
+                  </a>
+                </div>
+                <div
+                  class="card-text"
+                >
+                  <p>
+                    postContent
+                  </p>
+                  
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div>
+      <nav
+        class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top"
+      >
+        <a
+          class="navbar-brand"
+          href="/"
+        >
+          <img
+            alt="Home"
+            src="/favicon.ico"
+            style="width: 40px;"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          data-target="#navbarNavDropdown"
+          data-toggle="collapse"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="collapse navbar-collapse"
+          id="navbarNavDropdown"
+        >
+          <ul
+            class="navbar-nav"
+          >
+            <li
+              class="nav-item active"
+            >
+              <a
+                class="nav-link"
+                href="/products"
+              >
+                products
+              </a>
+            </li>
+            <li
+              class="nav-item "
+            >
+              <a
+                class="nav-link"
+                href="/uses"
+              >
+                uses
+              </a>
+            </li>
+            <li
+              class="nav-item "
+            >
+              <a
+                class="nav-link"
+                href="/recipes"
+              >
+                recipes
+              </a>
+            </li>
+            <li
+              class="nav-item dropdown"
+            >
+              <a
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+              >
+                Actions
+              </a>
+              <div
+                class="dropdown-menu"
+              >
+                <a
+                  class="dropdown-item"
+                  href="#"
+                >
+                  Delete Product
+                </a>
+                <a
+                  class="dropdown-item"
+                  href="/products/a/edit"
+                >
+                  Edit Product
+                </a>
+                <a
+                  class="dropdown-item"
+                  href="/products/a/editingredients"
+                >
+                  Edit Contents
+                </a>
+                <a
+                  class="dropdown-item"
+                  href="/products/a/adduse"
+                >
+                  Add Use
+                </a>
+                <a
+                  class="dropdown-item"
+                  href="/products/a/addpost"
+                >
+                  Add Post
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <h3>
+        test 1 oz 
+      </h3>
+      <span
+        class="form-group form-check-inline px-2"
+      >
+        <label
+          class="form-check-label"
+          for="checkbox_a"
+        >
+           wishlist 
+        </label>
+        <input
+          class="form-check-input ml-2"
+          id="checkbox_a"
+          readonly=""
+          type="checkbox"
+        />
+      </span>
+      <h6>
+        Category: 
+      </h6>
+      
+      <div
+        class="form-group"
+      >
+        <div
+          class="form-check"
+        >
+          <input
+            checked=""
+            class="form-check-input"
+            id="photosensitive"
+            readonly=""
+            type="checkbox"
+          />
+          <label
+            for="photosensitive"
+          >
+            photosensitive
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            checked=""
+            class="form-check-input"
+            id="topical"
+            readonly=""
+            type="checkbox"
+          />
+          <label
+            for="topical"
+          >
+            topical
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            checked=""
+            class="form-check-input"
+            id="dilute"
+            readonly=""
+            type="checkbox"
+          />
+          <label
+            for="dilute"
+          >
+            dilute
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            class="form-check-input"
+            id="aromatic"
+            readonly=""
+            type="checkbox"
+          />
+          <label
+            for="aromatic"
+          >
+            aromatic
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            class="form-check-input"
+            id="dietary"
+            readonly=""
+            type="checkbox"
+          />
+          <label
+            for="dietary"
+          >
+            dietary
+          </label>
+        </div>
+      </div>
+      <div>
+        <h6>
+          Contents:
+        </h6>
+        <div>
+          <div
+            class="modal fade"
+            id="qtyModal"
+            role="dialog"
+            tabindex="-1"
+          >
+            <div
+              class="modal-dialog"
+              role="document"
+            >
+              <div
+                class="modal-content"
+              >
+                <form>
+                  <div
+                    class="modal-header"
+                  >
+                    <h5
+                      class="modal-title"
+                      id="qtyModalTitle"
+                    >
+                      Update Quantity
+                    </h5>
+                    <button
+                      class="close"
+                      data-dismiss="modal"
+                      data-testid="xButton"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="modal-body form-group"
+                  >
+                    <label
+                      for="qtyInput"
+                    >
+                       QTY: 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="qtyInput"
+                      type="number"
+                      value="0"
+                    />
+                  </div>
+                  <div
+                    class="modal-footer"
+                  >
+                    <button
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                      type="button"
+                    >
+                      Close
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <ul
+            class="list-group"
+          >
+            <li
+              class="list-group-item input-group"
+            >
+              <div>
+                <h4
+                  class="alert alert-info"
+                >
+                  content category
+                </h4>
+                <hr />
+              </div>
+              <span
+                data-testid="sku"
+              />
+              <span
+                class="px-2"
+              >
+                <a
+                  data-testid="descr"
+                  href="/products/contentId"
+                >
+                  content 1
+                </a>
+              </span>
+              <span
+                class="px-2"
+                data-testid="size"
+              />
+              
+              <span
+                class="form-group form-check-inline px-2"
+              >
+                <label
+                  class="form-check-label"
+                  for="checkbox_contentId"
+                >
+                   wishlist 
+                </label>
+                <input
+                  class="form-check-input ml-2"
+                  id="checkbox_contentId"
+                  type="checkbox"
+                />
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h6>
+          Contained In:
+        </h6>
+        <div>
+          <div
+            class="modal fade"
+            id="qtyModal"
+            role="dialog"
+            tabindex="-1"
+          >
+            <div
+              class="modal-dialog"
+              role="document"
+            >
+              <div
+                class="modal-content"
+              >
+                <form>
+                  <div
+                    class="modal-header"
+                  >
+                    <h5
+                      class="modal-title"
+                      id="qtyModalTitle"
+                    >
+                      Update Quantity
+                    </h5>
+                    <button
+                      class="close"
+                      data-dismiss="modal"
+                      data-testid="xButton"
+                      type="button"
+                    >
+                      <span
+                        aria-hidden="true"
+                      >
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  <div
+                    class="modal-body form-group"
+                  >
+                    <label
+                      for="qtyInput"
+                    >
+                       QTY: 
+                    </label>
+                    <input
+                      class="form-control"
+                      id="qtyInput"
+                      type="number"
+                      value="0"
+                    />
+                  </div>
+                  <div
+                    class="modal-footer"
+                  >
+                    <button
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                      type="button"
+                    >
+                      Close
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <ul
+            class="list-group"
+          >
+            <li
+              class="list-group-item input-group"
+            >
+              <div>
+                <h4
+                  class="alert alert-info"
+                >
+                  container category
+                </h4>
+                <hr />
+              </div>
+              <span
+                data-testid="sku"
+              />
+              <span
+                class="px-2"
+              >
+                <a
+                  data-testid="descr"
+                  href="/products/containerId"
+                >
+                  container
+                </a>
+              </span>
+              <span
+                class="px-2"
+                data-testid="size"
+              />
+              
+              <span
+                class="form-group form-check-inline px-2"
+              >
+                <label
+                  class="form-check-label"
+                  for="checkbox_containerId"
+                >
+                   wishlist 
+                </label>
+                <input
+                  class="form-check-input ml-2"
+                  id="checkbox_containerId"
+                  type="checkbox"
+                />
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="card"
+        style="width: 25rem;"
+      >
+        <h4>
+          Uses:
+        </h4>
+        <ul
+          class="list-group"
+        >
+          <li
+            class="list-group-item input-group"
+          >
+            <span
+              data-testid="use"
+            >
+              <a
+                data-testid="use"
+                href="/uses/undefined"
+              />
+            </span>
+            <span
+              class="px-2"
+            >
+              <button
+                class="btn btn-outline-danger float-right"
+                data-testid="use-btn"
+              >
+                Delete
+              </button>
+            </span>
+          </li>
+        </ul>
+      </div>
+      
+      <div>
+        <h6>
+          Posts:
+        </h6>
+        <div>
+          <div
+            class="card"
+          >
+            <img
+              alt="posted image"
+              class="card-img-top"
+              src="http://localhost:3000/images/postImage"
+            />
+            <div
+              class="card-body"
+            >
+              <div
+                class="card-header"
+              >
+                postTitle
+                <a
+                  class="btn float-right"
+                  href="/products/a/editpost/postId"
+                >
+                  ...
+                </a>
+              </div>
+              <div
+                class="card-text"
+              >
+                <p>
+                  postContent
+                </p>
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllBySelectText": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getAllByValue": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getBySelectText": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "getByValue": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllBySelectText": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryAllByValue": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryBySelectText": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "queryByValue": [Function],
+  "rerender": [Function],
+  "store": Object {
+    "dispatch": [Function],
+    "getState": [Function],
+    "replaceReducer": [Function],
+    "subscribe": [Function],
+    Symbol(observable): [Function],
+  },
+  "unmount": [Function],
+}
+`;

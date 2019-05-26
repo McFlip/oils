@@ -28,7 +28,7 @@ const RecipesShowDropdown = (onDeleteClick,id) => {
           onClick={
             (e) => {
               e.preventDefault()
-              if (confirm("Are you sure? This can't be undone")) onDeleteClick()
+              if (window.confirm("Are you sure? This can't be undone")) onDeleteClick()
             }
           }
         >Delete Recipe</a>

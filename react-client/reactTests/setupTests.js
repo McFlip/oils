@@ -2,10 +2,8 @@
 import 'jest-dom/extend-expect'
 // this is basically: afterEach(cleanup)
 import 'react-testing-library/cleanup-after-each'
-// import $ from 'jquery'
-// import 'bootstrap/dist/css/bootstrap.min.css'
-
+// mock window functions
+window.confirm = () => true
 window.alert = (msg) => { console.log(msg) }
 window.matchMedia = () => ({})
 window.scrollTo = () => { }
-// window.$ = $

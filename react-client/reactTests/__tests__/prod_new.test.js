@@ -21,7 +21,10 @@ test('validate function stops form submission', () => {
 test('can render with loaded state', async () => {
   const store = newStore()
   const { getByTestId, getByText } = render(
-    <ProdsNew match={{ params: { id: 'a' }, isExact: true, path: '', url: '' }} />,
+    <ProdsNew
+      match={{ params: { id: 'a' }, isExact: true, path: '', url: '' }}
+      history={{ push: () => null }}
+    />,
     { store }
   )
   await wait(() => expect(getByTestId('sku').value).toBe('1'))

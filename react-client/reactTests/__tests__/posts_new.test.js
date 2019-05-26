@@ -81,8 +81,6 @@ test('render edit post', () => {
 })
 
 test('edit post', /* async */ () => {
-  // eslint-disable-next-line no-undef
-  global.confirm = () => true
   const store = newStore()
   const { getByText, getByLabelText, getByAltText } = render(
     <PostsNew
