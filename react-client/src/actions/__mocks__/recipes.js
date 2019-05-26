@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import _ from 'lodash'
-import { testState, testContains, FETCH_RECIPE } from 'constants/'
+import { FETCH_RECIPE } from 'constants/'
+import { testState, testContains } from './testData'
 
 const { recipes } = testState
 

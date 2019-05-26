@@ -4,20 +4,8 @@ import { render, fireEvent, wait, newStore } from '../test-utils'
 
 import ProdsIndex from 'components/prods_index'
 import * as prodsActionMock from 'actions/prods'
-import { testState } from 'constants/'
 
 jest.mock('actions/prods')
-
-test('can render with initial state', () => {
-  const { getByTestId, getByLabelText } = render(<ProdsIndex />, {
-    initialState: testState
-  })
-  expect(getByTestId('sku').textContent).toBe('1')
-  expect(getByTestId('descr').textContent).toBe('test')
-  expect(getByTestId('size').textContent).toBe('1 oz')
-  expect(getByTestId('qty').textContent).toBe('9')
-  expect(getByLabelText('wishlist').checked).toBe(false)
-})
 
 test('List All, qty button, wishlist', async () => {
   const store = newStore()

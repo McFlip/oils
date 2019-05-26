@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import _ from 'lodash'
-import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, testState, testState2, testContains } from 'constants/'
+import { FETCH_PRODS, FETCH_PROD, DELETE_PROD } from 'constants/'
+import { testState, testState2, testContains } from './testData'
 
 const testProd = testState.prods
 const testProd2 = testState2.prods // has 2 prods

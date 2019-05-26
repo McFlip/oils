@@ -1,5 +1,6 @@
 /* eslint-env jest */
-import { FETCH_POST, CREATE_POST, DELETE_POST, testState } from 'constants/'
+import { FETCH_POST, CREATE_POST, DELETE_POST } from 'constants/'
+import { testState } from './testData'
 
 const { prods: { a: { posts } } } = testState
 
