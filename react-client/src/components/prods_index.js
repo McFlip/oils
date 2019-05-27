@@ -21,7 +21,7 @@ class ProdsIndex extends Component {
   }
 
   handleFilterWishlist () {
-    this.props.searchProds('wishlist', 'true')
+    this.props.searchProds('true', 'wishlist')
   }
 
   handleSearch (term, category) {
