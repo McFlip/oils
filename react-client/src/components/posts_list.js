@@ -14,7 +14,7 @@ class PostList extends Component {
         <div className='card' key={i}>
           {post.image ? <img className='card-img-top' alt='posted image' src={IMG_HOST + post.image} /> : null}
           <div className='card-body'>
-            <div className='card-header'>
+            <div className='alert alert-yl'>
               {post.title}
               <Link className='btn float-right' to={`/products/${id}/editpost/${post._id}`}>...</Link>
             </div>
@@ -26,8 +26,8 @@ class PostList extends Component {
   }
   render () {
     return (
-      <div>
-        <h6>Posts:</h6>
+      <div className='card'>
+        <h4>Posts:</h4>
         <div>
           {this.props.posts ? this.renderPosts() : null}
         </div>

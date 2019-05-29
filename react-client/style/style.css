@@ -23,7 +23,7 @@ form a {
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 100px;
 }
 
 img {
@@ -34,4 +34,9 @@ img {
 .post-edit-img {
   max-width: 50%;
   height: auto; 
+}
+
+.alert-yl {
+  background-color: #6E4A9E;
+  color: lightcyan;
 }

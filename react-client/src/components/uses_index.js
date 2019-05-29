@@ -25,8 +25,10 @@ class UsesIndex extends Component {
     return (
       <div>
         <Menu page='uses' />
-        <p>Click Search without search term to list all available uses</p>
-        <SearchBar onSearchSubmit={this.handleSearch} subject='uses' />
+        <div className='bg-secondary text-light border border-dark'>
+          <p>Click Search without search term to list all available uses</p>
+          <SearchBar onSearchSubmit={this.handleSearch} subject='uses' />
+        </div>
         <h2>Uses Found</h2>
         <ul className='list-group'>{this.renderUses(this.state.uses)}</ul>
       </div>

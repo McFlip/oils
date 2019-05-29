@@ -6,7 +6,7 @@ class RecipeList extends Component {
   renderRecipes () {
     return this.props.recipes.map((recipe, i) => {
       return (
-        <div className='card' style={{ width: '18rem' }} key={i}>
+        <div className='card' key={i}>
           <div className='card-header'>
             <Link to={`/recipes/${recipe._id}`} data-testid='recipe'>
               {recipe.title}
@@ -33,8 +33,8 @@ class RecipeList extends Component {
   }
   render () {
     return (
-      <div>
-        <h6>Recipes:</h6>
+      <div className='card'>
+        <h4>Recipes:</h4>
         <div>
           {this.props.recipes ? this.renderRecipes() : null}
         </div>

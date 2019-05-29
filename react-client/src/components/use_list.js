@@ -29,7 +29,7 @@ class UseList extends Component {
 
   render () {
     return (
-      <div className='card' style={{ width: '25rem' }}>
+      <div className='card' >
         <h4>Uses:</h4>
         <ul className='list-group'>
           {this.renderUses()}

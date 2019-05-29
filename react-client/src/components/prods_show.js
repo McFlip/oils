@@ -71,8 +71,8 @@ class ProdsShow extends Component {
 
   renderContents (contents) {
     return (
-      <div>
-        <h6>Contents:</h6>
+      <div className='card'>
+        <h4>Contents:</h4>
         <ProdsList prods={contents} />
       </div>
     )
@@ -80,8 +80,8 @@ class ProdsShow extends Component {
 
   renderMembership (containers) {
     return (
-      <div>
-        <h6>Contained In:</h6>
+      <div className='card'>
+        <h4>Contained In:</h4>
         <ProdsList prods={containers} />
       </div>
     )
@@ -103,11 +103,13 @@ class ProdsShow extends Component {
       return (
         <div>
           <Menu page='products' dropdown={ProdsShowDropdown(this.onDeleteClick, match.params.id)} />
-          <h3>{`${descr} ${size || ''} ${unit_issue || ''}`}</h3>
+          <div className='jumbotron'>
+          <h1>{`${descr} ${size || ''} ${unit_issue || ''}`}</h1>
           <Checkbox _id={_id} checked={wishlist} readOnly />
-          <h6>Category: {category}</h6>
+          <h2>Category: {category}</h2>
           {wholesale || retail || pv ? this.renderVal(wholesale, retail, pv) : ''}
           {oil && this.renderOil(oilProps)}
+          </div>
           {contains != undefined && contains.length > 0 ? this.renderContents(contains) : ''}
           {containedIn != undefined && containedIn.length > 0 ? this.renderMembership(containedIn) : ''}
           {uses != undefined && uses.length > 0 ? <UseList uses={uses} id={_id} handleClick={this.handleClick} /> : ''}

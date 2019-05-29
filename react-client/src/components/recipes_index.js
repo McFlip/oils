@@ -35,9 +35,11 @@ class RecipesIndex extends Component {
     return (
       <div>
         <Menu page='recipes' />
-        <CreateRecipe onCreateSubmit={this.handleCreate} />
-        <p>Click Search without search term to list all available recipes</p>
-        <SearchBar onSearchSubmit={this.handleSearch} subject='uses' />
+        <div className='bg-secondary text-light border border-dark'>
+          <CreateRecipe onCreateSubmit={this.handleCreate} />
+          <p>Click Search without search term to list all available recipes</p>
+          <SearchBar onSearchSubmit={this.handleSearch} subject='uses' />
+        </div>
         <h2>Recipes Found</h2>
         <ul className='list-group'>{this.renderRecipes(this.state.recipes)}</ul>
       </div>

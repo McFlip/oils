@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Menu = ({ page, dropdown }) => {
-  const brandLogo = { width: '40px' }
   const pages = ['products', 'uses', 'recipes']
 
   function pageLinks (p) {
@@ -29,7 +28,7 @@ const Menu = ({ page, dropdown }) => {
   return (
     <nav className='navbar navbar-expand-sm bg-dark navbar-dark fixed-top'>
       <Link className='navbar-brand' to='/'>
-        <img src='/favicon.ico' alt='Home' style={brandLogo} />
+        <img src='/favicon.ico' alt='Home' />
       </Link>
       <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNavDropdown'>
         <span className='navbar-toggler-icon' />

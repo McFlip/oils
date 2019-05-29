@@ -48,7 +48,7 @@ class RecipeDirections extends Component {
     return (
       <div>
         <div className='card'>
-          <h4 className='card-header'>Directions</h4>
+          <h4 className='card-header bg-secondary text-light'>Directions</h4>
           {this.renderDirections()}
         </div>
         <div className='modal fade' id='editModal' tabIndex='-1' role='dialog'>
