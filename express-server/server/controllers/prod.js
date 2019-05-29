@@ -102,21 +102,28 @@ export function createProduct(req, res) {
 /* Delete one product. */
 export function deleteProduct(req, res) {
   const { id } = req.params
-  Product.findByIdAndRemove(id, (error) => {
-    if (error) res.status(500).send(error)
-  })
-  Recipe.find({ 'ingredients.product' : id })
-    .exec((error, recipes) => {
-    if (error) res.status(500).send(error)
-    recipes.map(recipe => {
-      recipe
-        .populate('ingredients', (error, r) => {
-          if (error) res.status(500).send(error)
-          r.ingredients = _.filter(r.ingredients, i => i.product != id)
-          r.markModified('ingredients')
-          r.save()
-        })
+  // enforce ref integrity
+  // cleanup filesystem
+  Product.findById(id).exec((err, prod) => {
+    if (err) res.status(500).send(err)
+    prod.posts.map((post) => {
+      if (post.image) req.gfs.remove({ filename: post.image })
+      .catch(err => res.status(500).send(err))
     })
+    Recipe.find({ 'ingredients.product' : id })
+    .exec((error, recipes) => {
+      if (error) res.status(500).send(error)
+      recipes.map(recipe => {
+        recipe
+          .populate('ingredients', (error, r) => {
+            if (error) res.status(500).send(error)
+            r.ingredients = _.filter(r.ingredients, i => i.product != id)
+            r.markModified('ingredients')
+            r.save()
+          })
+      })
+    })
+    prod.remove()
     res.status(200).send(id)
   })
 }
@@ -177,15 +184,17 @@ export function updatePost (req, res) {
     // set the image
     if (!!image || deleteImg === 'true') {
       req.gfs.remove({ filename: post.image })
-        .catch(err => console.log(err))
-      post.image = image
+        .catch(err => res.status(500).send(err))
+        .then(() => {
+          post.image = image
+          prod.save(err => {
+            if (err) res.status(500).send(err)
+            res.status(201).json({
+              message: 'Post updated successfully'
+            })
+          })
+        })
     }
-    prod.save(err => {
-      if (err) res.status(500).send(err)
-      res.status(201).json({
-        message: 'Post updated successfully'
-      })
-    })
   })
 }
 

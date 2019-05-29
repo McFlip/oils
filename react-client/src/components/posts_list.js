@@ -12,7 +12,7 @@ class PostList extends Component {
       const md = marked(clean)
       return (
         <div className='card' key={i}>
-          {post.image ? <img className='card-img-top' alt='posted image' src={IMG_HOST + post.image} /> : null}
+          {post.image ? <img className='' alt='posted image' src={IMG_HOST + post.image} /> : null}
           <div className='card-body'>
             <div className='alert alert-yl'>
               {post.title}

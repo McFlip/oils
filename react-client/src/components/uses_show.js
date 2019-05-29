@@ -27,7 +27,7 @@ class UsesShow extends Component {
     if (!prods) return null
     return (
       <div className='card'>
-        <h5 className='card-header alert alert-info'>
+        <h5 className='alert alert-yl shadow-lg'>
           Products
         </h5>
         <ul className='list-group list-group-flush'>
@@ -50,7 +50,7 @@ class UsesShow extends Component {
     if (!recipes) return null
     return (
       <div className='card'>
-        <h5 className='card-header alert alert-primary'>
+        <h5 className='alert alert-yl shadow-lg'>
           Recipes
         </h5>
         <ul className='list-group list-group-flush'>
