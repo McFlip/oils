@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
+import $ from 'jquery'
 
 class IngredientsList extends Component {
   constructor (props) {
@@ -31,7 +32,7 @@ class IngredientsList extends Component {
       const keyed = _.keyBy(this.props.ingredients, '_id')
       keyed[ingrId].qty = val
       ingredients = _.values(keyed)
-      this.props.updateRecipe(id, { ingredients }).then(window.alert('quantity updated'))
+      this.props.updateRecipe(id, { ingredients }).then($('.toast').toast('show'))
     }
   }
   handleClick (e) {
@@ -125,6 +126,14 @@ class IngredientsList extends Component {
             }
           </tbody>
         </table>
+        <div className='toast'>
+          <div className='toast-header'>
+            Success
+          </div>
+          <div className='toast-body'>
+            Quantity Updated
+          </div>
+        </div>
       </div>
     )
   }

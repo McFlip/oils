@@ -21,7 +21,6 @@ export function searchUses (term) {
 
 export function createUse (values) {
   const request = axios.post(`${ROOT_URL}/uses`, values)
-  alert(`New Use ${values.title} created`)
 
   return {
     type: ADD_USE,

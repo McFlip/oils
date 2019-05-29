@@ -8,6 +8,7 @@ import SearchBar from './search_bar'
 import CreateUse from './create'
 import { Link } from 'react-router-dom'
 import { fetchUses, searchUses, createUse, addUse } from '../actions/use'
+import $ from 'jquery'
 
 class UsesAdd extends Component {
   constructor (props) {
@@ -48,6 +49,7 @@ class UsesAdd extends Component {
       refId: id
     }
     this.props.createUse(value)
+      .then(() => $('.toast').toast('show'))
   }
 
   handleClick (e) {
@@ -85,6 +87,14 @@ class UsesAdd extends Component {
         <CreateUse onCreateSubmit={this.handleCreate} />
         <SearchBar onSearchSubmit={this.handleSearch} subject='uses' />
         <UseList uses={uses} handleClick={this.handleClick} btnMode='add' />
+        <div className='toast'>
+          <div className='toast-header'>
+            Success
+          </div>
+          <div className='toast-body'>
+            New Use Created
+          </div>
+        </div>
       </div>
     )
   }
