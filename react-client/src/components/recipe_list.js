@@ -34,7 +34,6 @@ class RecipeList extends Component {
   render () {
     return (
       <div className='card'>
-        <h4>Recipes:</h4>
         <div>
           {this.props.recipes ? this.renderRecipes() : null}
         </div>

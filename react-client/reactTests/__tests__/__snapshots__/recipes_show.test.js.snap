@@ -16,7 +16,6 @@ Object {
             <img
               alt="Home"
               src="/favicon.ico"
-              style="width: 40px;"
             />
           </a>
           <button
@@ -204,7 +203,6 @@ Object {
         </div>
         <div
           class="card"
-          style="width: 25rem;"
         >
           <h4>
             Uses:
@@ -290,13 +288,27 @@ Object {
               </tr>
             </tbody>
           </table>
+          <div
+            class="toast"
+          >
+            <div
+              class="toast-header"
+            >
+              Success
+            </div>
+            <div
+              class="toast-body"
+            >
+              Quantity Updated
+            </div>
+          </div>
         </div>
         <div>
           <div
             class="card"
           >
             <h4
-              class="card-header"
+              class="card-header bg-secondary text-light"
             >
               Directions
             </h4>
@@ -405,7 +417,6 @@ Object {
           <img
             alt="Home"
             src="/favicon.ico"
-            style="width: 40px;"
           />
         </a>
         <button
@@ -593,7 +604,6 @@ Object {
       </div>
       <div
         class="card"
-        style="width: 25rem;"
       >
         <h4>
           Uses:
@@ -679,13 +689,27 @@ Object {
             </tr>
           </tbody>
         </table>
+        <div
+          class="toast"
+        >
+          <div
+            class="toast-header"
+          >
+            Success
+          </div>
+          <div
+            class="toast-body"
+          >
+            Quantity Updated
+          </div>
+        </div>
       </div>
       <div>
         <div
           class="card"
         >
           <h4
-            class="card-header"
+            class="card-header bg-secondary text-light"
           >
             Directions
           </h4>

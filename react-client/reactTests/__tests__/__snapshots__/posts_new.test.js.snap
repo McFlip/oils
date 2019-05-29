@@ -16,7 +16,6 @@ Object {
             <img
               alt="Home"
               src="/favicon.ico"
-              style="width: 40px;"
             />
           </a>
           <button
@@ -175,7 +174,6 @@ Object {
           <img
             alt="Home"
             src="/favicon.ico"
-            style="width: 40px;"
           />
         </a>
         <button
@@ -406,7 +404,6 @@ Object {
             <img
               alt="Home"
               src="/favicon.ico"
-              style="width: 40px;"
             />
           </a>
           <button
@@ -538,7 +535,6 @@ Object {
           <img
             alt="Home"
             src="/favicon.ico"
-            style="width: 40px;"
           />
         </a>
         <button

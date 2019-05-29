@@ -16,7 +16,6 @@ Object {
             <img
               alt="Home"
               src="/favicon.ico"
-              style="width: 40px;"
             />
           </a>
           <button
@@ -116,437 +115,532 @@ Object {
             </ul>
           </div>
         </nav>
-        <h3>
-          test 1 oz 
-        </h3>
-        <span
-          class="form-group form-check-inline px-2"
-        >
-          <label
-            class="form-check-label"
-            for="checkbox_a"
-          >
-             wishlist 
-          </label>
-          <input
-            class="form-check-input ml-2"
-            id="checkbox_a"
-            readonly=""
-            type="checkbox"
-          />
-        </span>
-        <h6>
-          Category: 
-        </h6>
-        
         <div
-          class="form-group"
+          class="jumbotron"
         >
-          <div
-            class="form-check"
+          <h1>
+            test 1 oz 
+          </h1>
+          <span
+            class="form-group form-check-inline px-2"
           >
+            <label
+              class="form-check-label"
+              for="checkbox_a"
+            >
+               wishlist 
+            </label>
             <input
-              checked=""
-              class="form-check-input"
-              id="photosensitive"
+              class="form-check-input ml-2"
+              id="checkbox_a"
               readonly=""
               type="checkbox"
             />
-            <label
-              for="photosensitive"
-            >
-              photosensitive
-            </label>
-          </div>
+          </span>
+          <h2>
+            Category: 
+          </h2>
+          
           <div
-            class="form-check"
+            class="form-group"
           >
-            <input
-              checked=""
-              class="form-check-input"
-              id="topical"
-              readonly=""
-              type="checkbox"
-            />
-            <label
-              for="topical"
-            >
-              topical
-            </label>
-          </div>
-          <div
-            class="form-check"
-          >
-            <input
-              checked=""
-              class="form-check-input"
-              id="dilute"
-              readonly=""
-              type="checkbox"
-            />
-            <label
-              for="dilute"
-            >
-              dilute
-            </label>
-          </div>
-          <div
-            class="form-check"
-          >
-            <input
-              class="form-check-input"
-              id="aromatic"
-              readonly=""
-              type="checkbox"
-            />
-            <label
-              for="aromatic"
-            >
-              aromatic
-            </label>
-          </div>
-          <div
-            class="form-check"
-          >
-            <input
-              class="form-check-input"
-              id="dietary"
-              readonly=""
-              type="checkbox"
-            />
-            <label
-              for="dietary"
-            >
-              dietary
-            </label>
-          </div>
-        </div>
-        <div>
-          <h6>
-            Contents:
-          </h6>
-          <div>
             <div
-              class="modal fade"
-              id="qtyModal"
-              role="dialog"
-              tabindex="-1"
+              class="form-check"
             >
-              <div
-                class="modal-dialog"
-                role="document"
-              >
-                <div
-                  class="modal-content"
-                >
-                  <form>
-                    <div
-                      class="modal-header"
-                    >
-                      <h5
-                        class="modal-title"
-                        id="qtyModalTitle"
-                      >
-                        Update Quantity
-                      </h5>
-                      <button
-                        class="close"
-                        data-dismiss="modal"
-                        data-testid="xButton"
-                        type="button"
-                      >
-                        <span
-                          aria-hidden="true"
-                        >
-                          ×
-                        </span>
-                      </button>
-                    </div>
-                    <div
-                      class="modal-body form-group"
-                    >
-                      <label
-                        for="qtyInput"
-                      >
-                         QTY: 
-                      </label>
-                      <input
-                        class="form-control"
-                        id="qtyInput"
-                        type="number"
-                        value="0"
-                      />
-                    </div>
-                    <div
-                      class="modal-footer"
-                    >
-                      <button
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                        type="button"
-                      >
-                        Close
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        type="submit"
-                      >
-                        Save changes
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <ul
-              class="list-group"
-            >
-              <li
-                class="list-group-item input-group"
-              >
-                <div>
-                  <h4
-                    class="alert alert-info"
-                  >
-                    content category
-                  </h4>
-                  <hr />
-                </div>
-                <span
-                  data-testid="sku"
-                />
-                <span
-                  class="px-2"
-                >
-                  <a
-                    data-testid="descr"
-                    href="/products/contentId"
-                  >
-                    content 1
-                  </a>
-                </span>
-                <span
-                  class="px-2"
-                  data-testid="size"
-                />
-                
-                <span
-                  class="form-group form-check-inline px-2"
-                >
-                  <label
-                    class="form-check-label"
-                    for="checkbox_contentId"
-                  >
-                     wishlist 
-                  </label>
-                  <input
-                    class="form-check-input ml-2"
-                    id="checkbox_contentId"
-                    type="checkbox"
-                  />
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <h6>
-            Contained In:
-          </h6>
-          <div>
-            <div
-              class="modal fade"
-              id="qtyModal"
-              role="dialog"
-              tabindex="-1"
-            >
-              <div
-                class="modal-dialog"
-                role="document"
-              >
-                <div
-                  class="modal-content"
-                >
-                  <form>
-                    <div
-                      class="modal-header"
-                    >
-                      <h5
-                        class="modal-title"
-                        id="qtyModalTitle"
-                      >
-                        Update Quantity
-                      </h5>
-                      <button
-                        class="close"
-                        data-dismiss="modal"
-                        data-testid="xButton"
-                        type="button"
-                      >
-                        <span
-                          aria-hidden="true"
-                        >
-                          ×
-                        </span>
-                      </button>
-                    </div>
-                    <div
-                      class="modal-body form-group"
-                    >
-                      <label
-                        for="qtyInput"
-                      >
-                         QTY: 
-                      </label>
-                      <input
-                        class="form-control"
-                        id="qtyInput"
-                        type="number"
-                        value="0"
-                      />
-                    </div>
-                    <div
-                      class="modal-footer"
-                    >
-                      <button
-                        class="btn btn-secondary"
-                        data-dismiss="modal"
-                        type="button"
-                      >
-                        Close
-                      </button>
-                      <button
-                        class="btn btn-primary"
-                        type="submit"
-                      >
-                        Save changes
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <ul
-              class="list-group"
-            >
-              <li
-                class="list-group-item input-group"
-              >
-                <div>
-                  <h4
-                    class="alert alert-info"
-                  >
-                    container category
-                  </h4>
-                  <hr />
-                </div>
-                <span
-                  data-testid="sku"
-                />
-                <span
-                  class="px-2"
-                >
-                  <a
-                    data-testid="descr"
-                    href="/products/containerId"
-                  >
-                    container
-                  </a>
-                </span>
-                <span
-                  class="px-2"
-                  data-testid="size"
-                />
-                
-                <span
-                  class="form-group form-check-inline px-2"
-                >
-                  <label
-                    class="form-check-label"
-                    for="checkbox_containerId"
-                  >
-                     wishlist 
-                  </label>
-                  <input
-                    class="form-check-input ml-2"
-                    id="checkbox_containerId"
-                    type="checkbox"
-                  />
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          class="card"
-          style="width: 25rem;"
-        >
-          <h4>
-            Uses:
-          </h4>
-          <ul
-            class="list-group"
-          >
-            <li
-              class="list-group-item input-group"
-            >
-              <span
-                data-testid="use"
-              >
-                <a
-                  data-testid="use"
-                  href="/uses/undefined"
-                />
-              </span>
-              <span
-                class="px-2"
-              >
-                <button
-                  class="btn btn-outline-danger float-right"
-                  data-testid="use-btn"
-                >
-                  Delete
-                </button>
-              </span>
-            </li>
-          </ul>
-        </div>
-        
-        <div>
-          <h6>
-            Posts:
-          </h6>
-          <div>
-            <div
-              class="card"
-            >
-              <img
-                alt="posted image"
-                class="card-img-top"
-                src="http://localhost:3000/images/postImage"
+              <input
+                checked=""
+                class="form-check-input"
+                id="photosensitive"
+                readonly=""
+                type="checkbox"
               />
-              <div
-                class="card-body"
+              <label
+                for="photosensitive"
               >
+                photosensitive
+              </label>
+            </div>
+            <div
+              class="form-check"
+            >
+              <input
+                checked=""
+                class="form-check-input"
+                id="topical"
+                readonly=""
+                type="checkbox"
+              />
+              <label
+                for="topical"
+              >
+                topical
+              </label>
+            </div>
+            <div
+              class="form-check"
+            >
+              <input
+                checked=""
+                class="form-check-input"
+                id="dilute"
+                readonly=""
+                type="checkbox"
+              />
+              <label
+                for="dilute"
+              >
+                dilute
+              </label>
+            </div>
+            <div
+              class="form-check"
+            >
+              <input
+                class="form-check-input"
+                id="aromatic"
+                readonly=""
+                type="checkbox"
+              />
+              <label
+                for="aromatic"
+              >
+                aromatic
+              </label>
+            </div>
+            <div
+              class="form-check"
+            >
+              <input
+                class="form-check-input"
+                id="dietary"
+                readonly=""
+                type="checkbox"
+              />
+              <label
+                for="dietary"
+              >
+                dietary
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          id="accordian"
+        >
+          <div
+            class="card"
+          >
+            <div
+              class="card-header"
+            >
+              <a
+                class="card-link"
+                data-toggle="collapse"
+                href="#Contains"
+              >
+                <h4>
+                  Contains
+                  :
+                </h4>
+              </a>
+            </div>
+            <div
+              class="collapse"
+              data-parent="#accordian"
+              id="Contains"
+            >
+              <div>
                 <div
-                  class="card-header"
+                  class="modal fade"
+                  id="qtyModal"
+                  role="dialog"
+                  tabindex="-1"
                 >
-                  postTitle
-                  <a
-                    class="btn float-right"
-                    href="/products/a/editpost/postId"
+                  <div
+                    class="modal-dialog"
+                    role="document"
                   >
-                    ...
-                  </a>
+                    <div
+                      class="modal-content"
+                    >
+                      <form>
+                        <div
+                          class="modal-header"
+                        >
+                          <h5
+                            class="modal-title"
+                            id="qtyModalTitle"
+                          >
+                            Update Quantity
+                          </h5>
+                          <button
+                            class="close"
+                            data-dismiss="modal"
+                            data-testid="xButton"
+                            type="button"
+                          >
+                            <span
+                              aria-hidden="true"
+                            >
+                              ×
+                            </span>
+                          </button>
+                        </div>
+                        <div
+                          class="modal-body form-group"
+                        >
+                          <label
+                            for="qtyInput"
+                          >
+                             QTY: 
+                          </label>
+                          <input
+                            class="form-control"
+                            id="qtyInput"
+                            type="number"
+                            value="0"
+                          />
+                        </div>
+                        <div
+                          class="modal-footer"
+                        >
+                          <button
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                            type="button"
+                          >
+                            Close
+                          </button>
+                          <button
+                            class="btn btn-primary"
+                            type="submit"
+                          >
+                            Save changes
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-                <div
-                  class="card-text"
+                <ul
+                  class="list-group"
                 >
-                  <p>
-                    postContent
-                  </p>
-                  
+                  <li
+                    class="list-group-item input-group"
+                  >
+                    <div>
+                      <h4
+                        class="alert alert-yl shadow-lg"
+                      >
+                        content category
+                      </h4>
+                      <hr />
+                    </div>
+                    <span
+                      data-testid="sku"
+                    />
+                    <span
+                      class="px-2"
+                    >
+                      <a
+                        data-testid="descr"
+                        href="/products/contentId"
+                      >
+                        content 1
+                      </a>
+                    </span>
+                    <span
+                      class="px-2"
+                      data-testid="size"
+                    />
+                    
+                    <span
+                      class="form-group form-check-inline px-2"
+                    >
+                      <label
+                        class="form-check-label"
+                        for="checkbox_contentId"
+                      >
+                         wishlist 
+                      </label>
+                      <input
+                        class="form-check-input ml-2"
+                        id="checkbox_contentId"
+                        type="checkbox"
+                      />
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+          >
+            <div
+              class="card-header"
+            >
+              <a
+                class="card-link"
+                data-toggle="collapse"
+                href="#ContainedIn"
+              >
+                <h4>
+                  Contained In
+                  :
+                </h4>
+              </a>
+            </div>
+            <div
+              class="collapse"
+              data-parent="#accordian"
+              id="ContainedIn"
+            >
+              <div>
+                <div
+                  class="modal fade"
+                  id="qtyModal"
+                  role="dialog"
+                  tabindex="-1"
+                >
+                  <div
+                    class="modal-dialog"
+                    role="document"
+                  >
+                    <div
+                      class="modal-content"
+                    >
+                      <form>
+                        <div
+                          class="modal-header"
+                        >
+                          <h5
+                            class="modal-title"
+                            id="qtyModalTitle"
+                          >
+                            Update Quantity
+                          </h5>
+                          <button
+                            class="close"
+                            data-dismiss="modal"
+                            data-testid="xButton"
+                            type="button"
+                          >
+                            <span
+                              aria-hidden="true"
+                            >
+                              ×
+                            </span>
+                          </button>
+                        </div>
+                        <div
+                          class="modal-body form-group"
+                        >
+                          <label
+                            for="qtyInput"
+                          >
+                             QTY: 
+                          </label>
+                          <input
+                            class="form-control"
+                            id="qtyInput"
+                            type="number"
+                            value="0"
+                          />
+                        </div>
+                        <div
+                          class="modal-footer"
+                        >
+                          <button
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                            type="button"
+                          >
+                            Close
+                          </button>
+                          <button
+                            class="btn btn-primary"
+                            type="submit"
+                          >
+                            Save changes
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <ul
+                  class="list-group"
+                >
+                  <li
+                    class="list-group-item input-group"
+                  >
+                    <div>
+                      <h4
+                        class="alert alert-yl shadow-lg"
+                      >
+                        container category
+                      </h4>
+                      <hr />
+                    </div>
+                    <span
+                      data-testid="sku"
+                    />
+                    <span
+                      class="px-2"
+                    >
+                      <a
+                        data-testid="descr"
+                        href="/products/containerId"
+                      >
+                        container
+                      </a>
+                    </span>
+                    <span
+                      class="px-2"
+                      data-testid="size"
+                    />
+                    
+                    <span
+                      class="form-group form-check-inline px-2"
+                    >
+                      <label
+                        class="form-check-label"
+                        for="checkbox_containerId"
+                      >
+                         wishlist 
+                      </label>
+                      <input
+                        class="form-check-input ml-2"
+                        id="checkbox_containerId"
+                        type="checkbox"
+                      />
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
+            class="card"
+          >
+            <div
+              class="card-header"
+            >
+              <a
+                class="card-link"
+                data-toggle="collapse"
+                href="#Uses"
+              >
+                <h4>
+                  Uses
+                  :
+                </h4>
+              </a>
+            </div>
+            <div
+              class="collapse"
+              data-parent="#accordian"
+              id="Uses"
+            >
+              <div
+                class="card"
+              >
+                <h4>
+                  Uses:
+                </h4>
+                <ul
+                  class="list-group"
+                >
+                  <li
+                    class="list-group-item input-group"
+                  >
+                    <span
+                      data-testid="use"
+                    >
+                      <a
+                        data-testid="use"
+                        href="/uses/undefined"
+                      />
+                    </span>
+                    <span
+                      class="px-2"
+                    >
+                      <button
+                        class="btn btn-outline-danger float-right"
+                        data-testid="use-btn"
+                      >
+                        Delete
+                      </button>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div
+            class="card"
+          >
+            <div
+              class="card-header"
+            >
+              <a
+                class="card-link"
+                data-toggle="collapse"
+                href="#Posts"
+              >
+                <h4>
+                  Posts
+                  :
+                </h4>
+              </a>
+            </div>
+            <div
+              class="collapse"
+              data-parent="#accordian"
+              id="Posts"
+            >
+              <div
+                class="card"
+              >
+                <h4>
+                  Posts:
+                </h4>
+                <div>
+                  <div
+                    class="card"
+                  >
+                    <img
+                      alt="posted image"
+                      class=""
+                      src="http://localhost:3000/images/postImage"
+                    />
+                    <div
+                      class="card-body"
+                    >
+                      <div
+                        class="alert alert-yl"
+                      >
+                        postTitle
+                        <a
+                          class="btn float-right"
+                          href="/products/a/editpost/postId"
+                        >
+                          ...
+                        </a>
+                      </div>
+                      <div
+                        class="card-text"
+                      >
+                        <p>
+                          postContent
+                        </p>
+                        
 
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -567,7 +661,6 @@ Object {
           <img
             alt="Home"
             src="/favicon.ico"
-            style="width: 40px;"
           />
         </a>
         <button
@@ -667,437 +760,532 @@ Object {
           </ul>
         </div>
       </nav>
-      <h3>
-        test 1 oz 
-      </h3>
-      <span
-        class="form-group form-check-inline px-2"
-      >
-        <label
-          class="form-check-label"
-          for="checkbox_a"
-        >
-           wishlist 
-        </label>
-        <input
-          class="form-check-input ml-2"
-          id="checkbox_a"
-          readonly=""
-          type="checkbox"
-        />
-      </span>
-      <h6>
-        Category: 
-      </h6>
-      
       <div
-        class="form-group"
+        class="jumbotron"
       >
-        <div
-          class="form-check"
+        <h1>
+          test 1 oz 
+        </h1>
+        <span
+          class="form-group form-check-inline px-2"
         >
+          <label
+            class="form-check-label"
+            for="checkbox_a"
+          >
+             wishlist 
+          </label>
           <input
-            checked=""
-            class="form-check-input"
-            id="photosensitive"
+            class="form-check-input ml-2"
+            id="checkbox_a"
             readonly=""
             type="checkbox"
           />
-          <label
-            for="photosensitive"
-          >
-            photosensitive
-          </label>
-        </div>
+        </span>
+        <h2>
+          Category: 
+        </h2>
+        
         <div
-          class="form-check"
+          class="form-group"
         >
-          <input
-            checked=""
-            class="form-check-input"
-            id="topical"
-            readonly=""
-            type="checkbox"
-          />
-          <label
-            for="topical"
-          >
-            topical
-          </label>
-        </div>
-        <div
-          class="form-check"
-        >
-          <input
-            checked=""
-            class="form-check-input"
-            id="dilute"
-            readonly=""
-            type="checkbox"
-          />
-          <label
-            for="dilute"
-          >
-            dilute
-          </label>
-        </div>
-        <div
-          class="form-check"
-        >
-          <input
-            class="form-check-input"
-            id="aromatic"
-            readonly=""
-            type="checkbox"
-          />
-          <label
-            for="aromatic"
-          >
-            aromatic
-          </label>
-        </div>
-        <div
-          class="form-check"
-        >
-          <input
-            class="form-check-input"
-            id="dietary"
-            readonly=""
-            type="checkbox"
-          />
-          <label
-            for="dietary"
-          >
-            dietary
-          </label>
-        </div>
-      </div>
-      <div>
-        <h6>
-          Contents:
-        </h6>
-        <div>
           <div
-            class="modal fade"
-            id="qtyModal"
-            role="dialog"
-            tabindex="-1"
+            class="form-check"
           >
-            <div
-              class="modal-dialog"
-              role="document"
-            >
-              <div
-                class="modal-content"
-              >
-                <form>
-                  <div
-                    class="modal-header"
-                  >
-                    <h5
-                      class="modal-title"
-                      id="qtyModalTitle"
-                    >
-                      Update Quantity
-                    </h5>
-                    <button
-                      class="close"
-                      data-dismiss="modal"
-                      data-testid="xButton"
-                      type="button"
-                    >
-                      <span
-                        aria-hidden="true"
-                      >
-                        ×
-                      </span>
-                    </button>
-                  </div>
-                  <div
-                    class="modal-body form-group"
-                  >
-                    <label
-                      for="qtyInput"
-                    >
-                       QTY: 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="qtyInput"
-                      type="number"
-                      value="0"
-                    />
-                  </div>
-                  <div
-                    class="modal-footer"
-                  >
-                    <button
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                      type="button"
-                    >
-                      Close
-                    </button>
-                    <button
-                      class="btn btn-primary"
-                      type="submit"
-                    >
-                      Save changes
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <ul
-            class="list-group"
-          >
-            <li
-              class="list-group-item input-group"
-            >
-              <div>
-                <h4
-                  class="alert alert-info"
-                >
-                  content category
-                </h4>
-                <hr />
-              </div>
-              <span
-                data-testid="sku"
-              />
-              <span
-                class="px-2"
-              >
-                <a
-                  data-testid="descr"
-                  href="/products/contentId"
-                >
-                  content 1
-                </a>
-              </span>
-              <span
-                class="px-2"
-                data-testid="size"
-              />
-              
-              <span
-                class="form-group form-check-inline px-2"
-              >
-                <label
-                  class="form-check-label"
-                  for="checkbox_contentId"
-                >
-                   wishlist 
-                </label>
-                <input
-                  class="form-check-input ml-2"
-                  id="checkbox_contentId"
-                  type="checkbox"
-                />
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div>
-        <h6>
-          Contained In:
-        </h6>
-        <div>
-          <div
-            class="modal fade"
-            id="qtyModal"
-            role="dialog"
-            tabindex="-1"
-          >
-            <div
-              class="modal-dialog"
-              role="document"
-            >
-              <div
-                class="modal-content"
-              >
-                <form>
-                  <div
-                    class="modal-header"
-                  >
-                    <h5
-                      class="modal-title"
-                      id="qtyModalTitle"
-                    >
-                      Update Quantity
-                    </h5>
-                    <button
-                      class="close"
-                      data-dismiss="modal"
-                      data-testid="xButton"
-                      type="button"
-                    >
-                      <span
-                        aria-hidden="true"
-                      >
-                        ×
-                      </span>
-                    </button>
-                  </div>
-                  <div
-                    class="modal-body form-group"
-                  >
-                    <label
-                      for="qtyInput"
-                    >
-                       QTY: 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="qtyInput"
-                      type="number"
-                      value="0"
-                    />
-                  </div>
-                  <div
-                    class="modal-footer"
-                  >
-                    <button
-                      class="btn btn-secondary"
-                      data-dismiss="modal"
-                      type="button"
-                    >
-                      Close
-                    </button>
-                    <button
-                      class="btn btn-primary"
-                      type="submit"
-                    >
-                      Save changes
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-          <ul
-            class="list-group"
-          >
-            <li
-              class="list-group-item input-group"
-            >
-              <div>
-                <h4
-                  class="alert alert-info"
-                >
-                  container category
-                </h4>
-                <hr />
-              </div>
-              <span
-                data-testid="sku"
-              />
-              <span
-                class="px-2"
-              >
-                <a
-                  data-testid="descr"
-                  href="/products/containerId"
-                >
-                  container
-                </a>
-              </span>
-              <span
-                class="px-2"
-                data-testid="size"
-              />
-              
-              <span
-                class="form-group form-check-inline px-2"
-              >
-                <label
-                  class="form-check-label"
-                  for="checkbox_containerId"
-                >
-                   wishlist 
-                </label>
-                <input
-                  class="form-check-input ml-2"
-                  id="checkbox_containerId"
-                  type="checkbox"
-                />
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div
-        class="card"
-        style="width: 25rem;"
-      >
-        <h4>
-          Uses:
-        </h4>
-        <ul
-          class="list-group"
-        >
-          <li
-            class="list-group-item input-group"
-          >
-            <span
-              data-testid="use"
-            >
-              <a
-                data-testid="use"
-                href="/uses/undefined"
-              />
-            </span>
-            <span
-              class="px-2"
-            >
-              <button
-                class="btn btn-outline-danger float-right"
-                data-testid="use-btn"
-              >
-                Delete
-              </button>
-            </span>
-          </li>
-        </ul>
-      </div>
-      
-      <div>
-        <h6>
-          Posts:
-        </h6>
-        <div>
-          <div
-            class="card"
-          >
-            <img
-              alt="posted image"
-              class="card-img-top"
-              src="http://localhost:3000/images/postImage"
+            <input
+              checked=""
+              class="form-check-input"
+              id="photosensitive"
+              readonly=""
+              type="checkbox"
             />
-            <div
-              class="card-body"
+            <label
+              for="photosensitive"
             >
+              photosensitive
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              checked=""
+              class="form-check-input"
+              id="topical"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="topical"
+            >
+              topical
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              checked=""
+              class="form-check-input"
+              id="dilute"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="dilute"
+            >
+              dilute
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              class="form-check-input"
+              id="aromatic"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="aromatic"
+            >
+              aromatic
+            </label>
+          </div>
+          <div
+            class="form-check"
+          >
+            <input
+              class="form-check-input"
+              id="dietary"
+              readonly=""
+              type="checkbox"
+            />
+            <label
+              for="dietary"
+            >
+              dietary
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        id="accordian"
+      >
+        <div
+          class="card"
+        >
+          <div
+            class="card-header"
+          >
+            <a
+              class="card-link"
+              data-toggle="collapse"
+              href="#Contains"
+            >
+              <h4>
+                Contains
+                :
+              </h4>
+            </a>
+          </div>
+          <div
+            class="collapse"
+            data-parent="#accordian"
+            id="Contains"
+          >
+            <div>
               <div
-                class="card-header"
+                class="modal fade"
+                id="qtyModal"
+                role="dialog"
+                tabindex="-1"
               >
-                postTitle
-                <a
-                  class="btn float-right"
-                  href="/products/a/editpost/postId"
+                <div
+                  class="modal-dialog"
+                  role="document"
                 >
-                  ...
-                </a>
+                  <div
+                    class="modal-content"
+                  >
+                    <form>
+                      <div
+                        class="modal-header"
+                      >
+                        <h5
+                          class="modal-title"
+                          id="qtyModalTitle"
+                        >
+                          Update Quantity
+                        </h5>
+                        <button
+                          class="close"
+                          data-dismiss="modal"
+                          data-testid="xButton"
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body form-group"
+                      >
+                        <label
+                          for="qtyInput"
+                        >
+                           QTY: 
+                        </label>
+                        <input
+                          class="form-control"
+                          id="qtyInput"
+                          type="number"
+                          value="0"
+                        />
+                      </div>
+                      <div
+                        class="modal-footer"
+                      >
+                        <button
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                          type="button"
+                        >
+                          Close
+                        </button>
+                        <button
+                          class="btn btn-primary"
+                          type="submit"
+                        >
+                          Save changes
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
-              <div
-                class="card-text"
+              <ul
+                class="list-group"
               >
-                <p>
-                  postContent
-                </p>
-                
+                <li
+                  class="list-group-item input-group"
+                >
+                  <div>
+                    <h4
+                      class="alert alert-yl shadow-lg"
+                    >
+                      content category
+                    </h4>
+                    <hr />
+                  </div>
+                  <span
+                    data-testid="sku"
+                  />
+                  <span
+                    class="px-2"
+                  >
+                    <a
+                      data-testid="descr"
+                      href="/products/contentId"
+                    >
+                      content 1
+                    </a>
+                  </span>
+                  <span
+                    class="px-2"
+                    data-testid="size"
+                  />
+                  
+                  <span
+                    class="form-group form-check-inline px-2"
+                  >
+                    <label
+                      class="form-check-label"
+                      for="checkbox_contentId"
+                    >
+                       wishlist 
+                    </label>
+                    <input
+                      class="form-check-input ml-2"
+                      id="checkbox_contentId"
+                      type="checkbox"
+                    />
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card"
+        >
+          <div
+            class="card-header"
+          >
+            <a
+              class="card-link"
+              data-toggle="collapse"
+              href="#ContainedIn"
+            >
+              <h4>
+                Contained In
+                :
+              </h4>
+            </a>
+          </div>
+          <div
+            class="collapse"
+            data-parent="#accordian"
+            id="ContainedIn"
+          >
+            <div>
+              <div
+                class="modal fade"
+                id="qtyModal"
+                role="dialog"
+                tabindex="-1"
+              >
+                <div
+                  class="modal-dialog"
+                  role="document"
+                >
+                  <div
+                    class="modal-content"
+                  >
+                    <form>
+                      <div
+                        class="modal-header"
+                      >
+                        <h5
+                          class="modal-title"
+                          id="qtyModalTitle"
+                        >
+                          Update Quantity
+                        </h5>
+                        <button
+                          class="close"
+                          data-dismiss="modal"
+                          data-testid="xButton"
+                          type="button"
+                        >
+                          <span
+                            aria-hidden="true"
+                          >
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body form-group"
+                      >
+                        <label
+                          for="qtyInput"
+                        >
+                           QTY: 
+                        </label>
+                        <input
+                          class="form-control"
+                          id="qtyInput"
+                          type="number"
+                          value="0"
+                        />
+                      </div>
+                      <div
+                        class="modal-footer"
+                      >
+                        <button
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                          type="button"
+                        >
+                          Close
+                        </button>
+                        <button
+                          class="btn btn-primary"
+                          type="submit"
+                        >
+                          Save changes
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <ul
+                class="list-group"
+              >
+                <li
+                  class="list-group-item input-group"
+                >
+                  <div>
+                    <h4
+                      class="alert alert-yl shadow-lg"
+                    >
+                      container category
+                    </h4>
+                    <hr />
+                  </div>
+                  <span
+                    data-testid="sku"
+                  />
+                  <span
+                    class="px-2"
+                  >
+                    <a
+                      data-testid="descr"
+                      href="/products/containerId"
+                    >
+                      container
+                    </a>
+                  </span>
+                  <span
+                    class="px-2"
+                    data-testid="size"
+                  />
+                  
+                  <span
+                    class="form-group form-check-inline px-2"
+                  >
+                    <label
+                      class="form-check-label"
+                      for="checkbox_containerId"
+                    >
+                       wishlist 
+                    </label>
+                    <input
+                      class="form-check-input ml-2"
+                      id="checkbox_containerId"
+                      type="checkbox"
+                    />
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card"
+        >
+          <div
+            class="card-header"
+          >
+            <a
+              class="card-link"
+              data-toggle="collapse"
+              href="#Uses"
+            >
+              <h4>
+                Uses
+                :
+              </h4>
+            </a>
+          </div>
+          <div
+            class="collapse"
+            data-parent="#accordian"
+            id="Uses"
+          >
+            <div
+              class="card"
+            >
+              <h4>
+                Uses:
+              </h4>
+              <ul
+                class="list-group"
+              >
+                <li
+                  class="list-group-item input-group"
+                >
+                  <span
+                    data-testid="use"
+                  >
+                    <a
+                      data-testid="use"
+                      href="/uses/undefined"
+                    />
+                  </span>
+                  <span
+                    class="px-2"
+                  >
+                    <button
+                      class="btn btn-outline-danger float-right"
+                      data-testid="use-btn"
+                    >
+                      Delete
+                    </button>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div
+          class="card"
+        >
+          <div
+            class="card-header"
+          >
+            <a
+              class="card-link"
+              data-toggle="collapse"
+              href="#Posts"
+            >
+              <h4>
+                Posts
+                :
+              </h4>
+            </a>
+          </div>
+          <div
+            class="collapse"
+            data-parent="#accordian"
+            id="Posts"
+          >
+            <div
+              class="card"
+            >
+              <h4>
+                Posts:
+              </h4>
+              <div>
+                <div
+                  class="card"
+                >
+                  <img
+                    alt="posted image"
+                    class=""
+                    src="http://localhost:3000/images/postImage"
+                  />
+                  <div
+                    class="card-body"
+                  >
+                    <div
+                      class="alert alert-yl"
+                    >
+                      postTitle
+                      <a
+                        class="btn float-right"
+                        href="/products/a/editpost/postId"
+                      >
+                        ...
+                      </a>
+                    </div>
+                    <div
+                      class="card-text"
+                    >
+                      <p>
+                        postContent
+                      </p>
+                      
 
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

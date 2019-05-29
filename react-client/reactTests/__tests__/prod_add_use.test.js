@@ -10,6 +10,7 @@ jest.mock('actions/prods')
 jest.mock('actions/use')
 
 // Create a new product use, search for and add an existing use
+// FIX: test is broken - mock out toast function
 test('create a new use and search', async () => {
   const store = newStore()
   const { getByText, getByTestId, queryByText } = render(

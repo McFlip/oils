@@ -10,6 +10,8 @@ import RecipeList from './recipe_list'
 import PostList from './posts_list'
 import { fetchProd, deleteProd, updateProd } from '../actions/prods'
 import { removeUse } from '../actions/use'
+import $ from 'jquery'
+import Popper from 'popper.js'
 
 class ProdsShow extends Component {
   constructor (props) {
@@ -69,20 +71,17 @@ class ProdsShow extends Component {
     )
   }
 
-  renderContents (contents) {
+  renderAccordian (name, element) {
     return (
       <div className='card'>
-        <h4>Contents:</h4>
-        <ProdsList prods={contents} />
-      </div>
-    )
-  }
-
-  renderMembership (containers) {
-    return (
-      <div className='card'>
-        <h4>Contained In:</h4>
-        <ProdsList prods={containers} />
+        <div className='card-header'>
+          <a className='card-link' data-toggle='collapse' href={`#${name.replace(/ /g, '')}`}>
+            <h4>{name}:</h4>
+          </a>
+        </div>
+        <div id={name.replace(/ /g, '')} className='collapse' data-parent='#accordian'>
+          {element}
+        </div>
       </div>
     )
   }
@@ -104,17 +103,19 @@ class ProdsShow extends Component {
         <div>
           <Menu page='products' dropdown={ProdsShowDropdown(this.onDeleteClick, match.params.id)} />
           <div className='jumbotron'>
-          <h1>{`${descr} ${size || ''} ${unit_issue || ''}`}</h1>
-          <Checkbox _id={_id} checked={wishlist} readOnly />
-          <h2>Category: {category}</h2>
-          {wholesale || retail || pv ? this.renderVal(wholesale, retail, pv) : ''}
-          {oil && this.renderOil(oilProps)}
+            <h1>{`${descr} ${size || ''} ${unit_issue || ''}`}</h1>
+            <Checkbox _id={_id} checked={wishlist} readOnly />
+            <h2>Category: {category}</h2>
+            {wholesale || retail || pv ? this.renderVal(wholesale, retail, pv) : ''}
+            {oil && this.renderOil(oilProps)}
           </div>
-          {contains != undefined && contains.length > 0 ? this.renderContents(contains) : ''}
-          {containedIn != undefined && containedIn.length > 0 ? this.renderMembership(containedIn) : ''}
-          {uses != undefined && uses.length > 0 ? <UseList uses={uses} id={_id} handleClick={this.handleClick} /> : ''}
-          {recipes != undefined && recipes.length > 0 ? <RecipeList recipes={recipes} titles={useTitles} /> : ''}
-          {posts != undefined && posts.length > 0 ? <PostList posts={posts} id={_id} /> : ''}
+          <div id='accordian'>
+            {contains != undefined && contains.length > 0 ? this.renderAccordian('Contains', <ProdsList prods={contains} />) : ''}
+            {containedIn != undefined && containedIn.length > 0 ? this.renderAccordian('Contained In', <ProdsList prods={containedIn} />) : ''}
+            {uses != undefined && uses.length > 0 ? this.renderAccordian('Uses', <UseList uses={uses} id={_id} handleClick={this.handleClick} />) : ''}
+            {recipes != undefined && recipes.length > 0 ? this.renderAccordian('Recipes', <RecipeList recipes={recipes} titles={useTitles} />) : ''}
+            {posts != undefined && posts.length > 0 ? this.renderAccordian('Posts', <PostList posts={posts} id={_id} />) : ''}
+          </div>
         </div>
       )
     }
