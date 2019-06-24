@@ -6,7 +6,7 @@ import { testUses } from './testData'
 // const testProd2 = testState2.prods; // has 2 prods
 
 export const createUse = jest.fn(() => {
-  return {
+  return new Promise(resolve => resolve({
     type: ADD_USE,
     payload: {
       data: {
@@ -15,7 +15,7 @@ export const createUse = jest.fn(() => {
         title: 'createdUseTitle'
       }
     }
-  }
+  }))
 })
 
 export const fetchUses = jest.fn(() => {

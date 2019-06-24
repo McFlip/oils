@@ -7,6 +7,11 @@ import * as recipesActionMock from 'actions/recipes'
 
 jest.mock('actions/prods')
 jest.mock('actions/recipes')
+jest.mock('jquery', () => {
+  return function () {
+    return { toast: () => {} }
+  }
+})
 const store = newStore()
 
 // kit tests

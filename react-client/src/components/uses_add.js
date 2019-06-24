@@ -48,7 +48,6 @@ class UsesAdd extends Component {
       category: refType,
       refId: id
     }
-    // FIX: creatUse mock needs to be a promis
     this.props.createUse(value)
       .then(() => $('.toast').toast('show'))
   }
