@@ -32,7 +32,7 @@ test('edit recipe', async () => {
   fireEvent.click(getByText('Actions'))
   fireEvent.click(getByText('Edit Title'))
   fireEvent.change(getByLabelText('Title:'), { target: { value: 'testez recipez deez nuts' } })
-  fireEvent.click(getByText('Save changes'))
+  fireEvent.click(getByTestId('title-save'))
   fireEvent.click(getByText('Actions'))
   fireEvent.click(getByText('Edit directions'))
   fireEvent.change(getByTestId('directions'), { target: { value: 'step 1 cut a hole in the box' } })
@@ -40,7 +40,7 @@ test('edit recipe', async () => {
 })
 // rerender and make assertions
 test('edit recipe WTF', () => {
-  const { getByText, getByTestId } = render(
+  const { getByTestId } = render(
     <RecipesShow
       match={{
         params: { id: 'testRecipe' },
@@ -56,5 +56,5 @@ test('edit recipe WTF', () => {
     { store }
   )
   expect(getByTestId('titleDisplay').textContent).toBe('testez recipez deez nuts')
-  expect(getByText('step 1 cut a hole in the box')).toBeTruthy()
+  expect(getByTestId('directionsDisplay').textContent).toBe('step 1 cut a hole in the box\n')
 })

@@ -42,7 +42,7 @@ class RecipeDirections extends Component {
   renderDirections () {
     const clean = DOMPurify.sanitize(this.state.value)
     const md = marked(clean)
-    return (<div className='card-body' dangerouslySetInnerHTML={{ __html: md }} />)
+    return (<div className='card-body' data-testid='directionsDisplay' dangerouslySetInnerHTML={{ __html: md }} />)
   }
   render () {
     return (

@@ -1,7 +1,7 @@
 // add some helpful assertions
 import 'jest-dom/extend-expect'
 // this is basically: afterEach(cleanup)
-import 'react-testing-library/cleanup-after-each'
+import '@testing-library/react/cleanup-after-each'
 // jquery 3rd party lib
 import $ from 'jquery'
 // eslint-disable-next-line no-undef

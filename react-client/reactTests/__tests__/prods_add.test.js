@@ -45,7 +45,7 @@ test('existing kit content', async () => {
 })
 
 test('add and remove content', async () => {
-  const { getByText, getByTestId, queryByTestId, queryByText } = render(
+  const { getByText, getAllByText, getByTestId, queryByTestId, queryByText } = render(
     <ProdsAdd
       match={{
         params: { id: 'a' },
@@ -68,7 +68,7 @@ test('add and remove content', async () => {
   await wait(() => expect(queryByTestId('sku')).toBeNull())
   expect(getByText('test2')).toBeTruthy()
   // delete the first ingredient
-  fireEvent.click(getByText('Delete'))
+  fireEvent.click(getAllByText('Delete')[0])
   await wait(() => expect(queryByText('content 1')).toBeNull())
   expect(getByText('test2')).toBeTruthy()
 })

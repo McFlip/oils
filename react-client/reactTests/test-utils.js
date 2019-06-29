@@ -1,4 +1,4 @@
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import React from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import promise from 'redux-promise'
@@ -31,7 +31,7 @@ export const newStore = () => {
 }
 
 // re-export everything
-export * from 'react-testing-library'
+export * from '@testing-library/react'
 
 // override render method
 export { renderWithRedux as render }
