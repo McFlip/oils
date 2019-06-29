@@ -1,18 +1,8 @@
 import axios from 'axios'
-import { FETCH_POSTS, FETCH_POST, CREATE_POST, DELETE_POST, ROOT_URL } from '../constants'
-
-export function fetchPosts () {
-  const request = axios.get(`${ROOT_URL}/posts`)
-
-  return {
-    type: FETCH_POSTS,
-    payload: request
-  }
-}
+import { FETCH_POST, CREATE_POST, DELETE_POST, ROOT_URL } from '../constants'
 
 export function createPost (values, callback) {
-  // console.log(values)
-  const config = {     
+  const config = {
     headers: { 'content-type': 'multipart/form-data' }
   }
   const request = axios
@@ -26,7 +16,7 @@ export function createPost (values, callback) {
 }
 
 export function updatePost (values, callback) {
-  const config = {     
+  const config = {
     headers: { 'content-type': 'multipart/form-data' }
   }
   const request = axios

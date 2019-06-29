@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { FETCH_USES, FETCH_USE, SEARCH_USES, DELETE_USE, ADD_USE, ROOT_URL, REMOVE_USE } from '../constants/'
+import { FETCH_USES, SEARCH_USES, ADD_USE, ROOT_URL, REMOVE_USE } from '../constants/'
 
 export function fetchUses (id, refType) {
   const request = axios.get(`${ROOT_URL}/uses/${id}/${refType}`)
@@ -31,11 +31,6 @@ export function createUse (values) {
 export function fetchUse (id) {
   const request = axios.get(`${ROOT_URL}/uses/${id}`)
   return request
-
-  /* return {
-    type: FETCH_USE,
-    payload: request
-  }; */
 }
 
 export function deleteUse (useId) {

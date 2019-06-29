@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import $ from 'jquery'
 
-const RecipesShowDropdown = (onDeleteClick,id) => {
+const RecipesShowDropdown = (onDeleteClick, id) => {
   return (
     <div>
       <div className='dropdown-menu'>

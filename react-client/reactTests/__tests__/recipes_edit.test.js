@@ -7,9 +7,9 @@ jest.mock('actions/recipes')
 jest.dontMock('jquery')
 const store = newStore()
 
-// note: the prods_add test covers editing ingredients
-// note: the prod_add_use test covers uses
-// note: recipes_show test covers rendering a recipe using a snapshot
+// the prods_add test covers editing ingredients
+// the prod_add_use test covers uses
+// recipes_show test covers rendering a recipe using a snapshot
 // first test makes the changes
 // then we rerender and make assertions
 test('edit recipe', async () => {

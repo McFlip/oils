@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 class UseList extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   renderUses () {
     return this.props.uses.map((use, i) => {
       return (
@@ -17,9 +13,9 @@ class UseList extends Component {
           </span>
           <span className='px-2'>
             <button onClick={e => this.props.handleClick(e)} data-txt={use._id} data-testid='use-btn'
-              className={this.props.btnMode == 'add' ? 'btn btn-outline-primary float-right' : 'btn btn-outline-danger float-right'}
+              className={this.props.btnMode === 'add' ? 'btn btn-outline-primary float-right' : 'btn btn-outline-danger float-right'}
             >
-              { this.props.btnMode == 'add' ? 'Add' : 'Delete' }
+              { this.props.btnMode === 'add' ? 'Add' : 'Delete' }
             </button>
           </span>
         </li>

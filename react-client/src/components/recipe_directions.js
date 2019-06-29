@@ -27,7 +27,7 @@ class RecipeDirections extends Component {
   // dispatch actions
   handleSubmit (e) {
     e.preventDefault()
-    const clean = DOMPurify.sanitize(this.state.value) 
+    const clean = DOMPurify.sanitize(this.state.value)
     this.props.handleSubmit(clean)
     $('#editModal').modal('toggle')
   }

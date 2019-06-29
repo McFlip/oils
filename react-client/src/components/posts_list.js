@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { IMG_HOST } from '../constants';
+import { IMG_HOST } from '../constants'
 import { Link } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import marked from 'marked'

@@ -17,7 +17,7 @@ class RecipesIndex extends Component {
   }
   handleCreate (title) {
     if (title === '') {
-      alert("recipe title can't be blank")
+      window.alert("recipe title can't be blank")
     } else {
       // jump to newly created recipe
       createRecipe({ title }, recipe => this.props.history.push(`/recipes/${recipe._id}`))

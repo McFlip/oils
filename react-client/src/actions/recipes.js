@@ -28,7 +28,7 @@ export function updateRecipe (id, value) {
   }
 }
 
-export function deleteRecipe (id, callback) {
+export function deleteRecipe (id) {
   const request = axios
     .delete(`${ROOT_URL}/recipes/${id}`)
   return {

@@ -6,7 +6,7 @@ import RecipesShow from 'components/recipes_show'
 jest.mock('actions/recipes')
 const store = newStore()
 
-test('recipe render', () =>{
+test('recipe render', () => {
   const recipe = render(
     <RecipesShow
       match={{

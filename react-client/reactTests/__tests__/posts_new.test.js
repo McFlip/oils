@@ -1,6 +1,6 @@
 /* eslint-env jest */
 import React from 'react'
-import { render, newStore, fireEvent, wait } from '../test-utils'
+import { render, newStore, fireEvent } from '../test-utils'
 import PostsNew from 'components/posts_new'
 import * as postsActionMock from 'actions/posts'
 
@@ -82,7 +82,7 @@ test('render edit post', () => {
 
 test('edit post', /* async */ () => {
   const store = newStore()
-  const { getByText, getByLabelText, getByAltText } = render(
+  const { getByText, getByAltText } = render(
     <PostsNew
       match={{
         params: { id: 'a', postId: 'postId' },
@@ -114,7 +114,7 @@ test('edit post', /* async */ () => {
   formData = postsActionMock.updatePost.mock.calls[1][0]
   expect(formData.get('image')).toBe('null')
   expect(formData.get('deleteImg')).toBe('true')
-  expect(getByAltText('post image').style._values).toEqual({"filter": "grayscale(100%) blur(5px)"})
+  expect(getByAltText('post image').style._values).toEqual({ 'filter': 'grayscale(100%) blur(5px)' })
   // delete post
   fireEvent.click(getByText('Delete Post'))
   expect(postsActionMock.deletePost).toHaveBeenCalledTimes(1)

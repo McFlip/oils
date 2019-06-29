@@ -7,7 +7,7 @@ import IngredientsList from './ingredients_list'
 import RecipeDirections from './recipe_directions'
 import { fetchRecipe, updateRecipe, deleteRecipe } from '../actions/recipes'
 import { removeUse } from '../actions/use'
-import RecipesShowDropdown from './recipesShow_dropdown';
+import RecipesShowDropdown from './recipesShow_dropdown'
 
 class RecipesShow extends Component {
   constructor (props) {

@@ -1,5 +1,6 @@
 import { FETCH_RECIPE, REMOVE_USE } from '../constants'
 import produce from 'immer'
+import _ from 'lodash'
 
 export default function (state = {}, action) {
   switch (action.type) {
@@ -9,7 +10,7 @@ export default function (state = {}, action) {
       const newState = produce(state, draftState => {
         const { id, category } = action.payload.data
         if (category === 'recipe') {
-          draftState.recipe.uses = _.remove(draftState.recipe.uses, i => i._id != id)
+          draftState.recipe.uses = _.remove(draftState.recipe.uses, i => i._id !== id)
         } else {
           return state
         }

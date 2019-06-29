@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 
-export default class QTY_Button extends Component {
+export default class QtyButton extends Component {
   constructor (props) {
     super(props)
     this.state = {}

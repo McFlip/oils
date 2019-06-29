@@ -2,7 +2,6 @@
 import React from 'react'
 import { render, fireEvent, newStore, wait } from '../test-utils'
 import ProdsAdd from 'components/prods_add'
-import * as prodsActionMock from 'actions/prods'
 import * as recipesActionMock from 'actions/recipes'
 
 jest.mock('actions/prods')

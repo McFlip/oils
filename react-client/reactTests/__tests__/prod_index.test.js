@@ -9,7 +9,7 @@ jest.mock('actions/prods')
 
 test('List All, qty button, wishlist', async () => {
   const store = newStore()
-  const { getByTestId, queryByTestId, queryByText, getByLabelText, getByText } = render(<ProdsIndex />, { store })
+  const { getByTestId, queryByTestId, getByLabelText, getByText } = render(<ProdsIndex />, { store })
   // check render
   expect(queryByTestId('sku')).toBeNull()
   fireEvent.click(getByText('Actions'))

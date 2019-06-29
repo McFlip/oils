@@ -1,15 +1,15 @@
-import { Product, Oil, Post } from '../models/product.js';
+import { Product, Oil, Post } from '../models/product.js'
 import mongoose from 'mongoose'
 import Recipe from '../models/recipe'
 import _ from 'lodash'
 
 /* GET all products. */
 export function getProducts (req, res) {
-  Product.find({}).sort({category: 1, sku: 1}).exec((error, products) => {
-      if (error) res.status(500).send(error)
+  Product.find({}).sort({ category: 1, sku: 1 }).exec((error, products) => {
+    if (error) res.status(500).send(error)
 
-      res.status(200).send(products);
-  });
+    res.status(200).send(products)
+  })
 }
 
 /* GET one product. */
@@ -17,14 +17,14 @@ export function getProduct (req, res) {
   const id = mongoose.Types.ObjectId(req.params.id)
   // Product.findById(id).
   Product.aggregate([
-    { $match: { _id: id } }, 
+    { $match: { _id: id } },
     {
       $lookup: {
         from: 'recipes',
         localField: '_id',
         foreignField: 'ingredients.product',
         as: 'recipes'
-      },
+      }
     },
     {
       $lookup: {
@@ -33,14 +33,14 @@ export function getProduct (req, res) {
         foreignField: '_id',
         as: 'useTitles'
       }
-    }, 
+    },
     {
       $lookup: {
         from: 'products',
         localField: 'ingredients.product',
         foreignField: '_id',
         as: 'contains'
-      }, 
+      }
     },
     {
       $lookup: {
@@ -58,93 +58,95 @@ export function getProduct (req, res) {
         as: 'uses'
       }
     }
-  ]).
-  exec((error, product) => {
-    if (error) res.status(500).send(error)
-    res.status(200).send(product[0]);
-  })
+  ])
+    .exec((error, product) => {
+      if (error) res.status(500).send(error)
+      res.status(200).send(product[0])
+    })
 }
 
 /* GET product search results. */
 /* if query is string, do regex substring match,
    else, do exact match on the sku # */
-export function searchProducts(req, res) {
-  const k = req.params.category;
-  const q = req.query.q;
-  let search;
+export function searchProducts (req, res) {
+  const k = req.params.category
+  const q = req.query.q
+  let search
   if (isNaN(q) && q !== 'true') {
-    search = {[k]: { "$regex": q, "$options": "i" } };
+    search = { [k]: { '$regex': q, '$options': 'i' } }
   } else {
-    search = {[k]: q };
+    search = { [k]: q }
   }
-  Product.find(search).sort({category: 1, sku: 1}).exec((error, products) => {
+  Product.find(search).sort({ category: 1, sku: 1 }).exec((error, products) => {
     if (error) res.status(500).send(error)
 
-    res.status(200).send(products);
-  });
+    res.status(200).send(products)
+  })
 }
 
 // CREATE product
-export function createProduct(req, res) {
-  const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body;
-  let product = new Product({ sku, descr, size, category, qty, wholesale, retail, pv, wishlist });
+export function createProduct (req, res) {
+  const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body
+  let product = new Product({ sku, descr, size, category, qty, wholesale, retail, pv, wishlist })
   if (oil) {
-    product.oil = new Oil({ photosensitive, topical, dilute, aromatic });
+    product.oil = new Oil({ photosensitive, topical, dilute, aromatic })
   }
 
   product.save((error, prod) => {
-    if (error) res.status(500).send(error);
+    if (error) res.status(500).send(error)
 
-    res.status(201).send(prod);
-  });
+    res.status(201).send(prod)
+  })
 }
 
 /* Delete one product. */
-export function deleteProduct(req, res) {
+export function deleteProduct (req, res) {
   const { id } = req.params
   // enforce ref integrity
   // cleanup filesystem
   Product.findById(id).exec((err, prod) => {
     if (err) res.status(500).send(err)
     prod.posts.map((post) => {
-      if (post.image) req.gfs.remove({ filename: post.image })
-      .catch(err => res.status(500).send(err))
+      if (post.image) {
+        req.gfs.remove({ filename: post.image })
+          .catch(err => res.status(500).send(err))
+      }
     })
-    Recipe.find({ 'ingredients.product' : id })
-    .exec((error, recipes) => {
-      if (error) res.status(500).send(error)
-      recipes.map(recipe => {
-        recipe
-          .populate('ingredients', (error, r) => {
-            if (error) res.status(500).send(error)
-            r.ingredients = _.filter(r.ingredients, i => i.product != id)
-            r.markModified('ingredients')
-            r.save()
-          })
+    Recipe.find({ 'ingredients.product': id })
+      .exec((error, recipes) => {
+        if (error) res.status(500).send(error)
+        recipes.map(recipe => {
+          recipe
+            .populate('ingredients', (error, r) => {
+              if (error) res.status(500).send(error)
+              r.ingredients = _.filter(r.ingredients, i => i.product !== id)
+              r.markModified('ingredients')
+              r.save()
+            })
+        })
       })
-    })
     prod.remove()
     res.status(200).send(id)
   })
 }
 
 /* Update one product */
-export function updateProduct(req, res) {
-  Product.findByIdAndUpdate(req.params.id, { $set: req.body}, { new: true }).
-  exec((error) => {
-    if (error) res.status(500).send(error)
-    getProduct( req, res)
-});
+export function updateProduct (req, res) {
+  Product.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    .exec((error) => {
+      if (error) res.status(500).send(error)
+      getProduct(req, res)
+    })
 }
 
 /* Create a post. */
 export function createPost (req, res) {
   const image = req.file ? req.file.filename : null
   let post = new Post({
-      title: req.body.title,
-      content: req.body.content,
-      image
-  });
+    title: req.body.title,
+    content: req.body.content,
+    image
+  })
 
   Product.findById(req.body.id)
     .exec((err, prod) => {
@@ -153,8 +155,8 @@ export function createPost (req, res) {
       prod.save(err => {
         if (err) res.status(500).send(err)
         res.status(201).json({
-            message: 'Post created successfully'
-        });
+          message: 'Post created successfully'
+        })
       })
     })
 }
@@ -164,7 +166,7 @@ export function getPost (req, res) {
   const { prodId, postId } = req.params
   Product.findById(prodId)
     .exec((err, prod) => {
-      if (err) res.status(500).send(err) 
+      if (err) res.status(500).send(err)
       const post = prod.posts.id(postId)
       res.status(200).send(post)
     })
@@ -201,16 +203,16 @@ export function updatePost (req, res) {
 // DELETE a post
 export function deletePost (req, res) {
   const { prodId, postId } = req.params
-Product.findById(prodId).exec((err, prod) => {
-  if (err) res.status(500).send(err)
-  const post = prod.posts.id(postId)
-  if (post.image) req.gfs.remove({ filename: post.image })
-  post.remove()
-  prod.save(err => {
+  Product.findById(prodId).exec((err, prod) => {
     if (err) res.status(500).send(err)
-    res.status(200).json({
-      message: 'Post deleted successfully'
+    const post = prod.posts.id(postId)
+    if (post.image) req.gfs.remove({ filename: post.image })
+    post.remove()
+    prod.save(err => {
+      if (err) res.status(500).send(err)
+      res.status(200).json({
+        message: 'Post deleted successfully'
+      })
     })
   })
-}) 
 }

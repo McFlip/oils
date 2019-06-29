@@ -189,9 +189,9 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-ProdsNew = reduxForm({
+const ProdsNewForm = reduxForm({
   validate,
   form: 'ProdsNewForm'
 })(ProdsNew)
 
-export default connect(mapStateToProps, { createProd, fetchProd, updateProd })(ProdsNew)
+export default connect(mapStateToProps, { createProd, fetchProd, updateProd })(ProdsNewForm)

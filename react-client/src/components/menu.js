@@ -6,7 +6,7 @@ const Menu = ({ page, dropdown }) => {
 
   function pageLinks (p) {
     let isActive = ''
-    if (p == page) isActive = 'active'
+    if (p === page) isActive = 'active'
     return (
       <li className={`nav-item ${isActive}`} key={p}>
         <Link className='nav-link' to={`/${p}`}>{p}</Link>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import 'bootstrap'
 import $ from 'jquery'
+// eslint-disable-next-line no-unused-vars
 import Popper from 'popper.js'
 
-class QTY_Form extends Component {
+class QtyForm extends Component {
   constructor (props) {
     super(props)
     this.state = { value: this.props.value }
@@ -61,4 +62,4 @@ class QTY_Form extends Component {
   }
 }
 
-export default QTY_Form
+export default QtyForm

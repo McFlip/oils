@@ -1,6 +1,5 @@
-import _ from 'lodash'
 import produce from 'immer'
-import { FETCH_USES, FETCH_USE, SEARCH_USES, DELETE_USE, ADD_USE } from '../constants/'
+import { FETCH_USES, SEARCH_USES, ADD_USE } from '../constants/'
 
 export default function (state = {}, action) {
   switch (action.type) {

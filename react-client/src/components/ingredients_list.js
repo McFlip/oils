@@ -37,7 +37,7 @@ class IngredientsList extends Component {
   }
   handleClick (e) {
     // remove ingredient
-    const { id, containsId } = this.props
+    const { id } = this.props
     const ingrId = e.target.dataset.txt
     let ingredients = []
     if (this.props.path === 'products') {

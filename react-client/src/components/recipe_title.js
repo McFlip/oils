@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import 'bootstrap'
 import $ from 'jquery'
+// eslint-disable-next-line no-unused-vars
 import Popper from 'popper.js'
 class RecipeTitle extends Component {
   constructor (props) {

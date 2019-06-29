@@ -41,8 +41,8 @@ export const searchProds = jest.fn((term, category) => {
   }
   // filter wishlist test has 2 prods
   // cast to boolean
-  if (category == 'wishlist') {
-    term = (term == 'true')
+  if (category === 'wishlist') {
+    term = (term === 'true')
     request = _.find(testProd2, { [category]: term })
   } else {
     request = _.find(testProd, { [category]: term })

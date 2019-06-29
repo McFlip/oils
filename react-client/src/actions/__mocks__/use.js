@@ -1,9 +1,6 @@
-import _ from 'lodash'
+/* eslint-env jest */
 import { ADD_USE, FETCH_USES, SEARCH_USES } from 'constants/'
 import { testUses } from './testData'
-
-// const testProd = testState.prods;
-// const testProd2 = testState2.prods; // has 2 prods
 
 export const createUse = jest.fn(() => {
   return new Promise(resolve => resolve({

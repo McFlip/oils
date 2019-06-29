@@ -32,7 +32,7 @@ class PostsNew extends Component {
         <label htmlFor={field.id} >{field.label}</label>
         {
           field.input.name === 'title'
-            ? <input id={field.id} className='form-control' type='text' required {...field.input} />  
+            ? <input id={field.id} className='form-control' type='text' required {...field.input} />
             : <textarea id={field.id} className='form-control' {...field.input} />
         }
         <div className='text-help'>
@@ -43,6 +43,7 @@ class PostsNew extends Component {
   }
 
   onSubmit (event) {
+    /* global FormData */
     event.preventDefault()
     const { id, postId } = this.props.match.params
     const formData = new FormData(event.target)
@@ -139,11 +140,10 @@ function validate (values) {
 }
 
 function mapStateToProps ({ posts: { post } }, ownProps) {
-  // console.log(post)
   if (ownProps.match.params.postId) {
     return { initialValues: post }
   } else {
-    return {}    
+    return {}
   }
 }
 
