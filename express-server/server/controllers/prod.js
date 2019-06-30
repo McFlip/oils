@@ -5,11 +5,14 @@ import _ from 'lodash'
 
 /* GET all products. */
 export function getProducts (req, res) {
-  Product.find({}).sort({ category: 1, sku: 1 }).exec((error, products) => {
-    if (error) res.status(500).send(error)
+  Product.find({})
+    .select('category sku descr size qty wishlist')
+    .sort({ category: 1, sku: 1 })
+    .exec((error, products) => {
+      if (error) res.status(500).send(error)
 
-    res.status(200).send(products)
-  })
+      res.status(200).send(products)
+    })
 }
 
 /* GET one product. */
@@ -77,11 +80,14 @@ export function searchProducts (req, res) {
   } else {
     search = { [k]: q }
   }
-  Product.find(search).sort({ category: 1, sku: 1 }).exec((error, products) => {
-    if (error) res.status(500).send(error)
+  Product.find(search)
+    .select('category sku descr size qty wishlist')
+    .sort({ category: 1, sku: 1 })
+    .exec((error, products) => {
+      if (error) res.status(500).send(error)
 
-    res.status(200).send(products)
-  })
+      res.status(200).send(products)
+    })
 }
 
 // CREATE product
