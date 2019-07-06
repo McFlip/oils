@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateProd } from '../actions/prods'
+import PropTypes from 'prop-types'
 
 class Checkbox extends Component {
   constructor (props) {
@@ -25,6 +26,13 @@ class Checkbox extends Component {
       </span>
     )
   }
+}
+
+Checkbox.propTypes = {
+  _id: PropTypes.string,
+  readOnly: PropTypes.bool,
+  checked: PropTypes.bool,
+  updateProd: PropTypes.func
 }
 
 function mapStateToProps (state, ownProps) {
