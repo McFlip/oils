@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 const Menu = ({ page, dropdown }) => {
@@ -43,4 +44,8 @@ const Menu = ({ page, dropdown }) => {
   )
 }
 
+Menu.propTypes = {
+  page: PropTypes.oneOf(['home', 'products', 'recipes', 'uses']),
+  dropdown: PropTypes.element
+}
 export default Menu
