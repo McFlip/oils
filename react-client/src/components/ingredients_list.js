@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import $ from 'jquery'
@@ -137,6 +138,16 @@ class IngredientsList extends Component {
       </div>
     )
   }
+}
+
+IngredientsList.propTypes = {
+  path: PropTypes.oneOf(['products', 'recipes']),
+  id: PropTypes.string,
+  ingredients: PropTypes.array,
+  mode: PropTypes.oneOf(['add', 'edit', 'read']),
+  updateRecipe: PropTypes.func,
+  containsId: PropTypes.array,
+  prods: PropTypes.object
 }
 
 export default IngredientsList
