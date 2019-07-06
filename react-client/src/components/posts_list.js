@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { IMG_HOST } from '../constants'
 import { Link } from 'react-router-dom'
 import DOMPurify from 'dompurify'
@@ -35,4 +36,10 @@ class PostList extends Component {
     )
   }
 }
+
+PostList.propTypes = {
+  id: PropTypes.string,
+  posts: PropTypes.array
+}
+
 export default PostList
