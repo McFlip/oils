@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import $ from 'jquery'
 import DOMPurify from 'dompurify'
 import marked from 'marked'
@@ -77,5 +78,8 @@ class RecipeDirections extends Component {
     )
   }
 }
-
+RecipeDirections.propTypes = {
+  value: PropTypes.string,
+  handleSubmit: PropTypes.func
+}
 export default RecipeDirections
