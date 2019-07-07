@@ -12,7 +12,7 @@ class SearchBar extends Component {
     return (
       <div className='card'>
         <form onSubmit={this.handleSubmit}>
-          {this.props.subject === 'inventory' ? <label htmlFor='searchInput'>Search</label> : null}
+          {this.props.subject === 'inventory' && <label htmlFor='searchInput'>Search</label>}
           <div className='input-group'>
             <div className='input-group-prepend'>
               {this.props.subject === 'inventory'

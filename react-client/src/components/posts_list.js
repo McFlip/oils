@@ -13,7 +13,7 @@ class PostList extends Component {
       const md = marked(clean)
       return (
         <div className='card' key={i}>
-          {post.image ? <img className='' alt='posted image' src={IMG_HOST + post.image} /> : null}
+          {post.image && <img className='' alt='posted image' src={IMG_HOST + post.image} />}
           <div className='card-body'>
             <div className='alert alert-yl'>
               {post.title}
@@ -30,7 +30,7 @@ class PostList extends Component {
       <div className='card'>
         <h4>Posts:</h4>
         <div>
-          {this.props.posts ? this.renderPosts() : null}
+          {this.props.posts && this.renderPosts()}
         </div>
       </div>
     )

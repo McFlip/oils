@@ -109,7 +109,7 @@ class PostsNew extends Component {
             id='title'
             component={this.renderField}
           />
-          { this.props.initialValues ? this.renderImg(this.props.initialValues.image) : null }
+          { this.props.initialValues && this.renderImg(this.props.initialValues.image) }
           <Field
             label='Image'
             name='image'
@@ -123,7 +123,7 @@ class PostsNew extends Component {
           />
           <button type='submit' className='btn btn-primary'>Submit</button>
           <Link to={`/products/${id}`} className='btn btn-secondary'>Cancel</Link>
-          {postId ? <button onClick={this.onDeletePost} className='btn btn-danger float-right'>Delete Post</button> : null}
+          {postId && <button onClick={this.onDeletePost} className='btn btn-danger float-right'>Delete Post</button>}
         </Form>
       </div>
     )

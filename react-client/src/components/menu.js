@@ -37,7 +37,7 @@ const Menu = ({ page, dropdown }) => {
       <div className='collapse navbar-collapse' id='navbarNavDropdown'>
         <ul className='navbar-nav'>
           { pages.map(pageLinks) }
-          { dropdown ? renderDropDown() : null }
+          { dropdown && renderDropDown() }
         </ul>
       </div>
     </nav>

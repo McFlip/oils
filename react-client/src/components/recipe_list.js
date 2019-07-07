@@ -35,7 +35,7 @@ class RecipeList extends Component {
     return (
       <div className='card'>
         <div>
-          {this.props.recipes ? this.renderRecipes() : null}
+          {this.props.recipes && this.renderRecipes()}
         </div>
       </div>
     )
