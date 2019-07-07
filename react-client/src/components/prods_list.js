@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import Checkbox from './checkbox'
@@ -78,5 +79,12 @@ class ProdsList extends Component {
     )
   }
 }
-
+ProdsList.propTypes = {
+  handleSubmit: PropTypes.func,
+  prods: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  mode: PropTypes.oneOf(['inventory'])
+}
 export default ProdsList
