@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import Menu from './menu'
@@ -62,6 +63,23 @@ export class ProdsAdd extends Component {
       </div>
     )
   }
+}
+ProdsAdd.propTypes = {
+  match: PropTypes.shape({
+    path: PropTypes.string,
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  fetchProd: PropTypes.func,
+  fetchRecipe: PropTypes.func,
+  searchProds: PropTypes.func,
+  recipe: PropTypes.object,
+  prods: PropTypes.shape({
+    prod: PropTypes.object
+  }),
+  updateProd: PropTypes.func,
+  updateRecipe: PropTypes.func
 }
 const mapStateToProps = ({ prods, recipes: { recipe } }, ownProps) => {
   prods = _.omit(prods, ownProps.match.params.id)
