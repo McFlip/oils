@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Menu from './menu'
 import ProdsShowDropdown from './prodsShow_dropdown'
@@ -118,7 +119,23 @@ class ProdsShow extends Component {
     }
   }
 }
-
+ProdsShow.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      state: PropTypes.object
+    }),
+    push: PropTypes.func
+  }),
+  fetchProd: PropTypes.func,
+  deleteProd: PropTypes.func,
+  removeUse: PropTypes.func,
+  prod: PropTypes.object
+}
 function mapStateToProps ({ prods }, ownProps) {
   return { prod: prods[ownProps.match.params.id] }
 }
