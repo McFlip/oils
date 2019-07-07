@@ -55,7 +55,7 @@ class ProdsList extends Component {
           <span className='px-2' data-testid='size'>
             {prod.size}
           </span>
-          {prod.qty !== undefined && this.props.mode === 'inventory' ? <QtyButton qty={prod.qty} _id={prod._id} handleClick={this.handleClick} /> : ''}
+          {prod.qty !== undefined && this.props.mode === 'inventory' ? <QtyButton qty={parseInt(prod.qty)} _id={prod._id} handleClick={this.handleClick} /> : ''}
           <Checkbox _id={prod._id} checked={prod.wishlist} />
         </li>
       )
