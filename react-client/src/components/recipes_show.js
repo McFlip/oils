@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Menu from './menu'
 import RecipeTitle from './recipe_title'
@@ -54,7 +55,21 @@ class RecipesShow extends Component {
     )
   }
 }
-
+RecipesShow.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  fetchRecipe: PropTypes.func,
+  updateRecipe: PropTypes.func,
+  removeUse: PropTypes.func,
+  deleteRecipe: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
+  recipe: PropTypes.object
+}
 const mapStateToProps = ({ recipes: { recipe } }) => ({ recipe })
 
 export default connect(mapStateToProps, { fetchRecipe, updateRecipe, removeUse, deleteRecipe })(RecipesShow)

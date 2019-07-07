@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Menu from './menu'
 import SearchBar from './search_bar'
@@ -46,5 +47,9 @@ class RecipesIndex extends Component {
     )
   }
 }
-
+RecipesIndex.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
+}
 export default RecipesIndex

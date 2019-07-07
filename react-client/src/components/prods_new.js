@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -162,7 +163,27 @@ class ProdsNew extends Component {
     )
   }
 }
-
+ProdsNew.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool
+      ])
+    })
+  }),
+  fetchProd: PropTypes.func,
+  updateProd: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
+  createProd: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  isOil: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool
+  ])
+}
 function validate (values) {
   const errors = {}
   // Validate the inputs from 'values'

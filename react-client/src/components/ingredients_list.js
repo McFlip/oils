@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import $ from 'jquery'
@@ -54,15 +55,14 @@ class IngredientsList extends Component {
     return (
       <form onSubmit={e => this.handleSubmit(e)} data-txt={id}>
         {
-          this.props.path === 'recipes'
-            ? <input
+          this.props.path === 'recipes' &&
+            <input
               type='text'
               className='form-control'
               defaultValue={qty}
               onChange={e => this.setState({ [id]: e.target.value })}
               data-testid='qty'
             />
-            : null
         }
         <button type='submit'>{btnTxt}</button>
       </form>
@@ -80,8 +80,8 @@ class IngredientsList extends Component {
               {ingredient.product ? ingredient.product.descr : ingredient.descr}
             </Link>
           </td>
-          <td>{this.props.path === 'recipes' ? this.renderQty(ingredient.qty, ingredient._id, 'Change') : null}</td>
-          {this.props.mode === 'edit' ? <td><button onClick={e => this.handleClick(e)} data-txt={ingredient._id}>Delete</button></td> : null}
+          <td>{this.props.path === 'recipes' && this.renderQty(ingredient.qty, ingredient._id, 'Change')}</td>
+          {this.props.mode === 'edit' && <td><button onClick={e => this.handleClick(e)} data-txt={ingredient._id}>Delete</button></td>}
         </tr>
       )
     })
@@ -115,7 +115,7 @@ class IngredientsList extends Component {
               <th scope='col'>#</th>
               <th scope='col'>Ingredient</th>
               <th scope='col'>Quantity</th>
-              {this.props.mode === 'edit' ? <th scope='col'>Action</th> : null}
+              {this.props.mode === 'edit' && <th scope='col'>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -137,6 +137,16 @@ class IngredientsList extends Component {
       </div>
     )
   }
+}
+
+IngredientsList.propTypes = {
+  path: PropTypes.oneOf(['products', 'recipes']),
+  id: PropTypes.string,
+  ingredients: PropTypes.array,
+  mode: PropTypes.oneOf(['add', 'edit', 'read']),
+  updateRecipe: PropTypes.func,
+  containsId: PropTypes.array,
+  prods: PropTypes.object
 }
 
 export default IngredientsList

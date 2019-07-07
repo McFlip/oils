@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class FieldFileInput extends Component {
   constructor (props) {
@@ -25,4 +26,9 @@ export default class FieldFileInput extends Component {
       </div>
     )
   }
+}
+
+FieldFileInput.propTypes = {
+  onChange: PropTypes.func,
+  label: PropTypes.string
 }

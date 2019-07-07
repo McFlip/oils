@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import Checkbox from './checkbox'
@@ -54,7 +55,7 @@ class ProdsList extends Component {
           <span className='px-2' data-testid='size'>
             {prod.size}
           </span>
-          {prod.qty !== undefined && this.props.mode === 'inventory' ? <QtyButton qty={prod.qty} _id={prod._id} handleClick={this.handleClick} /> : ''}
+          {prod.qty !== undefined && this.props.mode === 'inventory' ? <QtyButton qty={parseInt(prod.qty)} _id={prod._id} handleClick={this.handleClick} /> : ''}
           <Checkbox _id={prod._id} checked={prod.wishlist} />
         </li>
       )
@@ -65,12 +66,15 @@ class ProdsList extends Component {
     if (!this.props.prods) return <div>Loading...</div>
     return (
       <div>
-        <QtyForm
-          close={this.handleClose}
-          value={this.state.sel_prod ? this.state.sel_prod.qty : 0}
-          _id={this.state.sel_prod ? this.state.sel_prod._id : 0}
-          handleSubmit={this.handleSubmit}
-        />
+        {
+          this.state.sel_prod &&
+          <QtyForm
+            close={this.handleClose}
+            value={this.state.sel_prod.qty ? this.state.sel_prod.qty : 0}
+            _id={this.state.sel_prod._id}
+            handleSubmit={this.handleSubmit}
+          />
+        }
         <ul className='list-group'>
           {this.renderProds()}
         </ul>
@@ -78,5 +82,12 @@ class ProdsList extends Component {
     )
   }
 }
-
+ProdsList.propTypes = {
+  handleSubmit: PropTypes.func,
+  prods: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  mode: PropTypes.oneOf(['inventory'])
+}
 export default ProdsList

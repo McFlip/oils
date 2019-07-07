@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
@@ -35,10 +36,14 @@ class RecipeList extends Component {
     return (
       <div className='card'>
         <div>
-          {this.props.recipes ? this.renderRecipes() : null}
+          {this.props.recipes && this.renderRecipes()}
         </div>
       </div>
     )
   }
+}
+RecipeList.propTypes = {
+  recipes: PropTypes.array,
+  titles: PropTypes.array
 }
 export default RecipeList

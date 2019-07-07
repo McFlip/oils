@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 const Menu = ({ page, dropdown }) => {
@@ -36,11 +37,15 @@ const Menu = ({ page, dropdown }) => {
       <div className='collapse navbar-collapse' id='navbarNavDropdown'>
         <ul className='navbar-nav'>
           { pages.map(pageLinks) }
-          { dropdown ? renderDropDown() : null }
+          { dropdown && renderDropDown() }
         </ul>
       </div>
     </nav>
   )
 }
 
+Menu.propTypes = {
+  page: PropTypes.oneOf(['home', 'products', 'recipes', 'uses']),
+  dropdown: PropTypes.element
+}
 export default Menu

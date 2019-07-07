@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class SearchBar extends Component {
   constructor (props) {
@@ -12,7 +13,7 @@ class SearchBar extends Component {
     return (
       <div className='card'>
         <form onSubmit={this.handleSubmit}>
-          {this.props.subject === 'inventory' ? <label htmlFor='searchInput'>Search</label> : null}
+          {this.props.subject === 'inventory' && <label htmlFor='searchInput'>Search</label>}
           <div className='input-group'>
             <div className='input-group-prepend'>
               {this.props.subject === 'inventory'
@@ -59,5 +60,8 @@ class SearchBar extends Component {
     this.props.onSearchSubmit(this.state.term, this.state.category)
   }
 }
-
+SearchBar.propTypes = {
+  subject: PropTypes.oneOf(['inventory', 'uses']),
+  onSearchSubmit: PropTypes.func
+}
 export default SearchBar

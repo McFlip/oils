@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class QtyButton extends Component {
   constructor (props) {
@@ -29,4 +30,9 @@ export default class QtyButton extends Component {
       </button>
     )
   }
+}
+QtyButton.propTypes = {
+  handleClick: PropTypes.func,
+  _id: PropTypes.string,
+  qty: PropTypes.number
 }

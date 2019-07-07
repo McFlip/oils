@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 class UseList extends Component {
@@ -33,5 +34,10 @@ class UseList extends Component {
       </div>
     )
   }
+}
+UseList.propTypes = {
+  uses: PropTypes.array,
+  handleClick: PropTypes.func,
+  btnMode: PropTypes.oneOf(['add'])
 }
 export default UseList

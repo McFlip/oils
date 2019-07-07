@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { IMG_HOST } from '../constants'
 import { Link } from 'react-router-dom'
 import DOMPurify from 'dompurify'
@@ -12,7 +13,7 @@ class PostList extends Component {
       const md = marked(clean)
       return (
         <div className='card' key={i}>
-          {post.image ? <img className='' alt='posted image' src={IMG_HOST + post.image} /> : null}
+          {post.image && <img className='' alt='posted image' src={IMG_HOST + post.image} />}
           <div className='card-body'>
             <div className='alert alert-yl'>
               {post.title}
@@ -29,10 +30,16 @@ class PostList extends Component {
       <div className='card'>
         <h4>Posts:</h4>
         <div>
-          {this.props.posts ? this.renderPosts() : null}
+          {this.props.posts && this.renderPosts()}
         </div>
       </div>
     )
   }
 }
+
+PostList.propTypes = {
+  id: PropTypes.string,
+  posts: PropTypes.array
+}
+
 export default PostList

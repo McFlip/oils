@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class Create extends Component {
   constructor (props) {
@@ -42,6 +43,10 @@ class Create extends Component {
     e.preventDefault()
     this.props.onCreateSubmit(this.state.term)
   }
+}
+
+Create.propTypes = {
+  onCreateSubmit: PropTypes.func
 }
 
 export default Create

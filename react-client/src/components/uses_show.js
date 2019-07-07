@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Menu from './menu'
 import { fetchUse, deleteUse } from '../actions/use'
@@ -82,5 +83,14 @@ class UsesShow extends Component {
     )
   }
 }
-
+UsesShow.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
+}
 export default UsesShow

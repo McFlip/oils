@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import 'bootstrap'
 import $ from 'jquery'
 // eslint-disable-next-line no-unused-vars
@@ -65,5 +66,9 @@ class RecipeTitle extends Component {
     )
   }
 }
-
+RecipeTitle.propTypes = {
+  title: PropTypes.string,
+  handleSubmit: PropTypes.func,
+  close: PropTypes.func
+}
 export default RecipeTitle

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchPost, deletePost } from '../actions/posts'
@@ -39,6 +40,20 @@ class PostsShow extends Component {
       </div>
     )
   }
+}
+
+PostsShow.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
+  }),
+  fetchPost: PropTypes.func,
+  deletePost: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
+  post: PropTypes.object
 }
 
 function mapStateToProps ({ posts }, ownProps) {

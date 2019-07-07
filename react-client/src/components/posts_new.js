@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Form, Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -108,7 +109,7 @@ class PostsNew extends Component {
             id='title'
             component={this.renderField}
           />
-          { this.props.initialValues ? this.renderImg(this.props.initialValues.image) : null }
+          { this.props.initialValues && this.renderImg(this.props.initialValues.image) }
           <Field
             label='Image'
             name='image'
@@ -122,11 +123,25 @@ class PostsNew extends Component {
           />
           <button type='submit' className='btn btn-primary'>Submit</button>
           <Link to={`/products/${id}`} className='btn btn-secondary'>Cancel</Link>
-          {postId ? <button onClick={this.onDeletePost} className='btn btn-danger float-right'>Delete Post</button> : null}
+          {postId && <button onClick={this.onDeletePost} className='btn btn-danger float-right'>Delete Post</button>}
         </Form>
       </div>
     )
   }
+}
+
+PostsNew.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.object
+  }),
+  fetchPost: PropTypes.func,
+  updatePost: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
+  createPost: PropTypes.func,
+  deletePost: PropTypes.func,
+  initialValues: PropTypes.object
 }
 
 function validate (values) {
