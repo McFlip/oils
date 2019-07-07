@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Form, Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -127,6 +128,20 @@ class PostsNew extends Component {
       </div>
     )
   }
+}
+
+PostsNew.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.object
+  }),
+  fetchPost: PropTypes.func,
+  updatePost: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }),
+  createPost: PropTypes.func,
+  deletePost: PropTypes.func,
+  initialValues: PropTypes.object
 }
 
 function validate (values) {
