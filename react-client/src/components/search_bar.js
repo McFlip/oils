@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class SearchBar extends Component {
   constructor (props) {
@@ -59,5 +60,8 @@ class SearchBar extends Component {
     this.props.onSearchSubmit(this.state.term, this.state.category)
   }
 }
-
+SearchBar.propTypes = {
+  subject: PropTypes.oneOf(['inventory', 'uses']),
+  onSearchSubmit: PropTypes.func
+}
 export default SearchBar
