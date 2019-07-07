@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import { fetchProds, updateProd, searchProds } from '../actions/prods'
@@ -45,7 +46,12 @@ class ProdsIndex extends Component {
     )
   }
 }
-
+ProdsIndex.propTypes = {
+  fetchProds: PropTypes.func,
+  searchProds: PropTypes.func,
+  updateProd: PropTypes.func,
+  prods: PropTypes.object
+}
 function mapStateToProps ({ prods }) {
   return { prods: _.omit(prods, 'prod') }
 }
