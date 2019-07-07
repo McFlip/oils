@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
@@ -40,5 +41,9 @@ class RecipeList extends Component {
       </div>
     )
   }
+}
+RecipeList.propTypes = {
+  recipes: PropTypes.array,
+  titles: PropTypes.array
 }
 export default RecipeList
