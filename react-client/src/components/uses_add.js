@@ -1,5 +1,6 @@
 // Adds uses to a product or recipe
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import Menu from './menu'
@@ -98,6 +99,19 @@ class UsesAdd extends Component {
       </div>
     )
   }
+}
+UsesAdd.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    }),
+    path: PropTypes.string
+  }),
+  fetchUses: PropTypes.func,
+  searchUses: PropTypes.func,
+  createUse: PropTypes.func,
+  addUse: PropTypes.func,
+  uses: PropTypes.array
 }
 function mapStateToProps ({ uses }) {
   // filter out itemUses from uses so user cant add existing use
