@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import 'bootstrap'
 import $ from 'jquery'
 // eslint-disable-next-line no-unused-vars
@@ -61,5 +62,10 @@ class QtyForm extends Component {
     )
   }
 }
-
+QtyForm.propTypes = {
+  value: PropTypes.number,
+  handleSubmit: PropTypes.func,
+  _id: PropTypes.string,
+  close: PropTypes.func
+}
 export default QtyForm

@@ -66,12 +66,15 @@ class ProdsList extends Component {
     if (!this.props.prods) return <div>Loading...</div>
     return (
       <div>
-        <QtyForm
-          close={this.handleClose}
-          value={this.state.sel_prod ? this.state.sel_prod.qty : 0}
-          _id={this.state.sel_prod ? this.state.sel_prod._id : 0}
-          handleSubmit={this.handleSubmit}
-        />
+        {
+          this.state.sel_prod &&
+          <QtyForm
+            close={this.handleClose}
+            value={this.state.sel_prod.qty ? this.state.sel_prod.qty : 0}
+            _id={this.state.sel_prod._id}
+            handleSubmit={this.handleSubmit}
+          />
+        }
         <ul className='list-group'>
           {this.renderProds()}
         </ul>
