@@ -6,11 +6,19 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 const picHost = '/img/' // root url for pic host
 
 // child schemas
+/*
 const gfxSchema = new Schema({
   picture: {
     type: String,
     get: v => `${picHost}${v}`
   }
+})
+*/
+
+const inventorySchema = new Schema({
+  apiKey: String,
+  qty: Number,
+  wishlist: Boolean
 })
 
 const oilSchema = new Schema({
@@ -42,12 +50,10 @@ const prodSchema = new Schema({
   pv: Number,
   category: String,
   oil: oilSchema,
-  qty: Number,
-  wishlist: Boolean,
-  pics: [gfxSchema],
   uses: [{ type: ObjectId, ref: 'Use' }],
   posts: [postSchema],
-  ingredients: [Ingredient.schema]
+  ingredients: [Ingredient.schema],
+  inventory: [inventorySchema]
 })
 
 // create mongoose model

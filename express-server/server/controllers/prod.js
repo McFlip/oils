@@ -6,11 +6,23 @@ import _ from 'lodash'
 /* GET all products. */
 export function getProducts (req, res) {
   Product.find({})
-    .select('category sku descr size qty wishlist')
+    .select('category sku descr size')
     .sort({ category: 1, sku: 1 })
+    .populate({
+      path: 'inventory',
+      select: 'qty wishlist',
+      match: { apiKey: req.apiKey }
+    })
     .exec((error, products) => {
       if (error) res.status(500).send(error)
-
+      products.map((p) => {
+        if (p.inventory) {
+          console.log(p.inventory)
+          p.qty = p.inventory.qty
+          p.wishlist = p.inventory.wishlist
+          delete p.inventory
+        }
+      })
       res.status(200).send(products)
     })
 }
