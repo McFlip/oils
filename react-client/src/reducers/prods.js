@@ -8,8 +8,17 @@ export default function (state = {}, action) {
       return _.omit(state, action.payload.data)
     case FETCH_PROD:
       return { ...state, prod: action.payload.data, [action.payload.data._id]: action.payload.data }
-    case FETCH_PRODS:
+    case FETCH_PRODS: {
+      const { data } = action.payload
+      data.forEach(p => {
+        if (p.inventory.length > 0) {
+          p.qty = p.inventory[0].qty
+          p.wishlist = p.inventory[0].wishlist
+        }
+        delete p.inventory
+      })
       return { ..._.mapKeys(action.payload.data, '_id'), prod: { ...state.prod } }
+    }
     case REMOVE_USE: {
       const newState = produce(state, draftState => {
         const { id, refId, category } = action.payload.data

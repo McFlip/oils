@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, ROOT_URL } from '../constants/'
-
+const apiKey = 'badkitteh' // TODO: replace with env var
+// const apiKey = process.env.API_KEY
+// TODO: put apiKey in auth header
 export function fetchProds () {
-  const request = axios.get(`${ROOT_URL}/products`)
+  const request = axios.get(`${ROOT_URL}/products?apikey=${apiKey}`)
 
   return {
     type: FETCH_PRODS,

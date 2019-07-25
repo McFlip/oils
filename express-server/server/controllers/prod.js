@@ -1,4 +1,6 @@
 import { Product, Oil, Post } from '../models/product.js'
+// TODO: refactor all qty and wishlist functions
+// import { Inventory } from '../models/inventory'
 import mongoose from 'mongoose'
 import Recipe from '../models/recipe'
 import _ from 'lodash'
@@ -11,18 +13,10 @@ export function getProducts (req, res) {
     .populate({
       path: 'inventory',
       select: 'qty wishlist',
-      match: { apiKey: req.apiKey }
+      match: { apiKey: req.query.apikey } // TODO: get key from req.user
     })
     .exec((error, products) => {
       if (error) res.status(500).send(error)
-      products.map((p) => {
-        if (p.inventory) {
-          console.log(p.inventory)
-          p.qty = p.inventory.qty
-          p.wishlist = p.inventory.wishlist
-          delete p.inventory
-        }
-      })
       res.status(200).send(products)
     })
 }
@@ -30,7 +24,6 @@ export function getProducts (req, res) {
 /* GET one product. */
 export function getProduct (req, res) {
   const id = mongoose.Types.ObjectId(req.params.id)
-  // Product.findById(id).
   Product.aggregate([
     { $match: { _id: id } },
     {
