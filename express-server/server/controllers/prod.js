@@ -1,19 +1,21 @@
 import { Product, Oil, Post } from '../models/product.js'
 // TODO: refactor all qty and wishlist functions
-// import { Inventory } from '../models/inventory'
+// eslint-disable-next-line no-unused-vars
+import { Inventory } from '../models/inventory'
 import mongoose from 'mongoose'
 import Recipe from '../models/recipe'
 import _ from 'lodash'
 
 /* GET all products. */
 export function getProducts (req, res) {
-  Product.find({})
+  if (!req.search) req.search = {}
+  Product.find(req.search)
     .select('category sku descr size')
     .sort({ category: 1, sku: 1 })
     .populate({
       path: 'inventory',
       select: 'qty wishlist',
-      match: { apiKey: req.query.apikey } // TODO: get key from req.user
+      match: { apiKey: req.user.sub }
     })
     .exec((error, products) => {
       if (error) res.status(500).send(error)
@@ -79,20 +81,13 @@ export function getProduct (req, res) {
 export function searchProducts (req, res) {
   const k = req.params.category
   const q = req.query.q
-  let search
+  req.search = {}
   if (isNaN(q) && q !== 'true') {
-    search = { [k]: { '$regex': q, '$options': 'i' } }
+    req.search = { [k]: { '$regex': q, '$options': 'i' } }
   } else {
-    search = { [k]: q }
+    req.search = { [k]: q }
   }
-  Product.find(search)
-    .select('category sku descr size qty wishlist')
-    .sort({ category: 1, sku: 1 })
-    .exec((error, products) => {
-      if (error) res.status(500).send(error)
-
-      res.status(200).send(products)
-    })
+  getProducts(req, res)
 }
 
 // CREATE product

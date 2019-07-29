@@ -1,10 +1,12 @@
 import axios from 'axios'
-import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, ROOT_URL } from '../constants/'
-const apiKey = 'badkitteh' // TODO: replace with env var
-// const apiKey = process.env.API_KEY
-// TODO: put apiKey in auth header
+import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, ROOT_URL, JWT } from '../constants/'
+
+const config = {
+  headers: { 'Authorization': `Bearer ${JWT}` }
+}
+
 export function fetchProds () {
-  const request = axios.get(`${ROOT_URL}/products?apikey=${apiKey}`)
+  const request = axios.get(`${ROOT_URL}/products`, config)
 
   return {
     type: FETCH_PRODS,
@@ -13,7 +15,7 @@ export function fetchProds () {
 }
 
 export function searchProds (term, category) {
-  const request = axios.get(`${ROOT_URL}/products/search/${category}?q=${term}`)
+  const request = axios.get(`${ROOT_URL}/products/search/${category}?q=${term}`, config)
 
   return {
     type: FETCH_PRODS,
