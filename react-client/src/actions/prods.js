@@ -37,7 +37,7 @@ export function createProd (values, callback) {
 }
 
 export function fetchProd (id) {
-  const request = axios.get(`${ROOT_URL}/products/${id}`)
+  const request = axios.get(`${ROOT_URL}/products/${id}`, config)
 
   return {
     type: FETCH_PROD,

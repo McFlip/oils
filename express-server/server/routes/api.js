@@ -87,10 +87,9 @@ router.get('/images/:filename', (req, res) => {
 
 /* GET all products. */
 router.get('/products', passport.authenticate('jwt', { session: false }), ProdController.getProducts)
-// router.get('/products', ProdController.getProducts)
 
 /* GET one product. */
-router.get('/products/:id', ProdController.getProduct)
+router.get('/products/:id', passport.authenticate('jwt', { session: false }), ProdController.getProduct)
 
 /* GET product search results. */
 router.get('/products/search/:category', passport.authenticate('jwt', { session: false }), ProdController.searchProducts)

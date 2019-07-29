@@ -67,6 +67,14 @@ export function getProduct (req, res) {
         foreignField: '_id',
         as: 'uses'
       }
+    },
+    {
+      $lookup: {
+        from: 'inventories',
+        let: { apiKey: '$apiKey' },
+        pipeline: [ { $match: { apiKey: req.user.sub } } ],
+        as: 'inventory'
+      }
     }
   ])
     .exec((error, product) => {
