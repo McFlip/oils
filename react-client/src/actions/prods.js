@@ -25,7 +25,7 @@ export function searchProds (term, category) {
 
 export function createProd (values, callback) {
   const request = axios
-    .post(`${ROOT_URL}/products`, values)
+    .post(`${ROOT_URL}/products`, values, config)
     .then(product => {
       callback(product.data)
       return product

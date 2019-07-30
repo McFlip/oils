@@ -71,8 +71,20 @@ export function getProduct (req, res) {
     {
       $lookup: {
         from: 'inventories',
-        let: { apiKey: '$apiKey' },
-        pipeline: [ { $match: { apiKey: req.user.sub } } ],
+        let: { inventory: '$inventory' },
+        pipeline: [
+          {
+            $match:
+              { $expr:
+                { $and:
+                  [
+                    { $eq: [ '$apiKey', req.user.sub ] },
+                    { $in: [ '$_id', '$$inventory' ] }
+                  ]
+                }
+              }
+          }
+        ],
         as: 'inventory'
       }
     }
@@ -101,15 +113,21 @@ export function searchProducts (req, res) {
 // CREATE product
 export function createProduct (req, res) {
   const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body
-  let product = new Product({ sku, descr, size, category, qty, wholesale, retail, pv, wishlist })
+  const apiKey = req.user.sub
+  const inv = new Inventory({ qty, wishlist, apiKey })
+  let product = new Product({ sku, descr, size, category, wholesale, retail, pv })
   if (oil) {
     product.oil = new Oil({ photosensitive, topical, dilute, aromatic })
   }
-
-  product.save((error, prod) => {
-    if (error) res.status(500).send(error)
-
-    res.status(201).send(prod)
+  inv.save((err, i) => {
+    if (err) res.status(500).send(err)
+    const inventory = [i._id]
+    product.inventory = inventory
+    product.save((error, prod) => {
+      if (error) res.status(500).send(error)
+      req.params.id = prod._id
+      getProduct(req, res)
+    })
   })
 }
 

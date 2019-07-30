@@ -98,7 +98,7 @@ router.get('/products/search/:category', passport.authenticate('jwt', { session:
 router.post('/products/:id', ProdController.updateProduct)
 
 // CREATE product
-router.post('/products', ProdController.createProduct)
+router.post('/products', passport.authenticate('jwt', { session: false }), ProdController.createProduct)
 
 /* Delete product */
 router.delete('/products/:id', gfsMidWare, ProdController.deleteProduct)
