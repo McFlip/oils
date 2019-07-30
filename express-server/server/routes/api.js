@@ -97,6 +97,9 @@ router.get('/products/search/:category', passport.authenticate('jwt', { session:
 /* UPDATE product. */
 router.post('/products/:id', ProdController.updateProduct)
 
+// UPDATE inventory for a product
+router.post('/inventory/:id', passport.authenticate('jwt', { session: false }), ProdController.updateInventory)
+
 // CREATE product
 router.post('/products', passport.authenticate('jwt', { session: false }), ProdController.createProduct)
 

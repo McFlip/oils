@@ -163,10 +163,19 @@ export function deleteProduct (req, res) {
 }
 
 /* Update one product */
+// TODO: call updateInventory & get apiKey to pass to getProduct
 export function updateProduct (req, res) {
-  Product.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+  Product.findByIdAndUpdate(req.params.id, { $set: req.body })
     .exec((error) => {
       if (error) res.status(500).send(error)
+      getProduct(req, res)
+    })
+}
+
+export function updateInventory (req, res) {
+  Inventory.findOneAndUpdate({ prod: req.params.id, apiKey: req.user.sub }, { $set: req.body })
+    .exec((err) => {
+      if (err) res.status(500).send(err)
       getProduct(req, res)
     })
 }

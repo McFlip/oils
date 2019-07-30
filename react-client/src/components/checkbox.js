@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateProd } from '../actions/prods'
+import { updateInventory } from '../actions/prods'
 import PropTypes from 'prop-types'
 
 class Checkbox extends Component {
@@ -15,7 +15,7 @@ class Checkbox extends Component {
     if (this.props.readOnly) return
     const { checked } = this.props
     const val = { wishlist: !checked }
-    this.props.updateProd(this._id, val)
+    this.props.updateInventory(this._id, val)
   }
 
   render () {
@@ -32,7 +32,7 @@ Checkbox.propTypes = {
   _id: PropTypes.string,
   readOnly: PropTypes.bool,
   checked: PropTypes.bool,
-  updateProd: PropTypes.func
+  updateInventory: PropTypes.func
 }
 
 function mapStateToProps (state, ownProps) {
@@ -40,4 +40,4 @@ function mapStateToProps (state, ownProps) {
   return { checked: false }
 }
 
-export default connect(mapStateToProps, { updateProd })(Checkbox)
+export default connect(mapStateToProps, { updateInventory })(Checkbox)

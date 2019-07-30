@@ -64,3 +64,13 @@ export function updateProd (id, values) {
     payload: request
   }
 }
+
+export function updateInventory (id, values) {
+  const request = axios
+    .post(`${ROOT_URL}/inventory/${id}`, values, config)
+
+  return {
+    type: FETCH_PROD,
+    payload: request
+  }
+}
