@@ -8,6 +8,8 @@ import _ from 'lodash'
 
 /* GET all products. */
 export function getProducts (req, res) {
+  // FIXME: populate inventory
+  let prods = []
   if (!req.search) req.search = {}
   Product.find(req.search)
     .select('category sku descr size')
@@ -19,7 +21,18 @@ export function getProducts (req, res) {
     })
     .exec((error, products) => {
       if (error) res.status(500).send(error)
-      res.status(200).send(products)
+      products.forEach(p => {
+        Inventory.findOne({ apiKey: req.user.sub, prod: p._id })
+          .exec((err, i) => {
+            if (err) res.status(500).send(err)
+            console.log(p)
+            const { qty, wishlist } = i
+            p.set('inventory', [{ qty, wishlist }])
+            console.log(p.toObject())
+            prods.push(p.toObject())
+          })
+      })
+      res.status(200).send(prods)
     })
 }
 
@@ -71,7 +84,7 @@ export function getProduct (req, res) {
     {
       $lookup: {
         from: 'inventories',
-        let: { inventory: '$inventory' },
+        let: { id: '$_id' },
         pipeline: [
           {
             $match:
@@ -79,7 +92,7 @@ export function getProduct (req, res) {
                 { $and:
                   [
                     { $eq: [ '$apiKey', req.user.sub ] },
-                    { $in: [ '$_id', '$$inventory' ] }
+                    { $eq: [ '$$id', '$prod' ] }
                   ]
                 }
               }
@@ -110,22 +123,35 @@ export function searchProducts (req, res) {
   getProducts(req, res)
 }
 
+// GET all items on your wishlist
+export function getWishlist (req, res) {
+  Inventory.find({ apiKey: req.user.sub })
+    .populate('prod')
+    .exec((err, inv) => {
+      if (err) res.status(500).send(err)
+      const prods = inv.map(i => {
+        const { prod, qty, wishlist } = i
+        prod.set('inventory', [{ qty, wishlist }])
+        return prod
+      })
+      res.status(200).send(prods)
+    })
+}
+
 // CREATE product
 export function createProduct (req, res) {
   const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body
   const apiKey = req.user.sub
-  const inv = new Inventory({ qty, wishlist, apiKey })
   let product = new Product({ sku, descr, size, category, wholesale, retail, pv })
   if (oil) {
     product.oil = new Oil({ photosensitive, topical, dilute, aromatic })
   }
-  inv.save((err, i) => {
-    if (err) res.status(500).send(err)
-    const inventory = [i._id]
-    product.inventory = inventory
-    product.save((error, prod) => {
-      if (error) res.status(500).send(error)
-      req.params.id = prod._id
+  product.save((error, p) => {
+    if (error) res.status(500).send(error)
+    const prod = req.params.id = p._id
+    const inv = new Inventory({ prod, qty, wishlist, apiKey })
+    inv.save((err) => {
+      if (err) res.status(500).send(err)
       getProduct(req, res)
     })
   })
@@ -165,10 +191,19 @@ export function deleteProduct (req, res) {
 /* Update one product */
 // TODO: call updateInventory & get apiKey to pass to getProduct
 export function updateProduct (req, res) {
-  Product.findByIdAndUpdate(req.params.id, { $set: req.body })
-    .exec((error) => {
-      if (error) res.status(500).send(error)
-      getProduct(req, res)
+  const { qty, wishlist } = req.body
+  const val = { qty, wishlist }
+  Inventory
+    .findOneAndUpdate({ prod: req.params.id, apiKey: req.user.sub }, { $set: val })
+    .exec((err) => {
+      if (err) res.status(500).send(err)
+      delete req.body.qty
+      delete req.body.wishlist
+      Product.findByIdAndUpdate(req.params.id, { $set: req.body })
+        .exec((error) => {
+          if (error) res.status(500).send(error)
+          getProduct(req, res)
+        })
     })
 }
 

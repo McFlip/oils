@@ -15,7 +15,12 @@ export function fetchProds () {
 }
 
 export function searchProds (term, category) {
-  const request = axios.get(`${ROOT_URL}/products/search/${category}?q=${term}`, config)
+  let request
+  if (category === 'wishlist') {
+    request = axios.get(`${ROOT_URL}/wishlist`, config)
+  } else {
+    request = axios.get(`${ROOT_URL}/products/search/${category}?q=${term}`, config)
+  }
 
   return {
     type: FETCH_PRODS,
@@ -57,7 +62,7 @@ export function deleteProd (id) {
 
 export function updateProd (id, values) {
   const request = axios
-    .post(`${ROOT_URL}/products/${id}`, values)
+    .post(`${ROOT_URL}/products/${id}`, values, config)
 
   return {
     type: FETCH_PROD,

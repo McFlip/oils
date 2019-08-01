@@ -94,8 +94,11 @@ router.get('/products/:id', passport.authenticate('jwt', { session: false }), Pr
 /* GET product search results. */
 router.get('/products/search/:category', passport.authenticate('jwt', { session: false }), ProdController.searchProducts)
 
+// GET wishlist
+router.get('/wishlist', passport.authenticate('jwt', { session: false }), ProdController.getWishlist)
+
 /* UPDATE product. */
-router.post('/products/:id', ProdController.updateProduct)
+router.post('/products/:id', passport.authenticate('jwt', { session: false }), ProdController.updateProduct)
 
 // UPDATE inventory for a product
 router.post('/inventory/:id', passport.authenticate('jwt', { session: false }), ProdController.updateInventory)

@@ -48,7 +48,10 @@ const prodSchema = new Schema({
   uses: [{ type: ObjectId, ref: 'Use' }],
   posts: [postSchema],
   ingredients: [Ingredient.schema],
-  inventory: [{ type: ObjectId, ref: 'Inventory' }]
+  inventory: [{
+    qty: Number,
+    wishlist: Boolean
+  }]
 })
 
 // create mongoose model

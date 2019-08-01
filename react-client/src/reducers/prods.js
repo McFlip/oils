@@ -18,11 +18,13 @@ export default function (state = {}, action) {
     case FETCH_PRODS: {
       const { data } = action.payload
       data.forEach(p => {
-        if (p.inventory.length > 0) {
-          p.qty = p.inventory[0].qty
-          p.wishlist = p.inventory[0].wishlist
+        if (p.inventory) {
+          if (p.inventory.length > 0) {
+            p.qty = p.inventory[0].qty
+            p.wishlist = p.inventory[0].wishlist
+          }
+          delete p.inventory
         }
-        delete p.inventory
       })
       return { ..._.mapKeys(action.payload.data, '_id'), prod: { ...state.prod } }
     }
