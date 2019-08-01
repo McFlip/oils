@@ -1,6 +1,4 @@
 import { Product, Oil, Post } from '../models/product.js'
-// TODO: refactor all qty and wishlist functions
-// eslint-disable-next-line no-unused-vars
 import { Inventory } from '../models/inventory'
 import mongoose from 'mongoose'
 import Recipe from '../models/recipe'
@@ -8,30 +6,47 @@ import _ from 'lodash'
 
 /* GET all products. */
 export function getProducts (req, res) {
-  // FIXME: populate inventory
-  let prods = []
   if (!req.search) req.search = {}
-  Product.find(req.search)
-    .select('category sku descr size')
-    .sort({ category: 1, sku: 1 })
-    .populate({
-      path: 'inventory',
-      select: 'qty wishlist',
-      match: { apiKey: req.user.sub }
-    })
-    .exec((error, products) => {
+  Product
+    .aggregate([
+      { $match: req.search },
+      {
+        $lookup: {
+          from: 'inventories',
+          let: { id: '$_id' },
+          pipeline: [
+            {
+              $match:
+              {
+                $expr:
+                {
+                  $and:
+                    [
+                      { $eq: ['$apiKey', req.user.sub] },
+                      { $eq: ['$$id', '$prod'] }
+                    ]
+                }
+              }
+            }
+          ],
+          as: 'inventory'
+        }
+      },
+      {
+        $project: {
+          category: 1,
+          sku: 1,
+          descr: 1,
+          size: 1,
+          inventory: 1
+        }
+      },
+      {
+        $sort: { category: 1, sku: 1 }
+      }
+    ])
+    .exec((error, prods) => {
       if (error) res.status(500).send(error)
-      products.forEach(p => {
-        Inventory.findOne({ apiKey: req.user.sub, prod: p._id })
-          .exec((err, i) => {
-            if (err) res.status(500).send(err)
-            console.log(p)
-            const { qty, wishlist } = i
-            p.set('inventory', [{ qty, wishlist }])
-            console.log(p.toObject())
-            prods.push(p.toObject())
-          })
-      })
       res.status(200).send(prods)
     })
 }
@@ -39,6 +54,7 @@ export function getProducts (req, res) {
 /* GET one product. */
 export function getProduct (req, res) {
   const id = mongoose.Types.ObjectId(req.params.id)
+  // TODO: optimize each lookup with a pipeline - project only needed data for each subdoc
   Product.aggregate([
     { $match: { _id: id } },
     {
@@ -183,6 +199,9 @@ export function deleteProduct (req, res) {
             })
         })
       })
+    Inventory.deleteMany({ prod: id }, err => {
+      if (err) res.status(500).send(err)
+    })
     prod.remove()
     res.status(200).send(id)
   })
