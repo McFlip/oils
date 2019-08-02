@@ -208,7 +208,6 @@ export function deleteProduct (req, res) {
 }
 
 /* Update one product */
-// TODO: call updateInventory & get apiKey to pass to getProduct
 export function updateProduct (req, res) {
   const { qty, wishlist } = req.body
   const val = { qty, wishlist }

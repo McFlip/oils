@@ -43,7 +43,7 @@ const gfsMidWare = (req, res, next) => {
 // Passport auth config
 let ppOpts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'eebilkitteh' // TODO: get secret from env var
+  secretOrKey: process.env.JWT_SECRET
 }
 passport.use(new Strategy(ppOpts, (jwtPayload, done) => {
   // TODO: check for admin priv in users collection

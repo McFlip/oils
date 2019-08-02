@@ -15,9 +15,7 @@ export const REMOVE_USE = 'remove_use'
 export const FETCH_RECIPE = 'fetch_recipe'
 export const DELETE_RECIPE = 'DELETE_RECIPE'
 // API URLs
-export const ROOT_URL = 'http://localhost:3000'
-export const IMG_HOST = 'http://localhost:3000/images/'
+export const ROOT_URL = process.env.ROOT_URL || 'http://localhost:3000'
+export const IMG_HOST = process.env.IMG_HOST || 'http://localhost:3000/images/'
 // JSON Web Token acts as API key
-// TODO: get JWT from env var
-// const JWT = process.env.JWT
-export const JWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWRraXR0ZWgifQ.rvB92j8dCshswHz5XyTeIsiVbgVx9fMkPDyBYndAPVE'
+export const JWT = process.env.JWT ? process.env.JWT : window.localStorage.getItem('jwt')
