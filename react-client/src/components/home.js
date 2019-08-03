@@ -1,10 +1,12 @@
 import React from 'react'
 import Menu from './menu'
+import Login from './login'
 
 const Home = () => {
   return (
     <div>
       <Menu page='home' />
+      <Login />
       <div className='iframe-container'>
         <iframe
           src='http://mcflip.github.io/oils/'
