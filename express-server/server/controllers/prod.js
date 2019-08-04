@@ -211,25 +211,71 @@ export function deleteProduct (req, res) {
 export function updateProduct (req, res) {
   const { qty, wishlist } = req.body
   const val = { qty, wishlist }
-  Inventory
-    .findOneAndUpdate({ prod: req.params.id, apiKey: req.user.sub }, { $set: val })
-    .exec((err) => {
+  const { id } = req.params
+  const { sub } = req.user
+  Inventory.findOne({ prod: id, apiKey: sub })
+    .exec((err, inv) => {
       if (err) res.status(500).send(err)
-      delete req.body.qty
-      delete req.body.wishlist
-      Product.findByIdAndUpdate(req.params.id, { $set: req.body })
-        .exec((error) => {
-          if (error) res.status(500).send(error)
-          getProduct(req, res)
+      // if the inventory item doesn't exist yet, create one
+      if (!inv) {
+        inv = new Inventory({
+          apiKey: sub,
+          prod: id,
+          qty,
+          wishlist
         })
+        inv.save((err) => {
+          if (err) res.status(500).send(err)
+          delete req.body.qty
+          delete req.body.wishlist
+          Product.findByIdAndUpdate(req.params.id, { $set: req.body })
+            .exec((error) => {
+              if (error) res.status(500).send(error)
+              getProduct(req, res)
+            })
+        })
+      } else {
+        inv.update({ $set: val })
+          .exec((err) => {
+            if (err) res.status(500).send(err)
+            delete req.body.qty
+            delete req.body.wishlist
+            Product.findByIdAndUpdate(req.params.id, { $set: req.body })
+              .exec((error) => {
+                if (error) res.status(500).send(error)
+                getProduct(req, res)
+              })
+          })
+      }
     })
 }
 
 export function updateInventory (req, res) {
-  Inventory.findOneAndUpdate({ prod: req.params.id, apiKey: req.user.sub }, { $set: req.body })
-    .exec((err) => {
+  const { id } = req.params
+  const { sub } = req.user
+  Inventory.findOne({ prod: id, apiKey: sub })
+    .exec((err, inv) => {
       if (err) res.status(500).send(err)
-      getProduct(req, res)
+      // if the inventory item doesn't exist yet, create one
+      if (!inv) {
+        const { qty, wishlist } = req.body
+        inv = new Inventory({
+          apiKey: sub,
+          prod: id,
+          qty,
+          wishlist
+        })
+        inv.save((err) => {
+          if (err) res.status(500).send(err)
+          getProduct(req, res)
+        })
+      } else {
+        inv.update({ $set: req.body })
+          .exec((err) => {
+            if (err) res.status(500).send(err)
+            getProduct(req, res)
+          })
+      }
     })
 }
 
