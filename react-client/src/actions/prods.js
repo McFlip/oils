@@ -1,8 +1,12 @@
 import axios from 'axios'
-import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, ROOT_URL } from '../constants/'
+import { FETCH_PRODS, FETCH_PROD, DELETE_PROD, ROOT_URL, JWT } from '../constants/'
+
+const config = {
+  headers: { 'Authorization': `Bearer ${JWT}` }
+}
 
 export function fetchProds () {
-  const request = axios.get(`${ROOT_URL}/products`)
+  const request = axios.get(`${ROOT_URL}/products`, config)
 
   return {
     type: FETCH_PRODS,
@@ -11,7 +15,12 @@ export function fetchProds () {
 }
 
 export function searchProds (term, category) {
-  const request = axios.get(`${ROOT_URL}/products/search/${category}?q=${term}`)
+  let request
+  if (category === 'wishlist') {
+    request = axios.get(`${ROOT_URL}/wishlist`, config)
+  } else {
+    request = axios.get(`${ROOT_URL}/products/search/${category}?q=${term}`, config)
+  }
 
   return {
     type: FETCH_PRODS,
@@ -21,7 +30,7 @@ export function searchProds (term, category) {
 
 export function createProd (values, callback) {
   const request = axios
-    .post(`${ROOT_URL}/products`, values)
+    .post(`${ROOT_URL}/products`, values, config)
     .then(product => {
       callback(product.data)
       return product
@@ -33,7 +42,7 @@ export function createProd (values, callback) {
 }
 
 export function fetchProd (id) {
-  const request = axios.get(`${ROOT_URL}/products/${id}`)
+  const request = axios.get(`${ROOT_URL}/products/${id}`, config)
 
   return {
     type: FETCH_PROD,
@@ -53,7 +62,17 @@ export function deleteProd (id) {
 
 export function updateProd (id, values) {
   const request = axios
-    .post(`${ROOT_URL}/products/${id}`, values)
+    .post(`${ROOT_URL}/products/${id}`, values, config)
+
+  return {
+    type: FETCH_PROD,
+    payload: request
+  }
+}
+
+export function updateInventory (id, values) {
+  const request = axios
+    .post(`${ROOT_URL}/inventory/${id}`, values, config)
 
   return {
     type: FETCH_PROD,

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { fetchProds, updateProd, searchProds } from '../actions/prods'
+import { fetchProds, updateInventory, searchProds } from '../actions/prods'
 import ProdsList from './prods_list'
 import Menu from './menu'
 import ProdsDropdown from './prods_dropdown'
@@ -30,7 +30,7 @@ class ProdsIndex extends Component {
   }
 
   handleSubmit (id, value) {
-    this.props.updateProd(id, value)
+    this.props.updateInventory(id, value)
   }
 
   render () {
@@ -41,7 +41,7 @@ class ProdsIndex extends Component {
           <h1>Inventory</h1>
           <SearchBar onSearchSubmit={this.handleSearch} subject='inventory' />
         </div>
-        <ProdsList prods={this.props.prods} mode='inventory' updateProd={this.handleSubmit} handleSubmit={this.handleSubmit} />
+        <ProdsList prods={this.props.prods} mode='inventory' handleSubmit={this.handleSubmit} />
       </div>
     )
   }
@@ -49,11 +49,11 @@ class ProdsIndex extends Component {
 ProdsIndex.propTypes = {
   fetchProds: PropTypes.func,
   searchProds: PropTypes.func,
-  updateProd: PropTypes.func,
+  updateInventory: PropTypes.func,
   prods: PropTypes.object
 }
 function mapStateToProps ({ prods }) {
   return { prods: _.omit(prods, 'prod') }
 }
 
-export default connect(mapStateToProps, { fetchProds, updateProd, searchProds })(ProdsIndex)
+export default connect(mapStateToProps, { fetchProds, updateInventory, searchProds })(ProdsIndex)

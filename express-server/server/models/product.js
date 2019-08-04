@@ -1,17 +1,20 @@
+/* eslint-disable no-unused-vars */
 import { Ingredient } from './recipe'
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const ObjectId = mongoose.Schema.Types.ObjectId
-const picHost = '/img/' // root url for pic host
 
 // child schemas
+/*
+const picHost = '/img/'
 const gfxSchema = new Schema({
   picture: {
     type: String,
     get: v => `${picHost}${v}`
   }
 })
+*/
 
 const oilSchema = new Schema({
   photosensitive: Boolean,
@@ -42,12 +45,13 @@ const prodSchema = new Schema({
   pv: Number,
   category: String,
   oil: oilSchema,
-  qty: Number,
-  wishlist: Boolean,
-  pics: [gfxSchema],
   uses: [{ type: ObjectId, ref: 'Use' }],
   posts: [postSchema],
-  ingredients: [Ingredient.schema]
+  ingredients: [Ingredient.schema],
+  inventory: [{
+    qty: Number,
+    wishlist: Boolean
+  }]
 })
 
 // create mongoose model

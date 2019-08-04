@@ -4,6 +4,8 @@ import { Router } from 'express'
 import * as ProdController from '../controllers/prod.js'
 import * as UseController from '../controllers/use.js'
 import * as RecipeController from '../controllers/recipe.js'
+import passport from 'passport'
+import { Strategy, ExtractJwt } from 'passport-jwt'
 import multer from 'multer'
 import GridFSStorage from 'multer-gridfs-storage'
 import Grid from 'gridfs-stream'
@@ -37,6 +39,16 @@ const gfsMidWare = (req, res, next) => {
   req.gfs = gfs
   next()
 }
+
+// Passport auth config
+let ppOpts = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET
+}
+passport.use(new Strategy(ppOpts, (jwtPayload, done) => {
+  // TODO: check for admin priv in users collection
+  return done(null, jwtPayload)
+}))
 
 // GET a single post
 router.get('/products/:prodId/posts/:postId', ProdController.getPost)
@@ -74,19 +86,25 @@ router.get('/images/:filename', (req, res) => {
 })
 
 /* GET all products. */
-router.get('/products', ProdController.getProducts)
+router.get('/products', passport.authenticate('jwt', { session: false }), ProdController.getProducts)
 
 /* GET one product. */
-router.get('/products/:id', ProdController.getProduct)
+router.get('/products/:id', passport.authenticate('jwt', { session: false }), ProdController.getProduct)
 
 /* GET product search results. */
-router.get('/products/search/:category', ProdController.searchProducts)
+router.get('/products/search/:category', passport.authenticate('jwt', { session: false }), ProdController.searchProducts)
+
+// GET wishlist
+router.get('/wishlist', passport.authenticate('jwt', { session: false }), ProdController.getWishlist)
 
 /* UPDATE product. */
-router.post('/products/:id', ProdController.updateProduct)
+router.post('/products/:id', passport.authenticate('jwt', { session: false }), ProdController.updateProduct)
+
+// UPDATE inventory for a product
+router.post('/inventory/:id', passport.authenticate('jwt', { session: false }), ProdController.updateInventory)
 
 // CREATE product
-router.post('/products', ProdController.createProduct)
+router.post('/products', passport.authenticate('jwt', { session: false }), ProdController.createProduct)
 
 /* Delete product */
 router.delete('/products/:id', gfsMidWare, ProdController.deleteProduct)

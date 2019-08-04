@@ -1,24 +1,60 @@
 import { Product, Oil, Post } from '../models/product.js'
+import { Inventory } from '../models/inventory'
 import mongoose from 'mongoose'
 import Recipe from '../models/recipe'
 import _ from 'lodash'
 
 /* GET all products. */
 export function getProducts (req, res) {
-  Product.find({})
-    .select('category sku descr size qty wishlist')
-    .sort({ category: 1, sku: 1 })
-    .exec((error, products) => {
+  if (!req.search) req.search = {}
+  Product
+    .aggregate([
+      { $match: req.search },
+      {
+        $lookup: {
+          from: 'inventories',
+          let: { id: '$_id' },
+          pipeline: [
+            {
+              $match:
+              {
+                $expr:
+                {
+                  $and:
+                    [
+                      { $eq: ['$apiKey', req.user.sub] },
+                      { $eq: ['$$id', '$prod'] }
+                    ]
+                }
+              }
+            }
+          ],
+          as: 'inventory'
+        }
+      },
+      {
+        $project: {
+          category: 1,
+          sku: 1,
+          descr: 1,
+          size: 1,
+          inventory: 1
+        }
+      },
+      {
+        $sort: { category: 1, sku: 1 }
+      }
+    ])
+    .exec((error, prods) => {
       if (error) res.status(500).send(error)
-
-      res.status(200).send(products)
+      res.status(200).send(prods)
     })
 }
 
 /* GET one product. */
 export function getProduct (req, res) {
   const id = mongoose.Types.ObjectId(req.params.id)
-  // Product.findById(id).
+  // TODO: optimize each lookup with a pipeline - project only needed data for each subdoc
   Product.aggregate([
     { $match: { _id: id } },
     {
@@ -60,6 +96,26 @@ export function getProduct (req, res) {
         foreignField: '_id',
         as: 'uses'
       }
+    },
+    {
+      $lookup: {
+        from: 'inventories',
+        let: { id: '$_id' },
+        pipeline: [
+          {
+            $match:
+              { $expr:
+                { $and:
+                  [
+                    { $eq: [ '$apiKey', req.user.sub ] },
+                    { $eq: [ '$$id', '$prod' ] }
+                  ]
+                }
+              }
+          }
+        ],
+        as: 'inventory'
+      }
     }
   ])
     .exec((error, product) => {
@@ -74,34 +130,46 @@ export function getProduct (req, res) {
 export function searchProducts (req, res) {
   const k = req.params.category
   const q = req.query.q
-  let search
+  req.search = {}
   if (isNaN(q) && q !== 'true') {
-    search = { [k]: { '$regex': q, '$options': 'i' } }
+    req.search = { [k]: { '$regex': q, '$options': 'i' } }
   } else {
-    search = { [k]: q }
+    req.search = { [k]: q }
   }
-  Product.find(search)
-    .select('category sku descr size qty wishlist')
-    .sort({ category: 1, sku: 1 })
-    .exec((error, products) => {
-      if (error) res.status(500).send(error)
+  getProducts(req, res)
+}
 
-      res.status(200).send(products)
+// GET all items on your wishlist
+export function getWishlist (req, res) {
+  Inventory.find({ apiKey: req.user.sub })
+    .populate('prod')
+    .exec((err, inv) => {
+      if (err) res.status(500).send(err)
+      const prods = inv.map(i => {
+        const { prod, qty, wishlist } = i
+        prod.set('inventory', [{ qty, wishlist }])
+        return prod
+      })
+      res.status(200).send(prods)
     })
 }
 
 // CREATE product
 export function createProduct (req, res) {
   const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body
-  let product = new Product({ sku, descr, size, category, qty, wholesale, retail, pv, wishlist })
+  const apiKey = req.user.sub
+  let product = new Product({ sku, descr, size, category, wholesale, retail, pv })
   if (oil) {
     product.oil = new Oil({ photosensitive, topical, dilute, aromatic })
   }
-
-  product.save((error, prod) => {
+  product.save((error, p) => {
     if (error) res.status(500).send(error)
-
-    res.status(201).send(prod)
+    const prod = req.params.id = p._id
+    const inv = new Inventory({ prod, qty, wishlist, apiKey })
+    inv.save((err) => {
+      if (err) res.status(500).send(err)
+      getProduct(req, res)
+    })
   })
 }
 
@@ -131,6 +199,9 @@ export function deleteProduct (req, res) {
             })
         })
       })
+    Inventory.deleteMany({ prod: id }, err => {
+      if (err) res.status(500).send(err)
+    })
     prod.remove()
     res.status(200).send(id)
   })
@@ -138,10 +209,73 @@ export function deleteProduct (req, res) {
 
 /* Update one product */
 export function updateProduct (req, res) {
-  Product.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
-    .exec((error) => {
-      if (error) res.status(500).send(error)
-      getProduct(req, res)
+  const { qty, wishlist } = req.body
+  const val = { qty, wishlist }
+  const { id } = req.params
+  const { sub } = req.user
+  Inventory.findOne({ prod: id, apiKey: sub })
+    .exec((err, inv) => {
+      if (err) res.status(500).send(err)
+      // if the inventory item doesn't exist yet, create one
+      if (!inv) {
+        inv = new Inventory({
+          apiKey: sub,
+          prod: id,
+          qty,
+          wishlist
+        })
+        inv.save((err) => {
+          if (err) res.status(500).send(err)
+          delete req.body.qty
+          delete req.body.wishlist
+          Product.findByIdAndUpdate(req.params.id, { $set: req.body })
+            .exec((error) => {
+              if (error) res.status(500).send(error)
+              getProduct(req, res)
+            })
+        })
+      } else {
+        inv.update({ $set: val })
+          .exec((err) => {
+            if (err) res.status(500).send(err)
+            delete req.body.qty
+            delete req.body.wishlist
+            Product.findByIdAndUpdate(req.params.id, { $set: req.body })
+              .exec((error) => {
+                if (error) res.status(500).send(error)
+                getProduct(req, res)
+              })
+          })
+      }
+    })
+}
+
+export function updateInventory (req, res) {
+  const { id } = req.params
+  const { sub } = req.user
+  Inventory.findOne({ prod: id, apiKey: sub })
+    .exec((err, inv) => {
+      if (err) res.status(500).send(err)
+      // if the inventory item doesn't exist yet, create one
+      if (!inv) {
+        const { qty, wishlist } = req.body
+        inv = new Inventory({
+          apiKey: sub,
+          prod: id,
+          qty,
+          wishlist
+        })
+        inv.save((err) => {
+          if (err) res.status(500).send(err)
+          getProduct(req, res)
+        })
+      } else {
+        inv.update({ $set: req.body })
+          .exec((err) => {
+            if (err) res.status(500).send(err)
+            getProduct(req, res)
+          })
+      }
     })
 }
 
