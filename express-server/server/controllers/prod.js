@@ -134,7 +134,8 @@ export function searchProducts (req, res) {
   if (isNaN(q) && q !== 'true') {
     req.search = { [k]: { '$regex': q, '$options': 'i' } }
   } else {
-    req.search = { [k]: q }
+    const sku = parseInt(q)
+    req.search = { [k]: sku }
   }
   getProducts(req, res)
 }
