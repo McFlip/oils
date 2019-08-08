@@ -8,5 +8,6 @@ const inventorySchema = new Schema({
   qty: Number,
   wishlist: Boolean
 })
+inventorySchema.index({ prod: 1, apiKey: 1 })
 
 export const Inventory = mongoose.model('Inventory', inventorySchema)

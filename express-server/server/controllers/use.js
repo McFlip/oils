@@ -1,6 +1,6 @@
 import Use from '../models/use.js'
 import { Product } from '../models/product.js'
-import Recipe from '../models/recipe.js'
+import { Recipe } from '../models/recipe.js'
 import _ from 'lodash'
 import mongoose from 'mongoose'
 

@@ -1,7 +1,7 @@
 import { Product, Oil, Post } from '../models/product.js'
 import { Inventory } from '../models/inventory'
 import mongoose from 'mongoose'
-import Recipe from '../models/recipe'
+import { Recipe, Ingredient } from '../models/recipe'
 import _ from 'lodash'
 
 /* GET all products. */
@@ -142,7 +142,8 @@ export function searchProducts (req, res) {
 
 // GET all items on your wishlist
 export function getWishlist (req, res) {
-  Inventory.find({ apiKey: req.user.sub })
+  // TODO: generalize this to also get instock items
+  Inventory.find({ apiKey: req.user.sub, wishlist: true })
     .populate('prod')
     .exec((err, inv) => {
       if (err) res.status(500).send(err)
@@ -177,35 +178,39 @@ export function createProduct (req, res) {
 /* Delete one product. */
 export function deleteProduct (req, res) {
   const { id } = req.params
-  // enforce ref integrity
+  // enforce ref integrity with cascade delete
+  Product.findById(id)
   // cleanup filesystem
-  Product.findById(id).exec((err, prod) => {
-    if (err) res.status(500).send(err)
-    prod.posts.map((post) => {
-      if (post.image) {
-        req.gfs.remove({ filename: post.image })
-          .catch(err => res.status(500).send(err))
-      }
-    })
-    Recipe.find({ 'ingredients.product': id })
-      .exec((error, recipes) => {
-        if (error) res.status(500).send(error)
-        recipes.map(recipe => {
-          recipe
-            .populate('ingredients', (error, r) => {
-              if (error) res.status(500).send(error)
-              r.ingredients = _.filter(r.ingredients, i => i.product !== id)
-              r.markModified('ingredients')
-              r.save()
-            })
-        })
+    .then(prod => {
+      prod.posts.map((post) => {
+        if (post.image) {
+          req.gfs.remove({ filename: post.image })
+        }
       })
-    Inventory.deleteMany({ prod: id }, err => {
-      if (err) res.status(500).send(err)
+      return prod
     })
-    prod.remove()
-    res.status(200).send(id)
-  })
+    // cleanup inventory
+    .then(product => {
+      Inventory.deleteMany({ prod: id }).exec()
+      return product
+    })
+    // modify recipe ingredient lists
+    .then(prod => {
+      Recipe.find({ 'ingredients.product': id })
+        .exec((error, recipes) => {
+          if (error) console.log(error) // eslint-disable-line no-console
+          recipes.forEach(recipe => {
+            let vals = _.filter(recipe.ingredients, i => i.product != id) // eslint-disable-line eqeqeq
+            recipe.set({ ingredients: vals, Ingredient })
+            recipe.save()
+          })
+        })
+      return prod
+    })
+    // if all goes well delete the prod
+    .then(prod => prod.remove())
+    .then(res.status(200).send(id))
+    .catch(err => res.status(500).send(err))
 }
 
 /* Update one product */

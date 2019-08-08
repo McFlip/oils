@@ -25,12 +25,15 @@ services:
       - "3000:3000" #specify ports forewarding
     volumes:
       - ./express-server/server:/usr/src/app/server # bind src code to container
+      - type: volume  # morgan log files
+        source: logvol
+        target: /var/log
     links:
       - "database" # link this service to the database service
     depends_on:
       - "database"
     # Serve the app; wait for db connection
-    command: ["bash", "/usr/src/app/wait-for-it.sh", "database:27017", "--", "npm", "start"]
+    command: ["sh", "/usr/src/app/wait-for-it.sh", "database:27017", "--", "npm", "start"]
 
   database: # name of the third service
     container_name: mongo-db
@@ -52,3 +55,4 @@ services:
       - "database"
 volumes:
   dbvol:
+  logvol:

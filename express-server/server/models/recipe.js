@@ -7,7 +7,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 // child schema
 const ingredientSchema = new Schema({
-  product: { type: ObjectId, ref: 'Product' },
+  product: { type: ObjectId, ref: 'Product', index: true },
   qty: String
 })
 
@@ -16,9 +16,9 @@ const recipeSchema = new Schema({
   title: String,
   ingredients: [ingredientSchema],
   directions: String,
-  uses: [{ type: ObjectId, ref: 'Use' }]
+  uses: [{ type: ObjectId, ref: 'Use', index: true }]
 })
 
 // create mongoose model
-export default mongoose.model('Recipe', recipeSchema)
+export const Recipe = mongoose.model('Recipe', recipeSchema)
 export const Ingredient = mongoose.model('Ingredient', ingredientSchema)

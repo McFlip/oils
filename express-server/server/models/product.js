@@ -37,7 +37,10 @@ const prodSchema = new Schema({
     index: true,
     sparse: true
   },
-  descr: String,
+  descr: {
+    type: String,
+    index: true
+  },
   unitIssue: String,
   size: String,
   wholesale: Number,
@@ -45,7 +48,7 @@ const prodSchema = new Schema({
   pv: Number,
   category: String,
   oil: oilSchema,
-  uses: [{ type: ObjectId, ref: 'Use' }],
+  uses: [{ type: ObjectId, ref: 'Use', index: true }],
   posts: [postSchema],
   ingredients: [Ingredient.schema],
   inventory: [{
