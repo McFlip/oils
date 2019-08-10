@@ -44,6 +44,9 @@ class ProdsShow extends Component {
   }
 
   renderVal (wholesale, retail, pv) {
+    wholesale /= 100
+    retail /= 100
+    pv /= 100
     return (
       <table>
         <thead>
