@@ -44,6 +44,7 @@ services:
       - type: volume
         source: dbvol
         target: /data/db
+      - './bak/tar:/dump' # mongodump backups
   mongoku:
     container_name: mongoku
     image: huggingface/mongoku
