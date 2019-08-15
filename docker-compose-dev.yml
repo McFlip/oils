@@ -45,6 +45,7 @@ services:
         source: dbvol
         target: /data/db
       - './bak/tar:/dump' # mongodump backups
+    command: ["mongod", "--bind_ip", "localhost,database"]
   mongoku:
     container_name: mongoku
     image: huggingface/mongoku
