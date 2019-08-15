@@ -6,8 +6,10 @@
     "start": "rm -rf ./build && webpack --config webpack.config.server.js"
   },
   "dependencies": {
+    "acorn": "^6.3.0",
     "body-parser": "^1.18.3",
     "compression": "^1.7.4",
+    "core-js": "^3.2.1",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "gridfs-stream": "^1.1.1",

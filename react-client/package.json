@@ -10,6 +10,12 @@
   },
   "author": "Grady Denton",
   "license": "ISC",
+  "browserslist": [
+    "last 2 versions",
+    "> 5% in US",
+    "Firefox ESR",
+    "not dead"
+  ],
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/reactTests/setupTests.js"
