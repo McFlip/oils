@@ -13,7 +13,8 @@ const router = new Router()
 Grid.mongo = mongoose.mongo
 
 // MongoDB URL from the docker-compose file
-const dbHost = 'mongodb://database/mean-docker'
+const { DB_UNAME, DB_PW, NODE_ENV } = process.env
+const dbHost = NODE_ENV === 'production' ? `mongodb://${DB_UNAME}:${DB_PW}@database/mean-docker` : 'mongodb://database/mean-docker'
 const dbOpts = { useNewUrlParser: true }
 let gfs = null
 // Connect to mongodb
