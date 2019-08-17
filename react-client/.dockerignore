@@ -1,2 +1,10 @@
+.dockerignore
 node_modules/
 reactTests/
+.eslintrc*
+*.bash
+Dockerfile*
+LICENSE*
+README*
+docker-compose*
+.gitignore

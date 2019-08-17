@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "rm -rf ./build && webpack --config webpack.config.server.js"
+    "start": "rm -rf ./build && webpack --config webpack.config.server.js",
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "acorn": "^6.3.0",
