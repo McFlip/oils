@@ -1,20 +1,48 @@
-version: '3' # specify docker-compose version
+version: '3.2' # specify docker-compose version
 
 # Define the services/containers to be run
 services:
-  angular: # name of the first service
-    image: mcflip/oilsang
+  react:
+    container_name: production-client
+    image: mcflip/oils
     ports:
-      - "4200:4200" # specify port forewarding
-
+      - "80:80"
+    links:
+      - "express"
+    depends_on:
+      - "express"
+    restart: always
   express: #name of the second service
-    image: mcflip/oilsexp
+    container_name: production-api
+    image: mcflip/oils-backend # my private repo
     ports:
       - "3000:3000" #specify ports forewarding
+    volumes:
+      - type: volume  # morgan log files
+        source: logvol
+        target: /var/log
+    environment:
+      - NODE_ENV=production
     links:
-      - database # link this service to the database service
+      - "database" # link this service to the database service
+    depends_on:
+      - "database"
+    restart: always
+    # Serve the app; wait for db connection
+    command: ["sh", "/usr/src/app/wait-for-it.sh", "database:27017", "--", "node", "/usr/src/app/server.js"]
 
   database: # name of the third service
+    container_name: mongo-db
     image: mongo # specify image to build container from
     ports:
       - "27017:27017" # specify port forewarding
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: dbvol
+        target: /data/db
+      - './bak/tar:/dump' # mongodump backups
+    command: ["mongod", "--bind_ip", "localhost,database", "--auth"]
+volumes:
+  dbvol:
+  logvol:

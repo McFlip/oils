@@ -4,7 +4,7 @@ version: '3.2' # specify docker-compose version
 services:
   express: #name of the second service
     container_name: production-api
-    image: oils_back # specify the directory of the Dockerfile
+    image: mcflip/oils-backend # my private repo
     ports:
       - "3000:3000" #specify ports forewarding
     volumes:
@@ -17,6 +17,7 @@ services:
       - "database" # link this service to the database service
     depends_on:
       - "database"
+    restart: always
     # Serve the app; wait for db connection
     command: ["sh", "/usr/src/app/wait-for-it.sh", "database:27017", "--", "node", "/usr/src/app/server.js"]
 
@@ -25,6 +26,7 @@ services:
     image: mongo # specify image to build container from
     ports:
       - "27017:27017" # specify port forewarding
+    restart: unless-stopped
     volumes:
       - type: volume
         source: dbvol
