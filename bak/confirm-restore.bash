@@ -1,17 +1,20 @@
 #!/bin/bash
+# $1 is the backup tar.gz to test
+# $1 is just the filename
 
 docker container stop baktest
 docker container rm baktest
 docker volume rm testvol
 docker volume create testvol
-docker run -d --name baktest \
--v testvol:/data/db \
---network oils_default \
--p 12345:27017 \
-mongo
-docker container stop baktest
 docker run -it --rm \
---volumes-from baktest -v $(pwd)/tar/:/mybackups:ro \
+-v testvol:/data/db -v $(pwd)/tar/:/mybackups:ro \
 debian:bullseye-slim \
 tar xzvfC /mybackups/$1 /data/db
-docker start -a baktest
+docker run -d --name baktest \
+-v testvol:/data/db \
+mongo
+sleep 10s
+docker exec -it baktest mongo
+docker container stop baktest
+docker container rm baktest
+docker volume rm testvol
