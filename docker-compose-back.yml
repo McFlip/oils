@@ -11,6 +11,7 @@ services:
       - type: volume  # morgan log files
         source: logvol
         target: /var/log
+    env_file: .env
     environment:
       - NODE_ENV=production
     links:
