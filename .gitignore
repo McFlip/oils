@@ -62,3 +62,4 @@ typings/
 
 # deployment package
 deploy.tar.gz
+dist/
