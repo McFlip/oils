@@ -26,7 +26,7 @@ The app database is named `mean-docker`.
 
 Create the DB container and set up the admin and app accounts
 ```
-docker-compose start -d database
+docker-compose start database
 docker exec -it mongo-db mongo
 use admin
 db.createUser(
@@ -36,6 +36,7 @@ db.createUser(
     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
   }
 )
+db.auth("myUserAdmin", passwordPromp())
 use mean-docker
 db.createUser(
   {

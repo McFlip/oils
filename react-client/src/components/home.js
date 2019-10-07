@@ -9,7 +9,7 @@ const Home = () => {
       <Login />
       <div className='iframe-container'>
         <iframe
-          src='http://mcflip.github.io/oils/'
+          src='https://mcflip.github.io/oils/'
           name='gh-pages'
         />
       </div>

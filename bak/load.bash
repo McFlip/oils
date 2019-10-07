@@ -3,4 +3,4 @@
 
 # source DB login info from .env file
 export $(cat ../.env)
-docker exec -it mongo-db mongorestore --db mean-docker --username $DB_UNAME --password $DB_PW -vvvvv /dump/$1/mean-docker
+docker exec -it mongo-db mongorestore --db mean-docker --restoreDbUsersAndRoles --authenticationDatabase admin --username $DB_ADMIN_UNAME --password $DB_ADMIN_PW -vvvvv /dump/$1/mean-docker
