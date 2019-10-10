@@ -105,7 +105,7 @@ class ProdsShow extends Component {
           <Menu page='products' dropdown={ProdsShowDropdown(this.onDeleteClick, match.params.id)} />
           <div className='jumbotron'>
             <h1>{`${descr} ${size || ''} ${unitIssue || ''}`}</h1>
-            <Checkbox _id={_id} checked={wishlist} readOnly />
+            <Checkbox _id={_id} checked={wishlist} />
             <h2>Category: {category}</h2>
             {wholesale || retail || pv ? this.renderVal(wholesale, retail, pv) : ''}
             {oil && this.renderOil(oilProps)}
