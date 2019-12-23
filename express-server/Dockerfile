@@ -1,5 +1,5 @@
 # Create image based on the official Node image from dockerhub
-FROM node:12-alpine
+FROM node:12
 
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
@@ -8,10 +8,10 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy dependency definitions
-COPY package.json wait-for-it.sh /usr/src/app/
+COPY package.json package-lock.json wait-for-it.sh /usr/src/app/
 
 # Install dependecies
-RUN npm install
+RUN npm ci
 
 # Get all the code needed to run the app
 COPY . /usr/src/app
