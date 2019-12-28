@@ -16,16 +16,28 @@ Grid.mongo = mongoose.mongo
 const { DB_UNAME, DB_PW, NODE_ENV } = process.env
 const dbHost = NODE_ENV === 'production' ? `mongodb://${DB_UNAME}:${DB_PW}@database/mean-docker` : 'mongodb://database/mean-docker'
 const dbOpts = { useNewUrlParser: true }
-let gfs = null
+const maxTries = 6 // max connection attempts
+const retryTime = 10 // seconds between connection attempts
+let attempt = 1
+let gfs = null // gridfs-stream needs connection obj for constructor
 // Connect to mongodb
+// Recursive promises to handle mongoose reject on 1st connection failure
 async function connect () {
   return new Promise(async (resolve, reject) => {
     try {
       let conn = await mongoose.connect(dbHost, dbOpts)
       resolve(conn)
     } catch (error) {
-      setTimeout(() => null, 10 * 1000)
-      resolve(connect())
+      console.log(`Connection Attempt ${attempt} / ${maxTries} Failed!`)
+      console.log(error)
+      if (attempt < maxTries) {
+        console.log(`retrying connection in ${retryTime} seconds`)
+        attempt += 1
+        setTimeout(() => resolve(connect()), retryTime * 1000)
+      } else {
+        console.log('Max Connection Attempts to MongoDB Exceeded!')
+        reject(error)
+      }
     }
   })
 }
@@ -33,11 +45,14 @@ const conn = connect()
   .then(() => {
   // stream reader for downloads
     gfs = Grid(mongoose.connection.db)
-
-    console.log('MongoDB Connected')
+    console.log('####### MongoDB Connected ###### ', Date())
     return mongoose.connection
   })
-  .catch(err => console.log(err))
+  .catch(err => {
+    console.log(err)
+    // to exit the Docker container, kill the grandparent process
+    process.kill(process.ppid)
+  })
 
 // Setting up the storage element
 let storage = new GridFSStorage({ db: conn })
