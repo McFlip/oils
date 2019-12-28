@@ -32,8 +32,7 @@ services:
       - "database" # link this service to the database service
     depends_on:
       - "database"
-    # Serve the app; wait for db connection
-    # command: ["sh", "/usr/src/app/wait-for-it.sh", "database:27017", "--", "npm", "start"]
+    # Serve the app;
     command: ["npm", "start"]
 
   database: # name of the third service

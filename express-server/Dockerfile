@@ -8,7 +8,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy dependency definitions
-COPY package.json package-lock.json wait-for-it.sh /usr/src/app/
+COPY package.json package-lock.json /usr/src/app/
 
 # Install dependecies
 RUN npm ci
