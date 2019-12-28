@@ -18,7 +18,18 @@ const dbHost = NODE_ENV === 'production' ? `mongodb://${DB_UNAME}:${DB_PW}@datab
 const dbOpts = { useNewUrlParser: true }
 let gfs = null
 // Connect to mongodb
-const conn = mongoose.connect(dbHost, dbOpts)
+async function connect () {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let conn = await mongoose.connect(dbHost, dbOpts)
+      resolve(conn)
+    } catch (error) {
+      setTimeout(() => null, 10 * 1000)
+      resolve(connect())
+    }
+  })
+}
+const conn = connect()
   .then(() => {
   // stream reader for downloads
     gfs = Grid(mongoose.connection.db)
