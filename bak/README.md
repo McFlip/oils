@@ -22,7 +22,7 @@ Dumps out the collections in bson with metadata in json
 ## RESTORE
 
 ### New Server or Rebuild
-`bash restore.bash *filenameOfTAR* *docker-compose-file*`
+`bash restore.bash *docker-compose-file* *filenameOfTAR*`
 
 1. Stops services according to the compose file
 2. Recreates the volume
@@ -44,4 +44,8 @@ The `confirm -restore.bash` script tests the full file backups.
 Each one of the tests spins up a new MongoDB container called `baktest` with an attached volume called `testvolume`.
 Verify the data by issuing queries on the command line.
 
-Remember to remove `baktest` and `testvolume`.
+```
+use mean-docker
+show collections
+db.collectionName.find()
+```

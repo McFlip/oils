@@ -7,7 +7,7 @@ docker volume rm testvol
 docker volume create testvol
 docker run -d \
 -v testvol:/data/db \
--v $(pwd)/tar/$1:/dump \
+-v $(pwd)/bak/tar/$1:/dump \
 --name baktest \
 mongo
 docker exec -it baktest mongorestore -vvvvv /dump/
