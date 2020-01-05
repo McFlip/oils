@@ -30,7 +30,7 @@ services:
       - "database"
     restart: always
     # Serve the app
-    command: ["npm", "start"]
+    command: ["node", "/usr/src/app/server.js"]
 
   database: # name of the third service
     container_name: mongo-db
