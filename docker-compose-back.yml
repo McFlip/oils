@@ -19,8 +19,8 @@ services:
     depends_on:
       - "database"
     restart: always
-    # Serve the app; wait for db connection
-    command: ["sh", "/usr/src/app/wait-for-it.sh", "database:27017", "--", "node", "/usr/src/app/server.js"]
+    # Serve the app
+    command: ["npm", "start"]
 
   database: # name of the third service
     container_name: mongo-db
@@ -32,7 +32,7 @@ services:
       - type: volume
         source: dbvol
         target: /data/db
-      - './bak/tar:/dump' # mongodump backups
+      - './tar:/dump' # mongodump backups
     command: ["mongod", "--bind_ip", "localhost,database", "--auth"]
 volumes:
   dbvol:
