@@ -10,10 +10,12 @@ User accounts and logins are handled with JSON Web Tokens. Until OAuth is implem
 1. Go to the [release](https://github.com/McFlip/oils/releases) page and download the attached TAR file.
 2. Alternately, use curl.
 3. Extract `tar xvzf deploy.tar.gz`
-4. Create a `.env` file with creds for the database and the JWT secret
+4. Create a `.env` file in the `oils` folder with creds for the database and the JWT secret
 ```
 DB_UNAME=databaseUserName
 DB_PW=dontH4xMeBro
+DB_ADMIN_UNAME=admin
+DB_ADMIN_PW=adminpw123
 JWT_SECRET=eebilkitteh
 ```
 5. Set up the database - see bellow.
@@ -33,7 +35,20 @@ db.createUser(
   {
     user: "myUserAdmin",
     pwd: passwordPrompt(),
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+    roles: [
+      {
+        "role" : "userAdminAnyDatabase",
+        "db" : "admin"
+      },
+      {
+        "role" : "root",
+        "db" : "admin"
+      },
+      {
+        "role" : "readWriteAnyDatabase",
+        "db" : "admin"
+      }
+	  ]
   }
 )
 db.auth("myUserAdmin", passwordPromp())
@@ -46,10 +61,9 @@ db.createUser(
   }
 )
 ```
-Exit the mongo-shell with `ctrl+d`.
-Read the README in `bak` and load the database from the dump called `init`.
+Exit the mongo-shell with `ctrl+d` or `exit`.
+Read the README and load the database from the dump called `init`.
 ```
-cd bak
 bash load.bash init
 ```
 
