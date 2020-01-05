@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import Menu from './menu'
 import UseList from './use_list'
-import SearchBar from './search_bar'
 import CreateUse from './create'
 import { Link } from 'react-router-dom'
 import { fetchUses, searchUses, createUse, addUse } from '../actions/use'
@@ -85,8 +84,7 @@ class UsesAdd extends Component {
           Done
         </Link>
         <p>Click Search without search term to list all available uses</p>
-        <CreateUse onCreateSubmit={this.handleCreate} />
-        <SearchBar onSearchSubmit={this.handleSearch} subject='uses' />
+        <CreateUse onCreateSubmit={this.handleCreate} onSearchSubmit={this.handleSearch} />
         <UseList uses={uses} handleClick={this.handleClick} btnMode='add' />
         <div className='toast'>
           <div className='toast-header'>
