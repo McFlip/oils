@@ -7,6 +7,7 @@ class Create extends Component {
 
     this.state = { term: '' }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.onInputChange = this.onInputChange.bind(this)
   }
 
   render () {
@@ -35,6 +36,7 @@ class Create extends Component {
 
   // controlled component
   onInputChange (term) {
+    this.props.onSearchSubmit(term)
     this.setState({ term })
   }
 
@@ -46,7 +48,8 @@ class Create extends Component {
 }
 
 Create.propTypes = {
-  onCreateSubmit: PropTypes.func
+  onCreateSubmit: PropTypes.func,
+  onSearchSubmit: PropTypes.func
 }
 
 export default Create

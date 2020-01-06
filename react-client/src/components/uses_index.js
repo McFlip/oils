@@ -11,7 +11,7 @@ class UsesIndex extends Component {
     this.state = { uses: [] }
   }
   handleSearch (term) {
-    searchUses(term).payload.then(q => this.setState({ uses: q.data }))
+    searchUses(term).then(({ payload: { data: uses } }) => this.setState({ uses }))
   }
   renderUses (uses) {
     if (!uses) return null

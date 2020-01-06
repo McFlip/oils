@@ -59,14 +59,14 @@ export function removeUse (req, res) {
   if (category === 'product') {
     Product.findById(refId, (err, prod) => {
       if (err) res.status(500).send(err)
-      _.remove(prod.uses, i => i === id)
+      _.remove(prod.uses, i => i.toString() === id)
       prod.markModified('uses')
       prod.save()
     })
   } else if (category === 'recipe') {
     Recipe.findById(refId, (err, recipe) => {
       if (err) res.status(500).send(err)
-      _.remove(recipe.uses, i => i === id)
+      _.remove(recipe.uses, i => i.toString() === id)
       recipe.markModified('uses')
       recipe.save()
     })
