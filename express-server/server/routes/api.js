@@ -172,4 +172,9 @@ router.post('/recipes/:id', RecipeController.updateRecipe)
 // DELETE recipe
 router.delete('/recipes/:id', RecipeController.deleteRecipe)
 
+// Hello message for testing
+router.get('/', (req, res) => {
+  res.status(200).send('Hello World!\r\n\r\n')
+})
+
 export { router as api }
