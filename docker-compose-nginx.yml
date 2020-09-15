@@ -1,0 +1,21 @@
+# Web service
+# For full stack, run this on top of regular compose file
+# docker-compose -f docker-compose.yml -f docker-compose-nginx.yml
+
+version: '3.2' 
+
+services:
+  react:
+    container_name: production-client
+    image: mcflip/oils
+    ports:
+      - "443:443"
+    volumes: 
+      - type: volume  # TLS certs
+        source: tlsvol
+        target: /etc/letsencrypt/
+    links:
+      - "express"
+    depends_on:
+      - "express"
+    restart: always

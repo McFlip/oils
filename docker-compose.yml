@@ -1,43 +1,37 @@
-version: '3.2' # specify docker-compose version
+# Back-End production stack of API and DB
+# docker-compose up
 
-# Define the services/containers to be run
+version: '3.2'
+
 services:
-  react:
-    container_name: production-client
-    image: mcflip/oils
-    ports:
-      - "80:80"
-    links:
-      - "express"
-    depends_on:
-      - "express"
-    restart: always
-  express: #name of the second service
+  express: # Back-end REST API
     container_name: production-api
     image: mcflip/oils-backend # my private repo
     ports:
-      - "3000:3000" #specify ports forewarding
+      - "3000:3000" 
     volumes:
       - type: volume  # morgan log files
         source: logvol
         target: /var/log
+      - type: volume  # TLS certs
+        source: tlsvol
+        target: /etc/letsencrypt/
     env_file: .env
     environment:
       - NODE_ENV=production
     links:
-      - "database" # link this service to the database service
+      - "database" 
     depends_on:
       - "database"
     restart: always
-    # Serve the app
     command: ["node", "/usr/src/app/server.js"]
 
-  database: # name of the third service
+  database: # mongo
     container_name: mongo-db
-    image: mongo # specify image to build container from
+    image: mongo:4.2-bionic
     ports:
-      - "27017:27017" # specify port forewarding
-    restart: unless-stopped
+      - "27017:27017" 
+    restart: unless-stopped # in case you stop the db to do full backup
     volumes:
       - type: volume
         source: dbvol
@@ -47,3 +41,9 @@ services:
 volumes:
   dbvol:
   logvol:
+  tlsvol: 
+    driver: local
+    driver_opts:
+      type: none
+      device: /etc/letsencrypt/
+      o: bind
