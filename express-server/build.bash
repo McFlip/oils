@@ -8,7 +8,7 @@ docker push mcflip/oils-backend
 
 # copy configs and scripts to be uploaded to server
 cd ..
-cp docker-compose.yml .env bak/*.bash bak/README.md dist/
+cp docker-compose.yml ./express-server/.env bak/*.bash bak/README.md dist/
 
 # reset env file
 cd express-server

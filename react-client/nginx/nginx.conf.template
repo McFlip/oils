@@ -1,9 +1,10 @@
+# env vars are in the form ${}
 server {
 
   listen              443 ssl;
-  server_name         oils.duckdns.org;
-  ssl_certificate_key /etc/letsencrypt/live/oils.duckdns.org/privkey.pem;
-  ssl_certificate     /etc/letsencrypt/live/oils.duckdns.org/fullchain.pem;
+  server_name         ${DOMAIN};
+  ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
+  ssl_certificate     /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
   ssl_protocols       TLSv1.2;
   ssl_ciphers         HIGH:!aNULL:!MD5;
 
@@ -24,7 +25,7 @@ server {
 server {
 
   listen 80;
-  server_name oils.duckdns.org;
-  return 301  https://oils.duckdns.org$request_uri;
+  server_name ${DOMAIN};
+  return 301  https://${DOMAIN}$request_uri;
 
 }
