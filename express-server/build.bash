@@ -5,4 +5,11 @@
 cp .env.production .env
 docker build -t mcflip/oils-backend -f Dockerfile-production .
 docker push mcflip/oils-backend
+
+# copy configs and scripts to be uploaded to server
+cd ..
+cp docker-compose.yml ./express-server/.env bak/*.bash bak/README.md dist/
+
+# reset env file
+cd express-server
 cp .env.dev .env

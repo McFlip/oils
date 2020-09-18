@@ -1,16 +1,9 @@
-const webpack = require('webpack')
-const dotenv = require('dotenv')
-const result = dotenv.config()
-if (result.error) console.log(`ERROR LOADING .ENV \n${result.error}`)
-const env = result.parsed
-const envKeys = Object.keys(env).reduce((prev, next) => {
-  prev[`process.env.${next}`] = JSON.stringify(env[next])
-  return prev
-}, {})
+// development config
+const commonConfig = require('./webpack.config.common')
 
 module.exports = {
+  ...commonConfig,
   mode: 'development',
-  entry: ['./src/index.js'],
   devtool: 'cheap-module-eval-source-map',
   output: {
     path: __dirname,
@@ -31,8 +24,5 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       }
     ]
-  },
-  plugins: [
-    new webpack.DefinePlugin(envKeys)
-  ]
+  }
 }

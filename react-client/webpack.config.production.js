@@ -1,17 +1,10 @@
-const webpack = require('webpack')
+// production config
 const path = require('path')
-const dotenv = require('dotenv')
-const result = dotenv.config()
-if (result.error) console.log(`ERROR LOADING .ENV \n${result.error}`)
-const env = result.parsed
-const envKeys = Object.keys(env).reduce((prev, next) => {
-  prev[`process.env.${next}`] = JSON.stringify(env[next])
-  return prev
-}, {})
+const commonConfig = require('./webpack.config.common')
 
 module.exports = {
+  ...commonConfig,
   mode: 'production',
-  entry: ['./src/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -31,8 +24,5 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       }
     ]
-  },
-  plugins: [
-    new webpack.DefinePlugin(envKeys)
-  ]
+  }
 }
