@@ -2,14 +2,6 @@ const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const StartServerPlugin = require('start-server-webpack-plugin')
-const dotenv = require('dotenv')
-const result = dotenv.config()
-if (result.error) console.log(`ERROR LOADING .ENV \n${result.error}`)
-const env = result.parsed
-const envKeys = Object.keys(env).reduce((prev, next) => {
-  prev[`process.env.${next}`] = JSON.stringify(env[next])
-  return prev
-}, {})
 
 module.exports = {
   entry: [
@@ -32,8 +24,7 @@ module.exports = {
     new StartServerPlugin('server.js'),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin(envKeys)
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
     path: path.join(__dirname, '.build'),

@@ -63,3 +63,6 @@ typings/
 # deployment package
 deploy.tar.gz
 dist/
+
+# webpack bundle
+.build/

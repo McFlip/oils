@@ -7,6 +7,8 @@ RUN mkdir -p /usr/src/app
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
 
+ENV BUILD_TARGET server
+
 # Copy dependency definitions
 COPY package.json package-lock.json /usr/src/app/
 
