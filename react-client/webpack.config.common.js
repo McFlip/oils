@@ -1,27 +1,22 @@
 // common config between dev & production
 
 // load env vars from a '.env' file
+// or from build environment
 const webpack = require('webpack')
-const dotenv = require('dotenv')
-const result = dotenv.config()
-let envPlugin = null
-if (result.error) {
+const Dotenv = require('dotenv-webpack')
+let envVals = null
+envVals = new Dotenv()
+if (Object.keys(envVals.definitions).length === 0) {
   // eslint-disable-next-line no-console
-  console.log(`ERROR LOADING .ENV \n${result.error}`)
-} else {
-  const env = result.parsed
-  const envKeys = Object.keys(env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(env[next])
-    return prev
-  }, {})
-  envPlugin = new webpack.DefinePlugin(envKeys)
+  console.log('Loading ENV VARS from build env')
+  envVals = new webpack.EnvironmentPlugin(['DOMAIN', 'ROOT_URL', 'IMG_HOST'])
+}
+const plugins = {
+  plugins: [ envVals ]
 }
 
 // export the base obj that will be extended in other configs
 module.exports = {
   entry: ['./src/index.js'],
-  //   conditionally spread env plugin
-  ...envPlugin && { plugins: [
-    envPlugin
-  ] }
+  ...plugins
 }

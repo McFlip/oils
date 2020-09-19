@@ -2,6 +2,9 @@
 FROM node:12 as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
+ARG DOMAIN
+ARG ROOT_URL
+ARG IMG_HOST
 COPY package.json package-lock.json /app/
 RUN npm ci
 COPY . /app
