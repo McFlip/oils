@@ -8,6 +8,8 @@ let envVals = null
 try {
   envVals = new Dotenv()
 } catch (err) {
+  // eslint-disable-next-line no-console
+  console.log(`${err}\nLoading ENV VARS from build env`)
   envVals = new webpack.EnvironmentPlugin(['DOMAIN', 'ROOT_URL', 'IMG_HOST'])
 }
 const plugins = {
