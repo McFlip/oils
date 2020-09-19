@@ -5,11 +5,10 @@
 const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 let envVals = null
-try {
-  envVals = new Dotenv()
-} catch (err) {
+envVals = new Dotenv()
+if (Object.keys(envVals.definitions).length === 0) {
   // eslint-disable-next-line no-console
-  console.log(`${err}\nLoading ENV VARS from build env`)
+  console.log('Loading ENV VARS from build env')
   envVals = new webpack.EnvironmentPlugin(['DOMAIN', 'ROOT_URL', 'IMG_HOST'])
 }
 const plugins = {
