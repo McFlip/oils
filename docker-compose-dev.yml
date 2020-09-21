@@ -28,6 +28,8 @@ services:
       - type: volume  # morgan log files
         source: logvol
         target: /var/log
+    environment:
+      - JWT_SECRET=eebilkitteh
     links:
       - "database" # link this service to the database service
     depends_on:
