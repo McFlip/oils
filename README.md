@@ -19,7 +19,7 @@ DB_ADMIN_PW=adminpw123
 JWT_SECRET=eebilkitteh
 ```
 5. Set up the database - see bellow.
-6. Run the containers `docker-compose up` or `docker-compose -f docker-compose-back.yml` to just run the backend.
+6. Run the containers. Be sure to change the Docker image tag names to match your repo. Run `docker-compose up` to just run the backend or `docker-compose -f docker-compose.yml -f docker-compose-nginx.yml up` to run the full stack.
 
 ## MongoDB Deployment
 The development setup `docker-compose-dev` uses root access without a password.
@@ -70,25 +70,45 @@ bash load.bash init
 ## BUILD
 1. Clone the source code
 2. Go to [jwt](https://jwt.io) to generate a token for the next 2 steps
-3. Create a `.env.production` file in express-server
+3. Create a `.env` file in `ois/dist`
 ```
 BUILD_TARGET=server
 JWT_SECRET=eebilkitteh
 DB_UNAME=databaseUserName
 DB_PW=dontH4xMeBro
+DOMAIN=mysite.com
 ```
-4. Create a `.env.production` file in react-client
+4. Set the React App environment
+
+- If you will push to a private docker repo, create a `.env.production` file in `react-client`
 ```
 JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWRraXR0ZWgifQ.rvB92j8dCshswHz5XyTeIsiVbgVx9fMkPDyBYndAPVE
 ROOT_URL=http://localhost:3000
 IMG_HOST=http://localhost:3000/images/
 ```
-5. Run build scripts
+- If using Docker Compose, you can append these env vars to the `.env` file for the backend
+
+- If using the Docker run command use the `--env` switch for each variable or `--env-file` to specify the `.env` file.
+
+- If using a service like vercel, set the variables in your project settings. Ignore the build warning about a missing `.env` file.
+
+5. Run build scripts. Be sure to change the Docker image tags in each bash script.
 ```
 cd express-server
 bash build.bash
 cd ../react-client
 bash build.bash
 ```
-6. Run `docker-compose up`
-7. Open a browser to `http://localhost`
+6. Use rsync to copy the `dist` folder to the remote server
+7. Get letsencrypt certs using [certbot](https://certbot.eff.org/docs/install.html) in standalone mode
+8. Run `docker-compose up` for the backend or `docker-compose -f docker-compose.yml -f docker-compose-nginx.yml up` to run the full stack.
+
+## Dev
+1. Clone the repo
+2. Run `docker-compose -f docker-compose-dev.yml up`
+
+The development servers for both the React and Express apps will build and rebuild automatically
+
+The React app will be at `http://localhost:8080`
+
+The Mongoku DB admin app will be at `http://localhost:3100`
