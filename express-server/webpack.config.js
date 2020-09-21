@@ -1,27 +1,12 @@
-// This is the production config
-const webpack = require('webpack')
-const path = require('path')
+// Production config - extends common config
+const commonConfig = require('./webpack.config.common')
 const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
+  ...commonConfig,
   entry: './server/index',
-  target: 'node',
   externals: [nodeExternals({
     whitelist: [/^lodash/]
   })],
-  module: {
-    rules: [{
-      test: /\.js?$/,
-      use: 'babel-loader',
-      exclude: /node_modules/
-    }]
-  },
-  plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
-  output: {
-    path: path.join(__dirname, '.build'),
-    filename: 'server.js'
-  },
   mode: 'production'
 }

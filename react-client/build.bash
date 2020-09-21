@@ -3,6 +3,12 @@
 
 cp .env.production .env
 docker build -t mcflip/oils -f Dockerfile-production .
+retcode=$?
+if [ $retcode -ne 0 ]
+then
+    echo "docker build failed"
+    exit
+fi
 docker push mcflip/oils
 
 # copy config to be uploaded to server

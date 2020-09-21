@@ -3,6 +3,12 @@
 
 # docker login -u mcflip --password-stdin
 docker build -t mcflip/oils-backend -f Dockerfile-production .
+retcode=$?
+if [ $retcode -ne 0 ]
+then
+    echo "docker build failed"
+    exit
+fi
 docker push mcflip/oils-backend
 
 # copy configs and scripts to be uploaded to server
