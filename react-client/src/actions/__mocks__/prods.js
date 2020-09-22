@@ -26,6 +26,10 @@ export const createProd = jest.fn((values, callback) => {
     const { photosensitive, topical, dilute, aromatic, dietary } = values
     values.oil = { photosensitive, topical, dilute, aromatic, dietary }
   }
+  if (values.qty || values.wishlist) {
+    const { qty, wishlist } = values
+    values.inventory = [{ qty, wishlist }]
+  }
   callback(testid)
   return {
     type: FETCH_PROD,
