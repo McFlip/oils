@@ -54,7 +54,15 @@ export const testState = {
       sku: 2,
       descr: 'test2',
       contains: [],
-      containedIn: []
+      containedIn: [],
+      inventory: [
+        {
+          apiKey: 'badkitteh',
+          prod: 'b',
+          qty: 69,
+          wishlist: null
+        }
+      ]
     }
   },
   recipes: {
