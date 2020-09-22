@@ -9,9 +9,9 @@ import * as prodsActionMock from 'actions/prods'
 
 jest.mock('actions/prods')
 
-// check delete
 const store = newStore()
 
+// check delete
 test('delete pt1', () => {
   const { getByText } = render(
     <ProdsShow
@@ -40,25 +40,4 @@ test('delete pt1', () => {
 test('delete pt2', async () => {
   const { queryByTestId } = render(<ProdsIndex />, { store })
   await wait(() => expect(queryByTestId('sku')).toBeNull())
-})
-
-// check render
-test('render product', () => {
-  const store = newStore()
-  const product = render(
-    <ProdsShow
-      match={{
-        params: { id: 'a' },
-        isExact: true,
-        path: '',
-        url: ''
-      }}
-      history={{
-        location: { state: undefined },
-        push: () => null
-      }}
-    />,
-    { store }
-  )
-  expect(product).toMatchSnapshot()
 })
