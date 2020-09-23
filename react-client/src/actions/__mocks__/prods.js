@@ -1,10 +1,11 @@
 /* eslint-env jest */
-import _ from 'lodash'
+import _, { values } from 'lodash'
 import { FETCH_PRODS, FETCH_PROD, DELETE_PROD } from 'constants/'
 import { testState, testState2, testContains } from './testData'
 
 const testProd = testState.prods
 const testProd2 = testState2.prods // has 2 prods
+const testProd3 = _.cloneDeep(testProd)
 
 export const fetchProds = jest.fn(() => {
   return {
@@ -82,4 +83,18 @@ export const deleteProd = jest.fn((id) => {
     type: DELETE_PROD,
     payload: { data: id }
   })
+})
+
+export const updateInventory = jest.fn((id, values) => {
+  const prod = testProd[id]
+  prod.inventory = [{
+    qty: 9,
+    wishlist: false
+  }]
+  const result = _.assignIn(prod.inventory[0], values)
+  prod.inventory = [ result ]
+  return {
+    type: FETCH_PROD,
+    payload: { data: prod }
+  }
 })
