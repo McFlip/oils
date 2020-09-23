@@ -133,7 +133,6 @@ Object {
             <input
               class="form-check-input ml-2"
               id="checkbox_a"
-              readonly=""
               type="checkbox"
             />
           </span>
@@ -634,7 +633,6 @@ Object {
           <input
             class="form-check-input ml-2"
             id="checkbox_a"
-            readonly=""
             type="checkbox"
           />
         </span>

@@ -24,7 +24,7 @@ test('List All, qty button, wishlist', async () => {
   await wait(() => expect(getByLabelText('wishlist').checked).toBe(true))
   fireEvent.click(getByLabelText('wishlist'))
   await wait(() => expect(getByLabelText('wishlist').checked).toBe(false))
-  expect(prodsActionMock.updateProd).toHaveBeenCalledTimes(2)
+  expect(prodsActionMock.updateInventory).toHaveBeenCalledTimes(2)
   // check qty button
   // open and close w/out submit
   fireEvent.click(getByTestId('qtyButton'))

@@ -5,8 +5,6 @@ export const testState = {
       sku: 1,
       descr: 'test',
       size: '1 oz',
-      qty: 9,
-      wishlist: false,
       oil: {
         photosensitive: true,
         topical: true,
@@ -41,6 +39,14 @@ export const testState = {
           content: 'postContent',
           image: 'postImage'
         }
+      ],
+      inventory: [
+        {
+          apiKey: 'badkitteh',
+          prod: 'a',
+          qty: 9,
+          wishlist: null
+        }
       ]
     },
     b: {
@@ -48,7 +54,15 @@ export const testState = {
       sku: 2,
       descr: 'test2',
       contains: [],
-      containedIn: []
+      containedIn: [],
+      inventory: [
+        {
+          apiKey: 'badkitteh',
+          prod: 'b',
+          qty: 69,
+          wishlist: null
+        }
+      ]
     }
   },
   recipes: {

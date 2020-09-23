@@ -8,11 +8,13 @@ export default function (state = {}, action) {
       return _.omit(state, action.payload.data)
     case FETCH_PROD: {
       const { data } = action.payload
-      if (data.inventory.length > 0) {
-        data.qty = data.inventory[0].qty
-        data.wishlist = data.inventory[0].wishlist
+      if (data.inventory) {
+        if (data.inventory.length > 0) {
+          data.qty = data.inventory[0].qty
+          data.wishlist = data.inventory[0].wishlist
+        }
+        delete data.inventory
       }
-      delete data.inventory
       return { ...state, prod: action.payload.data, [action.payload.data._id]: action.payload.data }
     }
     case FETCH_PRODS: {

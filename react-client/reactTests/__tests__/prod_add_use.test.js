@@ -33,8 +33,8 @@ test('create a new use and search', async () => {
     refId: 'testId'
   })
   // search uses
-  fireEvent.click(getByTestId('Search'))
-  expect(usesActionMock.searchUses).toHaveBeenCalledTimes(1)
+  fireEvent.change(getByTestId('createUseInput'), { target: { value: 'secondUse' } })
+  expect(usesActionMock.searchUses).toHaveBeenCalledTimes(2)
   await wait(expect(getByText('secondUseTitle')).toBeTruthy)
   expect(queryByText('firstUseTitle')).not.toBeInTheDocument()
   //  add the 2nd use and make sure it dissapeared
