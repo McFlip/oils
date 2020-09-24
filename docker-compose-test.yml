@@ -1,0 +1,30 @@
+# spin up this stack before running npm test
+version: '3.2' 
+
+services:
+  express-test: # This is mainly the same as dev server
+    container_name: express-test
+    build: express-server # specify the directory of the Dockerfile
+    ports:
+      - "3000:3000" # deconflict with dev stack
+    volumes:
+      - ./express-server/server:/usr/src/app/server # bind src code to container
+    environment:
+      - JWT_SECRET=eebilkitteh
+    links:
+      - "database" # link this service to the database service
+    depends_on:
+      - "database"
+    # Serve the app;
+    command: ["npm", "start"]
+
+  database: # ephemeral - don't save data to a volume
+    container_name: mongo-test
+    image: mongo:4.2-bionic
+    ports:
+      - "27017:27017" # specify port forewarding
+    command:  
+        - "mongod"
+        - "--bind_ip"
+        - "localhost,database"
+        

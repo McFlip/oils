@@ -16,7 +16,15 @@ describe('testing the test', function() {
       .get('/')
       .end((err, res) => {
         res.should.have.status(200)
-        res.text.should.eq('Hello World!\r\n\r\n')
+        res.text.should.equal('Hello World!\r\n\r\n')
+      })
+  })
+  it('should not get anything', function () {
+    chai.request(apiURL)
+      .get('/uses/search?q=')
+      .end((err, res) => {
+        res.should.have.status(200)
+        res.body.should.eql([])
       })
   })
 })
