@@ -1,5 +1,5 @@
 // Dev config - extends common config
-const commonConfig = require('webpack.config.common')
+const commonConfig = require('./webpack.config.common')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 const StartServerPlugin = require('start-server-webpack-plugin')
@@ -20,7 +20,7 @@ module.exports = {
   ],
   optimization: {
     ...commonConfig.optimization,
-    NamedModules: true
+    namedModules: true
   },
   mode: 'development',
   devtool: 'cheap-module-eval-source-map'
