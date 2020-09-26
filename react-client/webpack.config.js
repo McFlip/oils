@@ -10,13 +10,19 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
+  devServer: {
+    contentBase: __dirname
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: ['/node_modules/', '/reactTests'],
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
         }
       },
       {
