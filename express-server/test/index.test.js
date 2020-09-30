@@ -21,6 +21,59 @@ const dbOpts = {
   useUnifiedTopology: true,
   useCreateIndex: true
 }
+const prod1 = {
+  sku: 1984,
+  descr: 'first test product',
+  size: '5 ml',
+  category: 'single',
+  qty: 1,
+  wholesale: 999,
+  retail: 1999,
+  pv: 500,
+  wishlist: true,
+  oil: true,
+  aromatic: true,
+  topical: true
+}
+const prods = [
+  {
+    _id: '5f6eb16a11cd0c001e3e9c28',
+    category: 'single',
+    inventory: [
+      {
+        __v: 0,
+        _id: '5f6eb16a11cd0c001e3e9c2b',
+        apiKey: 'badkitteh',
+        prod: '5f6eb16a11cd0c001e3e9c28',
+        qty: 1,
+        wishlist: true
+      }],
+    size: '5 ml',
+    sku: 1984,
+    oil: {
+      aromatic: true,
+      topical: true
+    }
+  }
+]
+const checkProd = (res, i) => {
+  if (res.inventory[0].prod) res._id.should.eql(res.inventory[0].prod)
+  res.category.should.eql(prods[i].category)
+  res.inventory[0].qty.should.eql(prods[i].inventory[0].qty)
+  res.inventory[0].wishlist.should.eql(prods[i].inventory[0].wishlist)
+  res.size.should.eql(prods[i].size)
+  res.sku.should.eql(prods[i].sku)
+}
+const checkProdDeep = (res, i) => {
+  checkProd(res, i)
+  const { photosensitive, topical, dilute, aromatic, dietary } = prods[i].oil
+  if (photosensitive) res.oil.photosensitive.should.eql(photosensitive)
+  if (topical) res.oil.topical.should.eql(topical)
+  if (dilute) res.oil.dilute.should.eql(dilute)
+  if (aromatic) res.oil.aromatic.should.eql(aromatic)
+  if (dietary) res.oil.dietary.should.eql(dietary)
+}
+let prod1ID = null
 
 chai.use(chaiHttp)
 
@@ -35,6 +88,7 @@ describe('CRUD tests', function () {
     mockMongoose.killMongo()
       .then(done())
   })
+  /*
   it('should return hello', function (done) {
     chai.request(apiURL)
       .get('/')
@@ -45,55 +99,92 @@ describe('CRUD tests', function () {
         done()
       })
   })
-  /*
-  can't do this without transpiling
-  beforeEach(function (done) {
-    mongoose.connect(dbHost, dbOpts)
-      .then(() => {
-        Product.remove({}, (err) => {
-          if (err) {
-            console.log('Failed to remove all products from the DB')
-            console.log(err)
-          }
-          done()
-        })
-      })
-      .catch((err) => {
-        console.log('Failed to connect to DB')
-        console.log(err)
-      })
-  })
   */
   describe('CREATE tests', function () {
     it('creates a product', function (done) {
-      const prod = {
-        sku: 1984,
-        description: 'first test product',
-        size: '5 ml',
-        category: 'single',
-        qty: 1,
-        wholesale: 999,
-        retail: 1999,
-        pv: 500,
-        wishlist: true,
-        oil: true,
-        aromatic: true,
-        topical: true
-      }
       chai.request(apiURL)
         .post('/products')
         .set({ Authorization: `Bearer ${token}` })
-        .send(prod)
+        .send(prod1)
         .end((err, res) => {
           if (err) console.log(err)
           res.should.have.status(200)
-          // TODO: test the returned object
+          // test the returned object
+          checkProd(res.body, 0)
           // save the returned id for later tests
+          prod1ID = res.body._id
           done()
         })
     })
   })
   describe('READ tests', function () {
+    it('should get all products', function (done) {
+      chai.request(apiURL)
+        .get('/products')
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('array')
+          // console.log(res.body)
+          checkProd(res.body[0], 0)
+          done()
+        })
+    })
+    it('should get all wishlist items', function (done) {
+      chai.request(apiURL)
+        .get('/wishlist')
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('array')
+          // console.log(res.body)
+          // console.log(res.body[0].inventory)
+          checkProd(res.body[0], 0)
+          done()
+        })
+    })
+    it('should get 1st prod by ID', function (done) {
+      chai.request(apiURL)
+        .get(`/products/${prod1ID}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('object')
+          // console.log(res.body)
+          checkProdDeep(res.body, 0)
+          done()
+        })
+    })
+    it('should find the 1st prod by sku', function (done) {
+      chai.request(apiURL)
+        .get(`/products/search/sku?q=${prod1.sku}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('array')
+          // console.log(res.body)
+          checkProd(res.body[0], 0)
+          done()
+        })
+    })
+    it('should find the 1st prod by descr', function (done) {
+      chai.request(apiURL)
+        .get(`/products/search/descr?q=first`)
+        .set({ Authorization: `Bearer ${token}` })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('array')
+          // console.log(res.body)
+          checkProd(res.body[0], 0)
+          done()
+        })
+    })
+
     // it('should get search result', function (done) {
     //   chai.request(apiURL)
     //     .get('/uses/search?q=')
@@ -104,39 +195,5 @@ describe('CRUD tests', function () {
     //       done()
     //     })
     // })
-    it('should get all products', function (done) {
-      const prods = [
-        {
-          _id: '5f6eb16a11cd0c001e3e9c28',
-          category: 'single',
-          inventory: [
-            {
-              __v: 0,
-              _id: '5f6eb16a11cd0c001e3e9c2b',
-              apiKey: 'badkitteh',
-              prod: '5f6eb16a11cd0c001e3e9c28',
-              qty: 1,
-              wishlist: true
-            }],
-          size: '5 ml',
-          sku: 1984
-        }]
-
-      chai.request(apiURL)
-        .get('/products')
-        .set({ Authorization: `Bearer ${token}` })
-        .end((err, res) => {
-          if (err) console.log(err)
-          res.should.have.status(200)
-          res.body.should.be.an('array')
-          res.body[0]._id.should.eql(res.body[0].inventory[0].prod)
-          res.body[0].category.should.eql(prods[0].category)
-          res.body[0].inventory[0].qty.should.eql(1)
-          res.body[0].inventory[0].wishlist.should.eql(true)
-          res.body[0].size.should.eql('5 ml')
-          res.body[0].sku.should.eql(1984)
-          done()
-        })
-    })
   })
 })
