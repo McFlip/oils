@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import http from 'http'
 import https from 'https'
 import app from './server'

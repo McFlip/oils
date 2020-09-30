@@ -18,7 +18,7 @@ let dbHost = 'mongodb://database/mean-docker'
 if (NODE_ENV === 'production') {
   dbHost = `mongodb://${DB_UNAME}:${DB_PW}@database/mean-docker`
 } else if (NODE_ENV === 'test') {
-  dbHost = 'mongodb://database-test:27017/mean-docker'
+  dbHost = 'mongodb://localhost/mean-docker'
 }
 const dbOpts = { useNewUrlParser: true }
 const maxTries = 6 // max connection attempts
@@ -29,20 +29,22 @@ let gfs = null // gridfs-stream needs connection obj for constructor
 // Recursive promises to handle mongoose reject on 1st connection failure
 async function connect () {
   return new Promise(async (resolve, reject) => {
-    await mongoose.connect(dbHost, dbOpts)
-      .then((conn) => resolve(conn))
-      .catch((error) => {
-        console.log(`Connection Attempt ${attempt} / ${maxTries} Failed!`)
-        console.log(error)
-        if (attempt < maxTries) {
-          console.log(`retrying connection in ${retryTime} seconds`)
-          attempt += 1
-          setTimeout(() => resolve(connect()), retryTime * 1000)
-        } else {
-          console.log('Max Connection Attempts to MongoDB Exceeded!')
-          reject(error)
-        }
-      })
+    if (NODE_ENV !== 'test') {
+      await mongoose.connect(dbHost, dbOpts)
+        .then((conn) => resolve(conn))
+        .catch((error) => {
+          console.log(`Connection Attempt ${attempt} / ${maxTries} Failed!`)
+          console.log(error)
+          if (attempt < maxTries) {
+            console.log(`retrying connection in ${retryTime} seconds`)
+            attempt += 1
+            setTimeout(() => resolve(connect()), retryTime * 1000)
+          } else {
+            console.log('Max Connection Attempts to MongoDB Exceeded!')
+            reject(error)
+          }
+        })
+    }
   })
 }
 const conn = connect()

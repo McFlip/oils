@@ -1,30 +1,40 @@
 /* eslint-disable no-console */
 /* eslint-env mocha, node */
-// remember to spin down the dev stack
-// and spin up the test stack
-// bounce the test stack to reset the DB
-// periodically run docker volume prune
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 // eslint-disable-next-line no-unused-vars
 const should = require('chai').should()
+const mongoose = require('mongoose')
+const MockMongoose = require('mock-mongoose').MockMongoose
+const mockMongoose = new MockMongoose(mongoose)
 /*
 TODO: need to transpile if I want to access DB directly w/ mongoose
 const Product = require('../server/models/product')
-const mongoose = require('mongoose')
 */
 
-const apiURL = 'http://localhost:3000'
+// const apiURL = 'http://localhost:3000'
+const apiURL = require('../.build/app')
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWRraXR0ZWgifQ.rvB92j8dCshswHz5XyTeIsiVbgVx9fMkPDyBYndAPVE'
-/*
-need to transpile
-const dbHost = 'mongodb://database-test:27017/mean-docker'
-const dbOpts = { useNewUrlParser: true }
-*/
+const dbHost = 'mongodb://localhost/mean-docker'
+const dbOpts = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+}
 
 chai.use(chaiHttp)
 
 describe('CRUD tests', function () {
+  before(function (done) {
+    mockMongoose.prepareStorage()
+      .then(function () {
+        mongoose.connect(dbHost, dbOpts, function (err) { done(err) })
+      })
+  })
+  after(function (done) {
+    mockMongoose.killMongo()
+      .then(done())
+  })
   it('should return hello', function (done) {
     chai.request(apiURL)
       .get('/')

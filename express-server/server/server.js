@@ -18,7 +18,10 @@ const ACAO = process.env.ALLOW_ORIGIN || '*'
 // predefined log format
 const LF = process.env.LOG_FORMAT || 'combined'
 // appending log
-const accessLogStream = fs.createWriteStream('/var/log/access.log', { flags: 'a' })
+const { NODE_ENV } = process.env
+const accessLogStream = NODE_ENV !== 'test'
+  ? fs.createWriteStream('/var/log/access.log', { flags: 'a' })
+  : null
 /*
 // config logging with rotating log files
 const LR = process.env.LOG_ROTATION || '1d'
@@ -42,8 +45,10 @@ app.use(function (req, res, next) {
 // passport auth
 app.use(passport.initialize())
 // logs
-app.use(morgan(LF, { stream: accessLogStream }))
-app.use(morgan('dev'))
+if (NODE_ENV !== 'test') {
+  app.use(morgan(LF, { stream: accessLogStream }))
+  app.use(morgan('dev'))
+}
 // default compression - use opts obj to config
 app.use(compression())
 
