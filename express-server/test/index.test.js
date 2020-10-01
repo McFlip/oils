@@ -19,7 +19,8 @@ const dbHost = 'mongodb://localhost/mean-docker'
 const dbOpts = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 }
 const prod1 = {
   sku: 1984,
@@ -34,6 +35,10 @@ const prod1 = {
   oil: true,
   aromatic: true,
   topical: true
+}
+const prod2 = {
+  sku: 2000,
+  descr: 'second test product'
 }
 const prods = [
   {
@@ -56,17 +61,17 @@ const prods = [
     }
   }
 ]
-const checkProd = (res, i) => {
+const checkProd = (res, model) => {
   if (res.inventory[0].prod) res._id.should.eql(res.inventory[0].prod)
-  res.category.should.eql(prods[i].category)
-  res.inventory[0].qty.should.eql(prods[i].inventory[0].qty)
-  res.inventory[0].wishlist.should.eql(prods[i].inventory[0].wishlist)
-  res.size.should.eql(prods[i].size)
-  res.sku.should.eql(prods[i].sku)
+  res.category.should.eql(model.category)
+  res.inventory[0].qty.should.eql(model.inventory[0].qty)
+  res.inventory[0].wishlist.should.eql(model.inventory[0].wishlist)
+  res.size.should.eql(model.size)
+  res.sku.should.eql(model.sku)
 }
-const checkProdDeep = (res, i) => {
-  checkProd(res, i)
-  const { photosensitive, topical, dilute, aromatic, dietary } = prods[i].oil
+const checkProdDeep = (res, model) => {
+  checkProd(res, model)
+  const { photosensitive, topical, dilute, aromatic, dietary } = model.oil
   if (photosensitive) res.oil.photosensitive.should.eql(photosensitive)
   if (topical) res.oil.topical.should.eql(topical)
   if (dilute) res.oil.dilute.should.eql(dilute)
@@ -74,6 +79,7 @@ const checkProdDeep = (res, i) => {
   if (dietary) res.oil.dietary.should.eql(dietary)
 }
 let prod1ID = null
+let prod2ID = null
 
 chai.use(chaiHttp)
 
@@ -110,9 +116,22 @@ describe('CRUD tests', function () {
           if (err) console.log(err)
           res.should.have.status(200)
           // test the returned object
-          checkProd(res.body, 0)
+          checkProd(res.body, prods[0])
           // save the returned id for later tests
           prod1ID = res.body._id
+          done()
+        })
+    })
+    it('creates the 2nd product', function (done) {
+      chai.request(apiURL)
+        .post('/products')
+        .set({ Authorization: `Bearer ${token}` })
+        .send(prod2)
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          // save the returned id for later tests
+          prod2ID = res.body._id
           done()
         })
     })
@@ -127,7 +146,7 @@ describe('CRUD tests', function () {
           res.should.have.status(200)
           res.body.should.be.an('array')
           // console.log(res.body)
-          checkProd(res.body[0], 0)
+          res.body.should.have.length(2)
           done()
         })
     })
@@ -141,7 +160,7 @@ describe('CRUD tests', function () {
           res.body.should.be.an('array')
           // console.log(res.body)
           // console.log(res.body[0].inventory)
-          checkProd(res.body[0], 0)
+          checkProd(res.body[0], prods[0])
           done()
         })
     })
@@ -154,7 +173,7 @@ describe('CRUD tests', function () {
           res.should.have.status(200)
           res.body.should.be.an('object')
           // console.log(res.body)
-          checkProdDeep(res.body, 0)
+          checkProdDeep(res.body, prods[0])
           done()
         })
     })
@@ -167,7 +186,7 @@ describe('CRUD tests', function () {
           res.should.have.status(200)
           res.body.should.be.an('array')
           // console.log(res.body)
-          checkProd(res.body[0], 0)
+          checkProd(res.body[0], prods[0])
           done()
         })
     })
@@ -180,20 +199,88 @@ describe('CRUD tests', function () {
           res.should.have.status(200)
           res.body.should.be.an('array')
           // console.log(res.body)
-          checkProd(res.body[0], 0)
+          checkProd(res.body[0], prods[0])
           done()
         })
     })
-
-    // it('should get search result', function (done) {
-    //   chai.request(apiURL)
-    //     .get('/uses/search?q=')
-    //     .end((err, res) => {
-    //       if (err) console.log(err)
-    //       res.should.have.status(200)
-    //       res.body.should.eql([])
-    //       done()
-    //     })
-    // })
+  })
+  describe('UPDATE tests', function () {
+    it('should remove 1st prod from wishlist', function (done) {
+      const model = {
+        ...prods[0],
+        inventory: [
+          {
+            __v: 0,
+            _id: '5f6eb16a11cd0c001e3e9c2b',
+            apiKey: 'badkitteh',
+            prod: '5f6eb16a11cd0c001e3e9c28',
+            qty: 1,
+            wishlist: false
+          }]
+      }
+      chai.request(apiURL)
+        .post(`/inventory/${prod1ID}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send({ wishlist: false })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('object')
+          checkProdDeep(res.body, model)
+          done()
+        })
+    })
+    it('should update 1st prod qty', function (done) {
+      const model = {
+        ...prods[0],
+        inventory: [
+          {
+            __v: 0,
+            _id: '5f6eb16a11cd0c001e3e9c2b',
+            apiKey: 'badkitteh',
+            prod: '5f6eb16a11cd0c001e3e9c28',
+            qty: 9,
+            wishlist: false
+          }]
+      }
+      chai.request(apiURL)
+        .post(`/inventory/${prod1ID}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send({ qty: 9 })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('object')
+          checkProdDeep(res.body, model)
+          done()
+        })
+    })
+    it('should update 1st prod size', function (done) {
+      const model = {
+        ...prods[0],
+        size: '99 bottles',
+        inventory: [
+          {
+            __v: 0,
+            _id: '5f6eb16a11cd0c001e3e9c2b',
+            apiKey: 'badkitteh',
+            prod: '5f6eb16a11cd0c001e3e9c28',
+            qty: 9,
+            wishlist: false
+          }]
+      }
+      chai.request(apiURL)
+        .post(`/products/${prod1ID}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send({ size: '99 bottles' })
+        .end((err, res) => {
+          if (err) console.log(err)
+          res.should.have.status(200)
+          res.body.should.be.an('object')
+          // console.log(res.body)
+          checkProdDeep(res.body, model)
+          done()
+        })
+    })
   })
 })

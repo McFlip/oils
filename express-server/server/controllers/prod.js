@@ -221,6 +221,15 @@ export function updateProduct (req, res) {
   const { sub } = req.user
   Inventory.findOne({ prod: id, apiKey: sub })
     .exec((err, inv) => {
+      const updateProd = () => {
+        delete req.body.qty
+        delete req.body.wishlist
+        Product.findByIdAndUpdate(req.params.id, { $set: req.body })
+          .exec((error) => {
+            if (error) res.status(500).send(error)
+            getProduct(req, res)
+          })
+      }
       if (err) res.status(500).send(err)
       // if the inventory item doesn't exist yet, create one
       if (!inv) {
@@ -232,26 +241,19 @@ export function updateProduct (req, res) {
         })
         inv.save((err) => {
           if (err) res.status(500).send(err)
-          delete req.body.qty
-          delete req.body.wishlist
-          Product.findByIdAndUpdate(req.params.id, { $set: req.body })
-            .exec((error) => {
-              if (error) res.status(500).send(error)
-              getProduct(req, res)
-            })
+          updateProd()
         })
       } else {
-        inv.update({ $set: val })
-          .exec((err) => {
-            if (err) res.status(500).send(err)
-            delete req.body.qty
-            delete req.body.wishlist
-            Product.findByIdAndUpdate(req.params.id, { $set: req.body })
-              .exec((error) => {
-                if (error) res.status(500).send(error)
-                getProduct(req, res)
-              })
-          })
+        // if necessary update the inventory
+        if (qty || wishlist) {
+          inv.updateOne({ $set: val })
+            .exec((err) => {
+              if (err) res.status(500).send(err)
+              updateProd()
+            })
+        } else {
+          updateProd()
+        }
       }
     })
 }
@@ -276,7 +278,7 @@ export function updateInventory (req, res) {
           getProduct(req, res)
         })
       } else {
-        inv.update({ $set: req.body })
+        inv.updateOne({ $set: req.body })
           .exec((err) => {
             if (err) res.status(500).send(err)
             getProduct(req, res)
