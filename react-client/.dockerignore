@@ -1,6 +1,7 @@
 .dockerignore
 node_modules/
 reactTests/
+coverage/
 .eslintrc*
 *.bash
 Dockerfile*

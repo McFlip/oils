@@ -6,7 +6,7 @@
   "repository": "git@github.com:McFlip/oils.git",
   "scripts": {
     "start": "webpack-dev-server --open --host 0.0.0.0",
-    "test": "jest",
+    "test": "jest --coverage",
     "build": "webpack --config webpack.config.production.js && cp -r index.html favicon.ico style ./dist/"
   },
   "author": "Grady Denton",
