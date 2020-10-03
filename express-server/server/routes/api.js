@@ -14,13 +14,15 @@ Grid.mongo = mongoose.mongo
 
 // MongoDB URL from the docker-compose file
 const { DB_UNAME, DB_PW, NODE_ENV } = process.env
-let dbHost = 'mongodb://database/mean-docker'
-if (NODE_ENV === 'production') {
-  dbHost = `mongodb://${DB_UNAME}:${DB_PW}@database/mean-docker`
-} else if (NODE_ENV === 'test') {
-  dbHost = 'mongodb://localhost/mean-docker'
+const dbHost = NODE_ENV === 'production'
+  ? `mongodb://${DB_UNAME}:${DB_PW}@database/mean-docker`
+  : 'mongodb://database/mean-docker'
+const dbOpts = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
 }
-const dbOpts = { useNewUrlParser: true }
 const maxTries = 6 // max connection attempts
 const retryTime = 10 // seconds between connection attempts
 let attempt = 1

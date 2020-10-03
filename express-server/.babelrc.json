@@ -10,5 +10,17 @@
         }
       }
     ]
-  ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*.test.js",
+            "**/server.js"
+          ]
+        }]
+      ]
+    }
+  }
 }
