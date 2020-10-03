@@ -9,14 +9,18 @@ import { Strategy, ExtractJwt } from 'passport-jwt'
 import multer from 'multer'
 import GridFSStorage from 'multer-gridfs-storage'
 import Grid from 'gridfs-stream'
+import { MockMongoose } from 'mock-mongoose'
+
+const mockMongoose = new MockMongoose(mongoose)
 const router = new Router()
 Grid.mongo = mongoose.mongo
 
-// MongoDB URL from the docker-compose file
+// For production, log in with user name & pw
 const { DB_UNAME, DB_PW, NODE_ENV } = process.env
 const dbHost = NODE_ENV === 'production'
   ? `mongodb://${DB_UNAME}:${DB_PW}@database/mean-docker`
   : 'mongodb://database/mean-docker'
+// Avoid Mongoose deprecation warnings
 const dbOpts = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -46,6 +50,13 @@ async function connect () {
             reject(error)
           }
         })
+    } else {
+      // For testing, use mockMongoose in-mem DB
+      mockMongoose.prepareStorage()
+        .then(() => {
+          mongoose.connect(dbHost, dbOpts)
+            .then((conn) => resolve(conn))
+        })
     }
   })
 }
@@ -70,6 +81,7 @@ let upload = multer({
   storage: storage
 }).single('image')
 
+// Pass the gfs interface to controllers via req
 const gfsMidWare = (req, res, next) => {
   req.gfs = gfs
   next()
@@ -183,6 +195,14 @@ router.delete('/recipes/:id', RecipeController.deleteRecipe)
 // Hello message for testing
 router.get('/', (req, res) => {
   res.status(200).send('Hello World!\r\n\r\n')
+})
+
+// For testing - shutdown Mongo DB after tests
+router.delete('/mockmongoose', (req, res) => {
+  mockMongoose.killMongo()
+    .then(() => {
+      res.status(200).send('MongoDB Disconnected\r\n')
+    })
 })
 
 export { router as api }

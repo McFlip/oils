@@ -4,24 +4,14 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 // eslint-disable-next-line no-unused-vars
 const should = require('chai').should()
-const mongoose = require('mongoose')
-const MockMongoose = require('mock-mongoose').MockMongoose
-const mockMongoose = new MockMongoose(mongoose)
+// const mongoose = require('mongoose')
 /*
 TODO: need to transpile if I want to access DB directly w/ mongoose
 const Product = require('../server/models/product')
 */
 
-// const apiURL = 'http://localhost:3000'
-const apiURL = require('../.build/app')
+let apiURL = null
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWRraXR0ZWgifQ.rvB92j8dCshswHz5XyTeIsiVbgVx9fMkPDyBYndAPVE'
-const dbHost = 'mongodb://localhost/mean-docker'
-const dbOpts = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-}
 const prod1 = {
   sku: 1984,
   descr: 'first test product',
@@ -85,16 +75,18 @@ chai.use(chaiHttp)
 
 describe('CRUD tests', function () {
   before(function (done) {
-    mockMongoose.prepareStorage()
-      .then(function () {
-        mongoose.connect(dbHost, dbOpts, function (err) { done(err) })
-      })
+    apiURL = require('../.build/app')
+    done()
   })
   after(function (done) {
-    mockMongoose.killMongo()
-      .then(done())
+    chai.request(apiURL)
+      .delete('/mockmongoose')
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        done()
+      })
   })
-  /*
   it('should return hello', function (done) {
     chai.request(apiURL)
       .get('/')
@@ -105,7 +97,6 @@ describe('CRUD tests', function () {
         done()
       })
   })
-  */
   describe('CREATE tests', function () {
     it('creates a product', function (done) {
       chai.request(apiURL)

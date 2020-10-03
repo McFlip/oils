@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 ENV BUILD_TARGET server
 # Copy dependency definitions and webpack configs
 # Don't copy source code for dev because it will be mounted in a volume
-COPY package.json package-lock.json webpack.config.common.js webpack.config.server.js .babelrc /usr/src/app/
+COPY package.json package-lock.json webpack.config.common.js webpack.config.server.js .babelrc.json ./
 # Faster than install, since we already built package-lock on host dev system
 RUN npm ci
 EXPOSE 3000
