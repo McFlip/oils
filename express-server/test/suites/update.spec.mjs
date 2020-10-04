@@ -1,0 +1,105 @@
+/* eslint-disable mocha/no-exports */
+/* eslint-disable no-console */
+/* eslint-env mocha, node */
+import chai from 'chai'
+// import checkProd from '../utility/checkProd.js'
+import checkProdDeep from '../utility/checkProdDeep.js'
+import prod1 from '../data/prod1.js'
+// import prod2 from '../data/prod2.js'
+import prods from '../data/prods.js'
+
+export default function update () {
+  let prod1ID = null
+  it('should fetch the ID for prod1', function (done) {
+    const { apiURL, token } = this.test.ctx
+    chai.request(apiURL)
+      .get(`/products/search/sku?q=${prod1.sku}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        prod1ID = res.body[0]._id
+        done()
+      })
+  })
+  it('should remove 1st prod from wishlist', function (done) {
+    const { apiURL, token } = this.test.ctx
+    const model = {
+      ...prods[0],
+      inventory: [
+        {
+          __v: 0,
+          _id: '5f6eb16a11cd0c001e3e9c2b',
+          apiKey: 'badkitteh',
+          prod: '5f6eb16a11cd0c001e3e9c28',
+          qty: 1,
+          wishlist: false
+        }]
+    }
+    chai.request(apiURL)
+      .post(`/inventory/${prod1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .send({ wishlist: false })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
+        checkProdDeep(res.body, model)
+        done()
+      })
+  })
+  it('should update 1st prod qty', function (done) {
+    const { apiURL, token } = this.test.ctx
+    const model = {
+      ...prods[0],
+      inventory: [
+        {
+          __v: 0,
+          _id: '5f6eb16a11cd0c001e3e9c2b',
+          apiKey: 'badkitteh',
+          prod: '5f6eb16a11cd0c001e3e9c28',
+          qty: 9,
+          wishlist: false
+        }]
+    }
+    chai.request(apiURL)
+      .post(`/inventory/${prod1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .send({ qty: 9 })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
+        checkProdDeep(res.body, model)
+        done()
+      })
+  })
+  it('should update 1st prod size', function (done) {
+    const { apiURL, token } = this.test.ctx
+    const model = {
+      ...prods[0],
+      size: '99 bottles',
+      inventory: [
+        {
+          __v: 0,
+          _id: '5f6eb16a11cd0c001e3e9c2b',
+          apiKey: 'badkitteh',
+          prod: '5f6eb16a11cd0c001e3e9c28',
+          qty: 9,
+          wishlist: false
+        }]
+    }
+    chai.request(apiURL)
+      .post(`/products/${prod1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .send({ size: '99 bottles' })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
+        // console.log(res.body)
+        checkProdDeep(res.body, model)
+        done()
+      })
+  })
+}

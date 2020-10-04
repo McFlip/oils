@@ -1,4 +1,4 @@
-import { Product, Oil, Post } from '../models/product.js'
+import { Product, Oil, Post } from '../models/product'
 import { Inventory } from '../models/inventory'
 import mongoose from 'mongoose'
 import { Recipe, Ingredient } from '../models/recipe'
