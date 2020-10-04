@@ -5,7 +5,7 @@
   "scripts": {
     "start": "rm -rf ./build && webpack --config webpack.config.server.js",
     "build": "webpack",
-    "test": "rm -rf ./build && NODE_ENV=test webpack --config webpack.config.test.js && NODE_ENV=test JWT_SECRET=eebilkitteh nyc --reporter=html mocha --timeout 12000"
+    "test": "rm -rf ./build && NODE_ENV=test webpack --config webpack.config.test.js && NODE_ENV=test JWT_SECRET=eebilkitteh nyc --reporter=html mocha --timeout 12000 --bail"
   },
   "nyc": {
     "sourceMap": false,

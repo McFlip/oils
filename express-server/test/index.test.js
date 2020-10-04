@@ -4,6 +4,9 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 // eslint-disable-next-line no-unused-vars
 const should = require('chai').should()
+const prod1 = require('./data/prod1')
+const prod2 = require('./data/prod2')
+const prods = require('./data/prods')
 // const mongoose = require('mongoose')
 /*
 TODO: need to transpile if I want to access DB directly w/ mongoose
@@ -12,62 +15,8 @@ const Product = require('../server/models/product')
 
 let apiURL = null
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWRraXR0ZWgifQ.rvB92j8dCshswHz5XyTeIsiVbgVx9fMkPDyBYndAPVE'
-const prod1 = {
-  sku: 1984,
-  descr: 'first test product',
-  size: '5 ml',
-  category: 'single',
-  qty: 1,
-  wholesale: 999,
-  retail: 1999,
-  pv: 500,
-  wishlist: true,
-  oil: true,
-  aromatic: true,
-  topical: true
-}
-const prod2 = {
-  sku: 2000,
-  descr: 'second test product'
-}
-const prods = [
-  {
-    _id: '5f6eb16a11cd0c001e3e9c28',
-    category: 'single',
-    inventory: [
-      {
-        __v: 0,
-        _id: '5f6eb16a11cd0c001e3e9c2b',
-        apiKey: 'badkitteh',
-        prod: '5f6eb16a11cd0c001e3e9c28',
-        qty: 1,
-        wishlist: true
-      }],
-    size: '5 ml',
-    sku: 1984,
-    oil: {
-      aromatic: true,
-      topical: true
-    }
-  }
-]
-const checkProd = (res, model) => {
-  if (res.inventory[0].prod) res._id.should.eql(res.inventory[0].prod)
-  res.category.should.eql(model.category)
-  res.inventory[0].qty.should.eql(model.inventory[0].qty)
-  res.inventory[0].wishlist.should.eql(model.inventory[0].wishlist)
-  res.size.should.eql(model.size)
-  res.sku.should.eql(model.sku)
-}
-const checkProdDeep = (res, model) => {
-  checkProd(res, model)
-  const { photosensitive, topical, dilute, aromatic, dietary } = model.oil
-  if (photosensitive) res.oil.photosensitive.should.eql(photosensitive)
-  if (topical) res.oil.topical.should.eql(topical)
-  if (dilute) res.oil.dilute.should.eql(dilute)
-  if (aromatic) res.oil.aromatic.should.eql(aromatic)
-  if (dietary) res.oil.dietary.should.eql(dietary)
-}
+const checkProd = require('./utility/checkProd')
+const checkProdDeep = require('./utility/checkProdDeep')
 let prod1ID = null
 let prod2ID = null
 
@@ -125,6 +74,12 @@ describe('CRUD tests', function () {
           prod2ID = res.body._id
           done()
         })
+    })
+    it.skip('creates a use for the first product', function (done) {
+      chai.request(apiURL)
+        .post('/uses')
+        .set({ Authorization: `Bearer ${token}` })
+        
     })
   })
   describe('READ tests', function () {
