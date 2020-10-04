@@ -1,30 +1,29 @@
 /* eslint-disable no-console */
 /* eslint-env mocha, node */
-const chai = require('chai')
-const chaiHttp = require('chai-http')
-// eslint-disable-next-line no-unused-vars
-const should = require('chai').should()
-const prod1 = require('./data/prod1')
-const prod2 = require('./data/prod2')
-const prods = require('./data/prods')
+import chaiHttp from 'chai-http'
+import chai from 'chai'
+import prod1 from './data/prod1.js'
+import prod2 from './data/prod2.js'
+import prods from './data/prods.js'
+import apiURL from '../.build/app.js'
+import checkProd from './utility/checkProd.js'
+import checkProdDeep from './utility/checkProdDeep.js'
 // const mongoose = require('mongoose')
 /*
 TODO: need to transpile if I want to access DB directly w/ mongoose
 const Product = require('../server/models/product')
 */
 
-let apiURL = null
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWRraXR0ZWgifQ.rvB92j8dCshswHz5XyTeIsiVbgVx9fMkPDyBYndAPVE'
-const checkProd = require('./utility/checkProd')
-const checkProdDeep = require('./utility/checkProdDeep')
 let prod1ID = null
 let prod2ID = null
 
 chai.use(chaiHttp)
+chai.should()
 
 describe('CRUD tests', function () {
   before(function (done) {
-    apiURL = require('../.build/app')
+    // apiURL = require('../.build/app')
     done()
   })
   after(function (done) {
