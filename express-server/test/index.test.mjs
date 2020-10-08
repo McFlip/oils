@@ -17,6 +17,7 @@ describe('CRUD tests', function () {
   before(function (done) {
     this.apiURL = apiURL
     this.token = token
+    this.prod1ID = null
     done()
   })
   after(function (done) {

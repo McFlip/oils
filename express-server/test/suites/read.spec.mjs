@@ -8,7 +8,7 @@ import prod1 from '../data/prod1.js'
 // import prod2 from '../data/prod2.js'
 import prods from '../data/prods.js'
 
-export default function () {
+export default function read () {
   let prod1ID = null
   it('should get all products', function (done) {
     const { apiURL, token } = this.test.ctx

@@ -4,26 +4,13 @@
 import chai from 'chai'
 // import checkProd from '../utility/checkProd.js'
 import checkProdDeep from '../utility/checkProdDeep.js'
-import prod1 from '../data/prod1.js'
+// import prod1 from '../data/prod1.js'
 // import prod2 from '../data/prod2.js'
 import prods from '../data/prods.js'
 
 export default function update () {
-  let prod1ID = null
-  it('should fetch the ID for prod1', function (done) {
-    const { apiURL, token } = this.test.ctx
-    chai.request(apiURL)
-      .get(`/products/search/sku?q=${prod1.sku}`)
-      .set({ Authorization: `Bearer ${token}` })
-      .end((err, res) => {
-        if (err) console.log(err)
-        res.should.have.status(200)
-        prod1ID = res.body[0]._id
-        done()
-      })
-  })
   it('should remove 1st prod from wishlist', function (done) {
-    const { apiURL, token } = this.test.ctx
+    const { apiURL, token, prod1ID } = this.test.ctx
     const model = {
       ...prods[0],
       inventory: [
@@ -49,7 +36,7 @@ export default function update () {
       })
   })
   it('should update 1st prod qty', function (done) {
-    const { apiURL, token } = this.test.ctx
+    const { apiURL, token, prod1ID } = this.test.ctx
     const model = {
       ...prods[0],
       inventory: [
@@ -75,7 +62,7 @@ export default function update () {
       })
   })
   it('should update 1st prod size', function (done) {
-    const { apiURL, token } = this.test.ctx
+    const { apiURL, token, prod1ID } = this.test.ctx
     const model = {
       ...prods[0],
       size: '99 bottles',

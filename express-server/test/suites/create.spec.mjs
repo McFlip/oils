@@ -21,7 +21,7 @@ export default function create () {
         // test the returned object
         checkProd(res.body, prods[0])
         // save the returned id for later tests
-        // this.test.parent.ctx.prod1ID = res.body._id
+        this.test.parent.parent.ctx.prod1ID = res.body._id
         // console.log(res.body._id)
         done()
       })
