@@ -36,15 +36,27 @@ export default function create () {
         if (err) console.log(err)
         res.should.have.status(200)
         // save the returned id for later tests
-        this.test.ctx.prod2ID = res.body._id
+        this.test.parent.parent.ctx.prod2ID = res.body._id
         done()
       })
   })
-  it.skip('creates a use for the first product', function (done) {
-    const { apiURL, token } = this.test.ctx
+  it('creates a use for the first product', function (done) {
+    const { apiURL, token, prod1ID } = this.test.ctx
+    const use = {
+      title: '1st test product use',
+      category: 'product',
+      refId: prod1ID
+    }
     chai.request(apiURL)
       .post('/uses')
       .set({ Authorization: `Bearer ${token}` })
-      
+      .send(use)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        this.test.parent.parent.ctx.use1ID = res.body
+        console.log(res.body)
+        done()
+      })
   })
 }

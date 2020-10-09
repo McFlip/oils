@@ -1,6 +1,7 @@
 const prods = [
   {
     _id: '5f6eb16a11cd0c001e3e9c28',
+    descr: 'first test product',
     category: 'single',
     inventory: [
       {
@@ -16,7 +17,10 @@ const prods = [
     oil: {
       aromatic: true,
       topical: true
-    }
+    },
+    uses: [
+      '1st test product use'
+    ]
   }
 ]
 module.exports = prods

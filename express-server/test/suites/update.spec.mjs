@@ -89,4 +89,29 @@ export default function update () {
         done()
       })
   })
+  it('should add the 1st use to the 2nd product', function (done) {
+    const { apiURL, token, prod2ID, use1ID } = this.test.ctx
+    chai.request(apiURL)
+      .post(`/uses/${use1ID}/product/${prod2ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.text.should.eql(use1ID)
+        done()
+      })
+  })
+  it('should confirm use was added to prod', function (done) {
+    const { apiURL, token, prod2ID, use1ID } = this.test.ctx
+    chai.request(apiURL)
+      .get(`/products/${prod2ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .end((err, res) => {
+        if (err) console.log(err)
+        const { title, _id } = res.body.uses[0]
+        title.should.eql('1st test product use')
+        _id.should.eql(use1ID)
+        done()
+      })
+  })
 }

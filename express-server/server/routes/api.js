@@ -162,10 +162,10 @@ router.post('/uses', UseController.createUse)
 // GET item uses
 router.get('/uses/:id/:refType', UseController.getUses)
 
-// Remove a product or recipe from a use
+// REMOVE a product or recipe from a use
 router.delete('/uses/:id/:category/:refId', UseController.removeUse)
 
-// Remove a product or recipe from a use
+// ADD a product or recipe from a use
 router.post('/uses/:id/:category/:refId', UseController.addUse)
 
 // SEARCH through uses
