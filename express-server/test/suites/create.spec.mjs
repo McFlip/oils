@@ -55,11 +55,22 @@ export default function create () {
         if (err) console.log(err)
         res.should.have.status(200)
         this.test.parent.parent.ctx.use1ID = res.body
-        console.log(res.body)
+        // console.log(res.body)
         done()
       })
   })
-  it.skip('creates a recipe', function (done) {
-    // fix the UI 1st
+  it('creates a recipe', function (done) {
+    const { apiURL, token } = this.test.ctx
+    const recipe = { title: '1st test recipe' }
+    chai.request(apiURL)
+      .post('/recipes/create')
+      .set({ Authorization: `Bearer ${token}` })
+      .send(recipe)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(201)
+        this.test.parent.parent.ctx.recipe1ID = res.body._id
+        done()
+      })
   })
 }
