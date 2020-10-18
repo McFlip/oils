@@ -165,7 +165,7 @@ router.get('/uses/:id/:refType', UseController.getUses)
 // REMOVE a product or recipe from a use
 router.delete('/uses/:id/:category/:refId', UseController.removeUse)
 
-// ADD a product or recipe from a use
+// ADD a product or recipe to a use
 router.post('/uses/:id/:category/:refId', UseController.addUse)
 
 // SEARCH through uses

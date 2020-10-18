@@ -73,4 +73,18 @@ export default function create () {
         done()
       })
   })
+  it('creates the 2nd recipe', function (done) {
+    const { apiURL, token } = this.test.ctx
+    const recipe = { title: '2nd test recipe' }
+    chai.request(apiURL)
+      .post('/recipes/create')
+      .set({ Authorization: `Bearer ${token}` })
+      .send(recipe)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(201)
+        this.test.parent.parent.ctx.recipe2ID = res.body._id
+        done()
+      })
+  })
 }

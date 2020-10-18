@@ -82,4 +82,38 @@ export default function read () {
         done()
       })
   })
+  it('should get 1st recipe by ID', function (done) {
+    const { apiURL, token, recipe1ID } = this.test.ctx
+    const recipe = {
+      title: '1st test recipe',
+      directions: 'brand new recipe',
+      ingredients: [],
+      uses: []
+    }
+    chai.request(apiURL)
+      .get(`/recipes/${recipe1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
+        // console.log(res.body)
+        res.body.should.deep.include(recipe)
+        done()
+      })
+  })
+  it('should find the 1st recipe', function (done) {
+    const { apiURL, token } = this.test.ctx
+    chai.request(apiURL)
+      .get('/recipes/search?q=1st')
+      .set({ Authorization: `Bearer ${token}` })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('array')
+        res.body.should.have.length(1)
+        res.body[0].title.should.eql('1st test recipe')
+        done()
+      })
+  })
 }
