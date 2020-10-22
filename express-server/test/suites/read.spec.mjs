@@ -83,12 +83,15 @@ export default function read () {
       })
   })
   it('should get 1st recipe by ID', function (done) {
-    const { apiURL, token, recipe1ID } = this.test.ctx
+    const { apiURL, token, recipe1ID, use2ID } = this.test.ctx
     const recipe = {
       title: '1st test recipe',
       directions: 'brand new recipe',
       ingredients: [],
-      uses: []
+      uses: [{
+        _id: use2ID,
+        title: '1st test recipe use'
+      }]
     }
     chai.request(apiURL)
       .get(`/recipes/${recipe1ID}`)

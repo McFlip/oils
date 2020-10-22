@@ -20,6 +20,7 @@ describe('CRUD tests', function () {
     this.prod1ID = null
     this.prod2ID = null
     this.use1ID = null
+    this.use2ID = null
     this.recipe1ID = null
     this.recipe2ID = null
     done()
