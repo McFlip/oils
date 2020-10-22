@@ -10,6 +10,8 @@ import prods from '../data/prods.js'
 
 export default function read () {
   let prod1ID = null
+  let post1ID = null
+  let image1ID = null
   it('should get all products', function (done) {
     const { apiURL, token } = this.test.ctx
     chai.request(apiURL)
@@ -65,6 +67,7 @@ export default function read () {
         res.body.should.be.an('object')
         // console.log(res.body)
         checkProdDeep(res.body, prods[0])
+        post1ID = res.body.posts[0]._id
         done()
       })
   })
@@ -116,6 +119,26 @@ export default function read () {
         res.body.should.be.an('array')
         res.body.should.have.length(1)
         res.body[0].title.should.eql('1st test recipe')
+        done()
+      })
+  })
+  it('should get the 1st post', function (done) {
+    const { apiURL, token } = this.test.ctx
+    const post = {
+      title: '1st product post',
+      content: 'new post'
+    }
+    chai.request(apiURL)
+      .get(`/products/${prod1ID}/posts/${post1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
+        res.body.should.deep.include(post)
+        res.body.image.should.be.a('string')
+        res.body.image.should.have.length(32)
+        image1ID = res.body.image
         done()
       })
   })

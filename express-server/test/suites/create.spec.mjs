@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-env mocha, node */
 import chai from 'chai'
+import fs from 'fs'
 import checkProd from '../utility/checkProd.js'
 // import checkProdDeep from './utility/checkProdDeep.js'
 import prod1 from '../data/prod1.js'
@@ -103,6 +104,27 @@ export default function create () {
         res.should.have.status(200)
         this.test.parent.parent.ctx.use2ID = res.body
         // console.log(res.body)
+        done()
+      })
+  })
+  it('creates a product post', function (done) {
+    const { apiURL, token, prod1ID } = this.test.ctx
+    const post = {
+      'title': '1st product post',
+      'content': 'new post',
+      'id': prod1ID,
+      'deleteImg': false
+    }
+    chai.request(apiURL)
+      .post('/posts')
+      .type('form')
+      .set({ Authorization: `Bearer ${token}` })
+      .attach('image', fs.readFileSync('test/data/favicon.ico'), 'postImg.ico')
+      .field(post)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(201)
+        // console.log(res.body.message)
         done()
       })
   })
