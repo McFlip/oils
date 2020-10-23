@@ -114,4 +114,27 @@ export default function update () {
         done()
       })
   })
+  it('should add 2nd use to the 2nd recipe', function (done) {
+    const { apiURL, recipe2ID, use2ID } = this.test.ctx
+    chai.request(apiURL)
+      .post(`/uses/${use2ID}/recipe/${recipe2ID}`)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.text.should.eql(use2ID)
+        done()
+      })
+  })
+  it('should confirm use was added to recipe', function (done) {
+    const { apiURL, recipe2ID, use2ID } = this.test.ctx
+    chai.request(apiURL)
+      .get(`/recipes/${recipe2ID}`)
+      .end((err, res) => {
+        if (err) console.log(err)
+        const { title, _id } = res.body.uses[0]
+        title.should.eql('1st test recipe use')
+        _id.should.eql(use2ID)
+        done()
+      })
+  })
 }
