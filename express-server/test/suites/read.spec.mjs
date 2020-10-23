@@ -2,6 +2,8 @@
 /* eslint-disable no-console */
 /* eslint-env mocha, node */
 import chai from 'chai'
+import binParser from 'superagent-binary-parser'
+import crypto from 'crypto'
 import checkProd from '../utility/checkProd.js'
 import checkProdDeep from '../utility/checkProdDeep.js'
 import prod1 from '../data/prod1.js'
@@ -139,6 +141,22 @@ export default function read () {
         res.body.image.should.be.a('string')
         res.body.image.should.have.length(32)
         image1ID = res.body.image
+        done()
+      })
+  })
+  it('should get the 1st post image', function (done) {
+    const { apiURL } = this.test.ctx
+    const hash = crypto.createHash('sha1')
+    chai.request(apiURL)
+      .get(`/images/${image1ID}`)
+      .parse(binParser)
+      .buffer()
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        hash.update(res.body)
+        // console.log(hash.digest('hex'))
+        hash.digest('hex').should.eql('2edf6f7bba09e59b9ca1f3df41bcd121c2da00d4')
         done()
       })
   })
