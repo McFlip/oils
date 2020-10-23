@@ -160,4 +160,30 @@ export default function read () {
         done()
       })
   })
+  it('should get 1st products uses', function (done) {
+    const { apiURL } = this.test.ctx
+    chai.request(apiURL)
+      .get(`/uses/${prod1ID}/product`)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('array')
+        // console.log(res.body)
+        res.body[0].title.should.eql('1st test product use')
+        done()
+      })
+  })
+  it('should get 1st recipes uses', function (done) {
+    const { apiURL, recipe1ID } = this.test.ctx
+    chai.request(apiURL)
+      .get(`/uses/${recipe1ID}/recipe`)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('array')
+        // console.log(res.body)
+        res.body[0].title.should.eql('1st test recipe use')
+        done()
+      })
+  })
 }
