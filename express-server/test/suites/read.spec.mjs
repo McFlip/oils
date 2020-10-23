@@ -214,4 +214,17 @@ export default function read () {
         done()
       })
   })
+  it('should find the product use', function (done) {
+    const { apiURL } = this.test.ctx
+    chai.request(apiURL)
+      .get('/uses/search?q=product')
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('array')
+        res.body.should.have.length(1)
+        res.body[0].title.should.eql('1st test product use')
+        done()
+      })
+  })
 }
