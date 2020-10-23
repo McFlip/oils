@@ -17,6 +17,7 @@ Grid.mongo = mongoose.mongo
 
 // For production, log in with user name & pw
 const { DB_UNAME, DB_PW, NODE_ENV } = process.env
+/* istanbul ignore next */
 const dbHost = NODE_ENV === 'production'
   ? `mongodb://${DB_UNAME}:${DB_PW}@database/mean-docker`
   : 'mongodb://database/mean-docker'
@@ -35,6 +36,7 @@ let gfs = null // gridfs-stream needs connection obj for constructor
 // Recursive promises to handle mongoose reject on 1st connection failure
 async function connect () {
   return new Promise(async (resolve, reject) => {
+    /* istanbul ignore if */
     if (NODE_ENV !== 'test') {
       await mongoose.connect(dbHost, dbOpts)
         .then((conn) => resolve(conn))
@@ -67,11 +69,13 @@ const conn = connect()
     console.log('####### MongoDB Connected ###### ', Date())
     return mongoose.connection
   })
-  .catch(err => {
-    console.log(err)
-    // to exit the Docker container, kill the grandparent process
-    process.kill(process.ppid)
-  })
+  .catch(
+    /* istanbul ignore next */
+    err => {
+      console.log(err)
+      // to exit the Docker container, kill the grandparent process
+      process.kill(process.ppid)
+    })
 
 // Setting up the storage element
 let storage = new GridFSStorage({ db: conn })
