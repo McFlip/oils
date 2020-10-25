@@ -31,6 +31,7 @@ export default function update () {
         if (err) console.log(err)
         res.should.have.status(200)
         res.body.should.be.an('object')
+        // console.log(res.body)
         checkProdDeep(res.body, model)
         done()
       })
@@ -85,6 +86,38 @@ export default function update () {
         res.should.have.status(200)
         res.body.should.be.an('object')
         // console.log(res.body)
+        checkProdDeep(res.body, model)
+        done()
+      })
+  })
+  it('should update 1st prod qty, wishlist, & category', function (done) {
+    const { apiURL, token, prod1ID } = this.test.ctx
+    const model = {
+      ...prods[0],
+      category: 'blend',
+      size: '99 bottles',
+      inventory: [
+        {
+          __v: 0,
+          _id: '5f6eb16a11cd0c001e3e9c2b',
+          apiKey: 'badkitteh',
+          prod: '5f6eb16a11cd0c001e3e9c28',
+          qty: 5,
+          wishlist: true
+        }]
+    }
+    chai.request(apiURL)
+      .post(`/products/${prod1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+      .send({
+        category: 'blend',
+        wishlist: true,
+        qty: 5
+      })
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
         checkProdDeep(res.body, model)
         done()
       })
