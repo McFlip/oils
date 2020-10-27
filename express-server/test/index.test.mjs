@@ -7,6 +7,7 @@ import apiURL from '../.build/app.js'
 import create from './suites/create.spec.mjs'
 import read from './suites/read.spec.mjs'
 import update from './suites/update.spec.mjs'
+import del from './suites/delete.spec.mjs'
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYWRraXR0ZWgifQ.rvB92j8dCshswHz5XyTeIsiVbgVx9fMkPDyBYndAPVE'
 
@@ -24,6 +25,7 @@ describe('CRUD tests', function () {
     this.use2ID = null
     this.recipe1ID = null
     this.recipe2ID = null
+    this.image2ID = null
     done()
   })
   after(function (done) {
@@ -48,4 +50,5 @@ describe('CRUD tests', function () {
   describe('CREATE tests', create.bind(this))
   describe('READ tests', read.bind(this))
   describe('UPDATE tests', update.bind(this))
+  describe('DELETE tests', del.bind(this))
 })

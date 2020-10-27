@@ -246,12 +246,12 @@ export default function update () {
       .end((err, res) => {
         if (err) console.log(err)
         res.body.title.should.eql('1st product post')
-        image2ID = res.body.image
+        this.test.parent.parent.ctx.image2ID = res.body.image
         done()
       })
   })
   it('should validate post image changed', function (done) {
-    const { apiURL } = this.test.ctx
+    const { apiURL, image2ID } = this.test.ctx
     const hash = crypto.createHash('sha1')
     chai.request(apiURL)
       .get(`/images/${image2ID}`)
