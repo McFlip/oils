@@ -311,7 +311,6 @@ export function updatePost (req, res) {
     post.title = title
     post.content = content
     const savePost = () => {
-      post.image = image
       prod.save(err => {
         if (err) res.status(500).send(err)
         res.status(201).json({
@@ -321,11 +320,19 @@ export function updatePost (req, res) {
     }
     // set the image
     if ((!!image || deleteImg === 'true') && post.image) {
-      // remove existing image
+      // remove/replace existing image
       req.gfs.remove({ filename: post.image })
-        .then(() => savePost())
+        .then(() => {
+          post.image = image
+          savePost()
+        })
         .catch(err => res.status(500).json({ message: 'failed to del file', err }))
+    } else if (image) {
+      // brand new image; no previous image
+      post.image = image
+      savePost()
     } else {
+      // no change to image
       savePost()
     }
   })
