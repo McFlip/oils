@@ -128,4 +128,24 @@ export default function create () {
         done()
       })
   })
+  it('creates the 2nd post', function (done) {
+    const { apiURL, token, prod1ID } = this.test.ctx
+    const post = {
+      'title': '2nd product post',
+      'content': 'I will attach an image in the UPDATE section',
+      'id': prod1ID,
+      'deleteImg': false
+    }
+    chai.request(apiURL)
+      .post('/posts')
+      .type('form')
+      // .set({ Authorization: `Bearer ${token}` })
+      .field(post)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(201)
+        // console.log(res.body.message)
+        done()
+      })
+  })
 }

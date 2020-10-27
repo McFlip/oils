@@ -69,6 +69,7 @@ export default function read () {
         // console.log(res.body)
         checkProdDeep(res.body, prods[0])
         this.test.parent.parent.ctx.post1ID = res.body.posts[0]._id
+        this.test.parent.parent.ctx.post2ID = res.body.posts[1]._id
         done()
       })
   })

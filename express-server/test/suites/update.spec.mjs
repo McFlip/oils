@@ -276,4 +276,48 @@ export default function update () {
         done()
       })
   })
+  it('should attach an image to the second post', function (done) {
+    const { apiURL, prod1ID, post2ID } = this.test.ctx
+    const post = {
+      'title': '2nd product post',
+      'content': 'I will attach an image in the UPDATE section',
+      'id': prod1ID,
+      'deleteImg': false
+    }
+    chai.request(apiURL)
+      .post(`/posts/${post2ID}`)
+      .type('form')
+      .attach('image', fs.readFileSync('test/data/care.jpg'), 'post2Img.jpg')
+      .field(post)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.body.message.should.eql('Post updated successfully')
+        done()
+      })
+  })
+  it('should validate 2nd post', function (done) {
+    const { apiURL, prod1ID, post2ID } = this.test.ctx
+    const hash = crypto.createHash('sha1')
+    let imageID = null
+    chai.request(apiURL)
+      .get(`/products/${prod1ID}/posts/${post2ID}`)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.body.title.should.eql('2nd product post')
+        // this.test.parent.parent.ctx.image2ID = res.body.image
+        imageID = res.body.image
+        chai.request(apiURL)
+          .get(`/images/${imageID}`)
+          .parse(binParser)
+          .buffer()
+          .end((err, res) => {
+            if (err) console.log(err)
+            res.should.have.status(200)
+            hash.update(res.body)
+            // console.log(hash.digest('hex'))
+            hash.digest('hex').should.eql('b923a6b10e15716743d3dabb2ac5753f44b6edf6')
+            done()
+          })
+      })
+  })
 }
