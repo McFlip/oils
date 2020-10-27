@@ -310,19 +310,22 @@ export function updatePost (req, res) {
     // set the text fields
     post.title = title
     post.content = content
+    const savePost = () => {
+      post.image = image
+      prod.save(err => {
+        if (err) res.status(500).send(err)
+        res.status(201).json({
+          message: 'Post updated successfully'
+        })
+      })
+    }
     // set the image
     if (!!image || deleteImg === 'true') {
       req.gfs.remove({ filename: post.image })
         .catch(err => res.status(500).send(err))
-        .then(() => {
-          post.image = image
-          prod.save(err => {
-            if (err) res.status(500).send(err)
-            res.status(201).json({
-              message: 'Post updated successfully'
-            })
-          })
-        })
+        .then(savePost())
+    } else {
+      savePost()
     }
   })
 }

@@ -170,4 +170,23 @@ export default function update () {
         done()
       })
   })
+  it('should update post content', function (done) {
+    const { apiURL, prod1ID, post1ID } = this.test.ctx
+    const post = {
+      id: prod1ID,
+      title: '1st product post',
+      content: 'modified post content',
+      // image: null,
+      deleteImg: false
+    }
+    chai.request(apiURL)
+      .post(`/posts/${post1ID}`)
+      .type('form')
+      .field(post)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.body.message.should.eql('Post updated successfully')
+        done()
+      })
+  })
 }

@@ -12,7 +12,6 @@ import prods from '../data/prods.js'
 
 export default function read () {
   let prod1ID = null
-  let post1ID = null
   let image1ID = null
   it('should get all products', function (done) {
     const { apiURL, token } = this.test.ctx
@@ -69,7 +68,7 @@ export default function read () {
         res.body.should.be.an('object')
         // console.log(res.body)
         checkProdDeep(res.body, prods[0])
-        post1ID = res.body.posts[0]._id
+        this.test.parent.parent.ctx.post1ID = res.body.posts[0]._id
         done()
       })
   })
@@ -125,7 +124,7 @@ export default function read () {
       })
   })
   it('should get the 1st post', function (done) {
-    const { apiURL, token } = this.test.ctx
+    const { apiURL, token, post1ID } = this.test.ctx
     const post = {
       title: '1st product post',
       content: 'new post'
