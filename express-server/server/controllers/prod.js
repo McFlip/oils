@@ -320,10 +320,11 @@ export function updatePost (req, res) {
       })
     }
     // set the image
-    if (!!image || deleteImg === 'true') {
+    if ((!!image || deleteImg === 'true') && post.image) {
+      // remove existing image
       req.gfs.remove({ filename: post.image })
-        .catch(err => res.status(500).send(err))
-        .then(savePost())
+        .then(() => savePost())
+        .catch(err => res.status(500).json({ message: 'failed to del file', err }))
     } else {
       savePost()
     }
