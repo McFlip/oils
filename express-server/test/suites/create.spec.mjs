@@ -129,7 +129,7 @@ export default function create () {
       })
   })
   it('creates the 2nd post', function (done) {
-    const { apiURL, token, prod1ID } = this.test.ctx
+    const { apiURL, prod1ID } = this.test.ctx
     const post = {
       'title': '2nd product post',
       'content': 'I will attach an image in the UPDATE section',

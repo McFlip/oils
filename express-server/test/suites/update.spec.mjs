@@ -13,7 +13,6 @@ import prods from '../data/prods.js'
 
 export default function update () {
   let image1ID = null
-  let image2ID = null
   it('should remove 1st prod from wishlist', function (done) {
     const { apiURL, token, prod1ID } = this.test.ctx
     const model = {
@@ -152,6 +151,30 @@ export default function update () {
         done()
       })
   })
+  it('should remove the 1st use from the 2nd product', function (done) {
+    const { apiURL, prod2ID, use1ID } = this.test.ctx
+    chai.request(apiURL)
+      .delete(`/uses/${use1ID}/product/${prod2ID}`)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
+        // console.log(res.body)
+        const { id, refId, category } = res.body
+        id.should.eql(use1ID)
+        refId.should.eql(prod2ID)
+        category.should.eql('product')
+        chai.request(apiURL)
+          .get(`/uses/${use1ID}`)
+          .end((err, res) => {
+            if (err) console.log(err)
+            res.should.have.status(200)
+            console.log(res.body)
+            res.body.products.should.have.length(1)
+            done()
+          })
+      })
+  })
   it('should add 2nd use to the 2nd recipe', function (done) {
     const { apiURL, recipe2ID, use2ID } = this.test.ctx
     chai.request(apiURL)
@@ -173,6 +196,61 @@ export default function update () {
         title.should.eql('1st test recipe use')
         _id.should.eql(use2ID)
         done()
+      })
+  })
+  it('should add ingredients to both recipes', function (done) {
+    const { apiURL, recipe1ID, recipe2ID, prod1ID, prod2ID } = this.test.ctx
+    const payload = {
+      ingredients: [
+        {
+          product: prod1ID,
+          qty: '1 drop'
+        },
+        {
+          product: prod2ID,
+          qty: '2 drops'
+        }
+      ]
+    }
+    const recipe = {
+      title: '1st test recipe',
+      directions: 'brand new recipe',
+      ingredients: [
+        {
+          product: {
+            _id: prod1ID,
+            descr: 'first test product'
+          },
+          qty: '1 drop'
+        },
+        {
+          product: {
+            _id: prod2ID,
+            descr: 'second test product'
+          },
+          qty: '2 drops'
+        }
+      ]
+    }
+    chai.request(apiURL)
+      .post(`/recipes/${recipe1ID}`)
+      .send(payload)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.should.be.an('object')
+        res.body.title.should.eql(recipe.title)
+        res.body.directions.should.eql(recipe.directions)
+        res.body.ingredients[0].should.deep.include(recipe.ingredients[0])
+        res.body.ingredients[1].should.deep.include(recipe.ingredients[1])
+        chai.request(apiURL)
+          .post(`/recipes/${recipe2ID}`)
+          .send(payload)
+          .end((err, res) => {
+            if (err) console.log(err)
+            res.should.have.status(200)
+            done()
+          })
       })
   })
   it('should update post content', function (done) {
