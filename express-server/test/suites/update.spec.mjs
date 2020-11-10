@@ -169,7 +169,7 @@ export default function update () {
           .end((err, res) => {
             if (err) console.log(err)
             res.should.have.status(200)
-            console.log(res.body)
+            // console.log(res.body)
             res.body.products.should.have.length(1)
             done()
           })
@@ -382,8 +382,8 @@ export default function update () {
       .end((err, res) => {
         if (err) console.log(err)
         res.body.title.should.eql('2nd product post')
-        // this.test.parent.parent.ctx.image2ID = res.body.image
         imageID = res.body.image
+        this.test.parent.parent.ctx.image3ID = imageID
         chai.request(apiURL)
           .get(`/images/${imageID}`)
           .parse(binParser)

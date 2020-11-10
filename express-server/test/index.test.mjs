@@ -26,6 +26,7 @@ describe('CRUD tests', function () {
     this.recipe1ID = null
     this.recipe2ID = null
     this.image2ID = null
+    this.image3ID = null
     done()
   })
   after(function (done) {
