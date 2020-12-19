@@ -128,4 +128,22 @@ export default function del () {
         done()
       })
   })
+  it('should delete the 2nd recipe', function (done) {
+    const { apiURL, recipe2ID } = this.test.ctx
+    chai.request(apiURL)
+      .delete(`/recipes/${recipe2ID}`)
+      .then((res) => {
+        res.should.have.status(204)
+        // verify delete - get should fail error 404
+        chai.request(apiURL)
+          .get(`/recipes/${recipe2ID}`)
+          .then((res) => {
+            res.should.have.status(404)
+            done()
+          })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  })
 }

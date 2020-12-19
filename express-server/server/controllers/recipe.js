@@ -1,38 +1,47 @@
 import { Recipe } from '../models/recipe'
 
 // get recipe
-export function getRecipe (req, res) {
+export function getRecipe (req, res, next) {
   const { id } = req.params
   Recipe.findById(id)
     .populate('ingredients.product')
     .populate('uses')
     .exec((err, recipe) => {
-      if (err) res.status(500).send(err)
-      let r = {
-        title: recipe.title,
-        directions: recipe.directions,
-        uses: [],
-        ingredients: []
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.log(err)
+        next(err)
       }
-      recipe.uses.map((use) => {
-        let u = {
-          _id: use._id,
-          title: use.title
+      if (!recipe) {
+        res.status(404)
+        next(new Error('recipe not found'))
+      } else {
+        let r = {
+          title: recipe.title,
+          directions: recipe.directions,
+          uses: [],
+          ingredients: []
         }
-        r.uses.push(u)
-      })
-      recipe.ingredients.map((ingredient) => {
-        let i = {
-          _id: ingredient._id,
-          qty: ingredient.qty,
-          product: {
-            _id: ingredient.product._id,
-            descr: ingredient.product.descr
+        recipe.uses.map((use) => {
+          let u = {
+            _id: use._id,
+            title: use.title
           }
-        }
-        r.ingredients.push(i)
-      })
-      res.status(200).send(r)
+          r.uses.push(u)
+        })
+        recipe.ingredients.map((ingredient) => {
+          let i = {
+            _id: ingredient._id,
+            qty: ingredient.qty,
+            product: {
+              _id: ingredient.product._id,
+              descr: ingredient.product.descr
+            }
+          }
+          r.ingredients.push(i)
+        })
+        res.status(200).send(r)
+      }
     })
 }
 // GET search results
@@ -93,9 +102,9 @@ export function updateRecipe (req, res) {
 
 export function deleteRecipe (req, res) {
   const { id } = req.params
-  // cascade delete ref
+
   Recipe.findByIdAndRemove(id, (error) => {
     if (error) res.status(500).send(error)
-    res.status(204)
+    res.status(204).send(id)
   })
 }
