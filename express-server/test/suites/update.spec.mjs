@@ -198,6 +198,31 @@ export default function update () {
         done()
       })
   })
+  it('should remove the 2nd use from the 2nd recipe', function (done) {
+    const { apiURL, recipe2ID, use2ID } = this.test.ctx
+    chai.request(apiURL)
+      .delete(`/uses/${use2ID}/recipe/${recipe2ID}`)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(200)
+        res.body.should.be.an('object')
+        // console.log(res.body)
+        const { id, refId, category } = res.body
+        id.should.eql(use2ID)
+        refId.should.eql(recipe2ID)
+        category.should.eql('recipe')
+        chai.request(apiURL)
+          .get(`/uses/${use2ID}`)
+          .end((err, res) => {
+            if (err) console.log(err)
+            res.should.have.status(200)
+            // console.log(res.body)
+            res.body.recipes.should.have.length(1)
+            res.body.recipes[0].title.should.eql('1st test recipe')
+            done()
+          })
+      })
+  })
   it('should add ingredients to both recipes', function (done) {
     const { apiURL, recipe1ID, recipe2ID, prod1ID, prod2ID } = this.test.ctx
     const payload = {
