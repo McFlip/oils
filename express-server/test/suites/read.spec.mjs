@@ -27,6 +27,18 @@ export default function read () {
         done()
       })
   })
+  it('should fail to get badkittehs inv as user basementkitteh', async function () {
+    const { apiURL } = this.test.ctx
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlbWVudGtpdHRlaCJ9.4YN2rV3tQO2xDYvdDJX_IRRONYMQGkvuC0Y5vNWQZNg'
+    let res = await chai.request(apiURL)
+      .get('/products')
+      .set({ Authorization: `Bearer ${token}` })
+    // console.log(res.body)
+    res.status.should.eq(200)
+    res.body.forEach(prod => {
+      prod.inventory.length.should.eq(0)
+    })
+  })
   it('should get all wishlist items', function (done) {
     const { apiURL, token } = this.test.ctx
     chai.request(apiURL)

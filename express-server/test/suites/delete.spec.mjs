@@ -173,22 +173,18 @@ export default function del () {
   it('should delete the 1st recipe use', async function () {
     const { apiURL, token, use2ID, prod1ID, recipe1ID } = this.test.ctx
     let res = null
-    try {
-      res = await chai.request(apiURL)
-        .delete(`/uses/${use2ID}`)
-      res.text.should.eq(use2ID)
-      res = await chai.request(apiURL)
-        .get(`/products/${prod1ID}`)
-        .set({ Authorization: `Bearer ${token}` })
-      // console.log(res.body.useTitles)
-      res.body.useTitles.length.should.eq(0)
-      res.body.recipes[0].title.should.eq('1st test recipe')
-      res = await chai.request(apiURL)
-        .get(`/recipes/${recipe1ID}`)
-        .set({ Authorization: `Bearer ${token}` })
-      res.body.uses.length.should.eq(0)
-    } catch (error) {
-      console.log(error)
-    }
+    res = await chai.request(apiURL)
+      .delete(`/uses/${use2ID}`)
+    res.text.should.eq(use2ID)
+    res = await chai.request(apiURL)
+      .get(`/products/${prod1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+    // console.log(res.body.useTitles)
+    res.body.useTitles.length.should.eq(0)
+    res.body.recipes[0].title.should.eq('1st test recipe')
+    res = await chai.request(apiURL)
+      .get(`/recipes/${recipe1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+    res.body.uses.length.should.eq(0)
   })
 }
