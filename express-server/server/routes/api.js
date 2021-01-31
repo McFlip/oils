@@ -207,6 +207,15 @@ router.delete('/mockmongoose', (req, res) => {
     .then(() => {
       res.status(200).send('MongoDB Disconnected\r\n')
     })
+    .catch((err) => {
+      console.log('unable to kill mockmongoose')
+      console.error(err)
+    })
+})
+
+// bad route
+router.all('*', (req, res) => {
+  res.sendStatus(404)
 })
 
 export { router as api }

@@ -48,6 +48,10 @@ describe('CRUD tests', function () {
         done()
       })
   })
+  it('should return 404 for a bad route', async function () {
+    let res = await chai.request(apiURL).get('/fubar')
+    res.should.have.status(404)
+  })
   describe('CREATE tests', create.bind(this))
   describe('READ tests', read.bind(this))
   describe('UPDATE tests', update.bind(this))
