@@ -23,7 +23,7 @@ export default function read () {
         res.should.have.status(200)
         res.body.should.be.an('array')
         // console.log(res.body)
-        res.body.should.have.length(2)
+        res.body.should.have.length(3)
         done()
       })
   })

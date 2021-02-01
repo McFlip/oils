@@ -157,7 +157,7 @@ export function getWishlist (req, res) {
 }
 
 // CREATE product
-export function createProduct (req, res) {
+export function createProduct (req, res, next) {
   const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body
   const apiKey = req.user.sub
   let product = new Product({ sku, descr, size, category, wholesale, retail, pv })
@@ -165,11 +165,11 @@ export function createProduct (req, res) {
     product.oil = new Oil({ photosensitive, topical, dilute, aromatic })
   }
   product.save((error, p) => {
-    if (error) res.status(500).send(error)
+    if (error) return next(error)
     const prod = req.params.id = p._id
     const inv = new Inventory({ prod, qty, wishlist, apiKey })
     inv.save((err) => {
-      if (err) res.status(500).send(err)
+      if (err) return next(err)
       getProduct(req, res)
     })
   })

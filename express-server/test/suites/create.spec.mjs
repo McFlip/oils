@@ -41,6 +41,29 @@ export default function create () {
         done()
       })
   })
+  it('attempts to create a bad product that doesnt match schema', async function () {
+    const { apiURL, token } = this.test.ctx
+    const badProd = {
+      sku: 'fizifth',
+      descr: {}
+    }
+    const badInventory = {
+      descr: 'the parent is good but the inv child is bad',
+      qty: 'fizifth'
+    }
+    // attempt bad prod - prod should fail to be created
+    const res = await chai.request(apiURL)
+      .post('/products')
+      .set({ Authorization: `Bearer ${token}` })
+      .send(badProd)
+    res.should.have.status(500)
+    // prod will save but without inventory
+    const res2 = await chai.request(apiURL)
+      .post('/products')
+      .set({ Authorization: `Bearer ${token}` })
+      .send(badInventory)
+    res2.should.have.status(500)
+  })
   it('creates a use for the first product', function (done) {
     const { apiURL, token, prod1ID } = this.test.ctx
     const use = {
