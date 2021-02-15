@@ -85,6 +85,13 @@ export default function read () {
         done()
       })
   })
+  it('should fail to get a prod by BAD ID', async function () {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/products/badid')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(500)
+  })
   it('should find the 1st prod by descr', function (done) {
     const { apiURL, token } = this.test.ctx
     chai.request(apiURL)
@@ -155,6 +162,18 @@ export default function read () {
         image1ID = res.body.image
         done()
       })
+  })
+  it('should fail to get a post by bad ID', async function () {
+    const { apiURL, token, prod1ID } = this.test.ctx
+    let res = null
+    res = await chai.request(apiURL)
+      .get('/products/aaaaaaaaaaaa/posts/bbbbbbbbbbbb')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(404)
+    res = await chai.request(apiURL)
+      .get(`/products/${prod1ID}/posts/bbbbbbbbbbbb`)
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(404)
   })
   it('should get the 1st post image', function (done) {
     const { apiURL } = this.test.ctx

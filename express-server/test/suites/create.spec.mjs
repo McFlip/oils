@@ -171,4 +171,13 @@ export default function create () {
         done()
       })
   })
+  it('creates a post for non-existant product', async function () {
+    const { apiURL } = this.test.ctx
+    const post = {}
+    const res = await chai.request(apiURL)
+      .post('/posts')
+      .type('form')
+      .field(post)
+    res.should.have.status(404)
+  })
 }

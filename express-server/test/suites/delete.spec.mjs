@@ -187,4 +187,12 @@ export default function del () {
       .set({ Authorization: `Bearer ${token}` })
     res.body.uses.length.should.eq(0)
   })
+  it('should fail to delete non-existant prod', async function () {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete('/products/aaaaaaaaaaaa')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(200)
+    res.body.should.eql({})
+  })
 }

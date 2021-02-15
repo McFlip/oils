@@ -423,4 +423,22 @@ export default function update () {
           })
       })
   })
+  it('should get empty query from updating non-existant prod', async function () {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .post('/products/aaaaaaaaaaaa')
+      .set({ Authorization: `Bearer ${token}` })
+      .send({ size: '99 bottles' })
+    res.should.have.status(200)
+    res.body.should.eql({})
+  })
+  it('should fail to update non-existant inv', async function () {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .post('/inventory/aaaaaaaaaaaa')
+      .set({ Authorization: `Bearer ${token}` })
+      .send({ size: '99 bottles' })
+    res.should.have.status(200)
+    res.body.should.eql({})
+  })
 }
