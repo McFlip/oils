@@ -31,6 +31,22 @@ export default function del () {
           })
       })
   })
+  it('should fail to delete post with bad prod ID', async function () {
+    const { apiURL, post1ID, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete(`/products/aaaaaaaaaaaa/posts/${post1ID}`)
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(404)
+    res.text.should.eql('Product not found')
+  })
+  it('should fail to delete post with bad post ID', async function () {
+    const { apiURL, prod1ID, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete(`/products/${prod1ID}/posts/aaaaaaaaaaaa`)
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(404)
+    res.text.should.eql('Post not found')
+  })
   it('should delete 2nd post', function (done) {
     const { apiURL, prod1ID, post2ID, token } = this.test.ctx
     chai.request(apiURL)

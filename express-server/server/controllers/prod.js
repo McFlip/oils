@@ -371,18 +371,28 @@ export function updatePost (req, res, next) {
 }
 
 // DELETE a post
-export function deletePost (req, res) {
+export function deletePost (req, res, next) {
   const { prodId, postId } = req.params
   Product.findById(prodId).exec((err, prod) => {
-    if (err) res.status(500).send(err)
-    const post = prod.posts.id(postId)
-    if (post.image) req.gfs.remove({ filename: post.image })
-    post.remove()
-    prod.save(err => {
-      if (err) res.status(500).send(err)
-      res.status(200).json({
-        message: 'Post deleted successfully'
-      })
-    })
+    /* istanbul ignore next */
+    if (err) next(err)
+    if (!prod) {
+      res.status(404).send('Product not found')
+    } else {
+      const post = prod.posts.id(postId)
+      if (!post) {
+        res.status(404).send('Post not found')
+      } else {
+        if (post.image) req.gfs.remove({ filename: post.image })
+        post.remove()
+        prod.save(err => {
+          /* istanbul ignore next */
+          if (err) next(err)
+          res.status(200).json({
+            message: 'Post deleted successfully'
+          })
+        })
+      }
+    }
   })
 }
