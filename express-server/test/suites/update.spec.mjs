@@ -441,4 +441,40 @@ export default function update () {
     res.should.have.status(200)
     res.body.should.eql({})
   })
+  it('should fail to update post using bad prod ID', function (done) {
+    const { apiURL, post1ID } = this.test.ctx
+    const post = {
+      id: 'fubar',
+      title: '1st product post',
+      content: 'modified post content',
+      deleteImg: false
+    }
+    chai.request(apiURL)
+      .post(`/posts/${post1ID}`)
+      .type('form')
+      .field(post)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(404)
+        done()
+      })
+  })
+  it('should fail to update post using bad post ID', function (done) {
+    const { apiURL, prod1ID } = this.test.ctx
+    const post = {
+      id: prod1ID,
+      title: '1st product post',
+      content: 'modified post content',
+      deleteImg: false
+    }
+    chai.request(apiURL)
+      .post('/posts/aaaaaaaaaaaa')
+      .type('form')
+      .field(post)
+      .end((err, res) => {
+        if (err) console.log(err)
+        res.should.have.status(404)
+        done()
+      })
+  })
 }

@@ -323,40 +323,49 @@ export function getPost (req, res, next) {
 }
 
 // UPDATE a post
-export function updatePost (req, res) {
+export function updatePost (req, res, next) {
   const { postId } = req.params
   const { id, title, content, deleteImg } = req.body
   const image = req.file ? req.file.filename : null
   Product.findById(id).exec((err, prod) => {
-    if (err) res.status(500).send(err)
-    const post = prod.posts.id(postId)
-    // set the text fields
-    post.title = title
-    post.content = content
-    const savePost = () => {
-      prod.save(err => {
-        if (err) res.status(500).send(err)
-        res.status(201).json({
-          message: 'Post updated successfully'
-        })
-      })
-    }
-    // set the image
-    if ((!!image || deleteImg === 'true') && post.image) {
-      // remove/replace existing image
-      req.gfs.remove({ filename: post.image })
-        .then(() => {
+    if (err) next(err)
+    if (!prod) {
+      res.status(404).send('Product not found')
+    } else {
+      const post = prod.posts.id(postId)
+      if (!post) {
+        res.status(404).send('Post not found')
+      } else {
+        // set the text fields
+        post.title = title
+        post.content = content
+        const savePost = () => {
+          prod.save(err => {
+            /* istanbul ignore next */
+            if (err) next(err)
+            res.status(201).json({
+              message: 'Post updated successfully'
+            })
+          })
+        }
+        // set the image
+        if ((!!image || deleteImg === 'true') && post.image) {
+          // remove/replace existing image
+          req.gfs.remove({ filename: post.image })
+          .then(() => {
+            post.image = image
+            savePost()
+          })
+          .catch(err => next(err))
+        } else if (image) {
+          // brand new image; no previous image
           post.image = image
           savePost()
-        })
-        .catch(err => res.status(500).json({ message: 'failed to del file', err }))
-    } else if (image) {
-      // brand new image; no previous image
-      post.image = image
-      savePost()
-    } else {
-      // no change to image
-      savePost()
+        } else {
+          // no change to image
+          savePost()
+        }
+      }
     }
   })
 }
