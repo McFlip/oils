@@ -7,11 +7,8 @@ export function getRecipe (req, res, next) {
     .populate('ingredients.product')
     .populate('uses')
     .exec((err, recipe) => {
-      if (err) {
-        // eslint-disable-next-line no-console
-        console.log(err)
-        next(err)
-      }
+      /* istanbul ignore next */
+      if (err) return next(err)
       if (!recipe) {
         res.status(404)
         next(new Error('recipe not found'))
@@ -45,23 +42,22 @@ export function getRecipe (req, res, next) {
     })
 }
 // GET search results
-export function searchRecipes (req, res) {
+export function searchRecipes (req, res, next) {
   const { q } = req.query
   const search = { 'title': { '$regex': q, '$options': 'i' } }
   Recipe.find(search).exec((err, recipes) => {
-    if (err) {
-      res.status(500).send(err)
-    }
+    /* istanbul ignore next */
+    if (err) return next(err)
     res.status(200).send(recipes)
   })
 }
 // CREATE a recipe
-export function createRecipe (req, res) {
+export function createRecipe (req, res, next) {
   const { title } = req.body
   let recipe = new Recipe({ title })
   recipe.directions = 'brand new recipe'
   recipe.save((err, r) => {
-    if (err) res.status(500).send(err)
+    if (err) return next(err)
     res.status(201).send(r)
   })
 }

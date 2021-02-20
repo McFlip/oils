@@ -13,7 +13,10 @@ const ingredientSchema = new Schema({
 
 // create mongoose schema
 const recipeSchema = new Schema({
-  title: String,
+  title: {
+    type: String,
+    required: [true, 'Recipe title is required']
+  },
   ingredients: [ingredientSchema],
   directions: String,
   uses: [{ type: ObjectId, ref: 'Use', index: true }]
