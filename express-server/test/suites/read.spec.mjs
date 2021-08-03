@@ -129,12 +129,19 @@ export default function read () {
         done()
       })
   })
+  it('should fail to get a recipe by wrong ID', async function () {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/recipes/aaaaaaaaaaaa')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(404)
+  })
   it('should fail to get a recipe by bad ID', async function () {
     const { apiURL, token } = this.test.ctx
     const res = await chai.request(apiURL)
-      .get('/recipe/aaaaaaaaaaaa')
+      .get('/recipes/bad')
       .set({ Authorization: `Bearer ${token}` })
-    res.should.have.status(404)
+    res.should.have.status(500)
   })
   it('should find the 1st recipe', function (done) {
     const { apiURL, token } = this.test.ctx
