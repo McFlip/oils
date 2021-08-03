@@ -5,27 +5,23 @@ import _ from 'lodash'
 import mongoose from 'mongoose'
 
 // get uses for item
-export function getUses (req, res) {
+export function getUses (req, res, next) {
   const { id, refType } = req.params
-  if (refType === 'product') {
-    Product.findById(id)
-      .populate('uses')
-      .exec((err, prod) => {
-        if (err) res.status(500).send(err)
-        res.status(200).send(prod.uses)
-      })
-  } else {
-    Recipe.findById(id)
-      .populate('uses')
-      .exec((err, recipe) => {
-        if (err) res.status(200).send(err)
-        res.status(200).send(recipe.uses)
-      })
-  }
+  const getItem = refType === 'product' ? Product : Recipe
+  getItem.findById(id)
+    .populate('uses')
+    .exec((err, item) => {
+      if (err) return next(err)
+      if (!item) {
+        res.status(404).send('cannot find item by that ID')
+      } else {
+        res.status(200).send(item.uses)
+      }
+    })
 }
 
 // get single use
-export function getUse (req, res) {
+export function getUse (req, res, next) {
   const id = mongoose.Types.ObjectId(req.params.id)
   Use
     .aggregate([
@@ -48,7 +44,7 @@ export function getUse (req, res) {
       }
     ])
     .exec((err, use) => {
-      if (err) res.status(500).send(err)
+      if (err) return next(err)
       res.status(200).send(use[0])
     })
 }

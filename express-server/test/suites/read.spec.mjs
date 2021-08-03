@@ -206,7 +206,7 @@ export default function read () {
       })
   })
   it('should get 1st products uses', function (done) {
-    const { apiURL } = this.test.ctx
+    const { apiURL, prod1ID } = this.test.ctx
     chai.request(apiURL)
       .get(`/uses/${prod1ID}/product`)
       .end((err, res) => {
@@ -217,6 +217,18 @@ export default function read () {
         res.body[0].title.should.eql('1st test product use')
         done()
       })
+  })
+  it('should fail to get the product use by wrong ID', async function() {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/uses/aaaaaaaaaaaa/product')
+    res.should.have.status(404)
+  })
+  it('should fail to get the product use by bad ID', async function() {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/uses/badid/product')
+    res.should.have.status(500)
   })
   it('should get 1st recipes uses', function (done) {
     const { apiURL, recipe1ID } = this.test.ctx
@@ -258,6 +270,12 @@ export default function read () {
         res.body.recipes[0].title.should.eql('1st test recipe')
         done()
       })
+  })
+  it('should fail to get a use by bad ID', async function() {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/uses/badid')
+    res.should.have.status(500)
   })
   it('should find the product use', function (done) {
     const { apiURL } = this.test.ctx
