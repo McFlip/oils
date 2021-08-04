@@ -97,6 +97,14 @@ export default function create () {
         done()
       })
   })
+  it('fails to create a bad recipe', async function () {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .post('/recipes/create')
+      .set({ Authorization: `Bearer ${token}` })
+      .send({})
+    res.should.have.status(500)
+  })
   it('creates the 2nd recipe', function (done) {
     const { apiURL, token } = this.test.ctx
     const recipe = { title: '2nd test recipe' }
