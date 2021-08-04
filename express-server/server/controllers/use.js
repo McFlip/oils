@@ -50,48 +50,50 @@ export function getUse (req, res, next) {
 }
 
 // remove a reference to a product or recipe
-export function removeUse (req, res) {
+export function removeUse (req, res, next) {
   const { id, category, refId } = req.params
+  let item = null
   if (category === 'product') {
-    Product.findById(refId, (err, prod) => {
-      if (err) res.status(500).send(err)
-      _.remove(prod.uses, i => i.toString() === id)
-      prod.markModified('uses')
-      prod.save()
-    })
+    item = Product
   } else if (category === 'recipe') {
-    Recipe.findById(refId, (err, recipe) => {
-      if (err) res.status(500).send(err)
-      _.remove(recipe.uses, i => i.toString() === id)
-      recipe.markModified('uses')
-      recipe.save()
-    })
+    item = Recipe
   } else {
-    res.status(500).send('invalid category')
+    next('invalid category')
   }
-  res.status(200).send({ id, refId, category })
+  item.findById(refId, (err, foundItem) => {
+    if (err) return next(err)
+    if (foundItem) {
+      _.remove(foundItem.uses, i => i.toString() === id)
+      foundItem.markModified('uses')
+      foundItem.save()
+      res.status(200).send({ id, refId, category })
+    } else {
+      res.status(404).send('unable to find ref by that ID')
+    }
+  })
 }
 
-export function addUse (req, res) {
+export function addUse (req, res, next) {
   const { id, category, refId } = req.params
+  let item = null
   if (category === 'product') {
-    Product.findById(refId, (err, prod) => {
-      if (err) res.status(500).send(err)
-      prod.uses.push(id)
-      prod.markModified('uses')
-      prod.save()
-    })
+    item = Product
   } else if (category === 'recipe') {
-    Recipe.findById(refId, (err, recipe) => {
-      if (err) res.status(500).send(err)
-      recipe.uses.push(id)
-      recipe.markModified('uses')
-      recipe.save()
-    })
+    item = Recipe
   } else {
-    res.status(500).send('invalid category')
+    return next('invalid category')
   }
-  res.status(200).send(id)
+  item.findById(refId, (err, foundItem) => {
+    if (err) return next(err)
+    if (!foundItem) {
+      res.status(404).send('unable to find item by that ID')
+    } else {
+      foundItem.uses.push(id)
+      foundItem.markModified('uses')
+      foundItem.save()
+      res.status(200).send(id)
+    }
+  })
 }
 
 export function searchUses (req, res) {

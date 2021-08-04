@@ -151,6 +151,30 @@ export default function update () {
         done()
       })
   })
+  it('should fail to add a use with an invalid category', async function() {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .post('/uses/aaaaaaaaaaaa/FUBAR/bbbbbbbbbbbb')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(500)
+    res.text.should.have.string('invalid category')
+  })
+  it('should fail to add a use with wrong ID', async function() {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .post('/uses/aaaaaaaaaaaa/product/bbbbbbbbbbbb')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(404)
+    res.text.should.have.string('unable to find item by that ID')
+  })
+  it('should fail to add a use with bad ID', async function() {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .post('/uses/aaaaaaaaaaaa/product/badid')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(500)
+    res.text.should.have.string('CastError: Cast to ObjectId failed for value &quot;badid&quot;')
+  })
   it('should remove the 1st use from the 2nd product', function (done) {
     const { apiURL, prod2ID, use1ID } = this.test.ctx
     chai.request(apiURL)
@@ -222,6 +246,26 @@ export default function update () {
             done()
           })
       })
+  })
+  it('should fail to remove a use with wrong ID', async function () {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete('/uses/aaaaaaaaaaaa/recipe/bbbbbbbbbbbb')
+    res.should.have.status(404)
+  })
+  it('should fail to remove a use with bad ID', async function () {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete('/uses/aaaaaaaaaaaa/recipe/badid')
+    res.should.have.status(500)
+    res.text.should.have.string('CastError: Cast to ObjectId failed for value &quot;badid&quot;')
+  })
+  it('should fail to remove a use with an invalid category', async function () {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete('/uses/aaaaaaaaaaaa/FUBAR/bbbbbbbbbbbb')
+    res.should.have.status(500)
+    res.text.should.have.string('<pre>invalid category</pre>')
   })
   it('should add ingredients to both recipes', function (done) {
     const { apiURL, recipe1ID, recipe2ID, prod1ID, prod2ID } = this.test.ctx
