@@ -7,10 +7,7 @@ export function getRecipe (req, res, next) {
     .populate('ingredients.product')
     .populate('uses')
     .exec((err, recipe) => {
-<<<<<<< HEAD
-=======
       /* istanbul ignore next */
->>>>>>> 30d6f778558c77356cb37b0e55a6d94d00aaf091
       if (err) return next(err)
       if (!recipe) {
         res.status(404)
@@ -49,10 +46,7 @@ export function searchRecipes (req, res, next) {
   const { q } = req.query
   const search = { 'title': { '$regex': q, '$options': 'i' } }
   Recipe.find(search).exec((err, recipes) => {
-<<<<<<< HEAD
-=======
     /* istanbul ignore next */
->>>>>>> 30d6f778558c77356cb37b0e55a6d94d00aaf091
     if (err) return next(err)
     res.status(200).send(recipes)
   })
