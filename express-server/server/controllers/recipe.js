@@ -46,7 +46,6 @@ export function searchRecipes (req, res, next) {
   const { q } = req.query
   const search = { 'title': { '$regex': q, '$options': 'i' } }
   Recipe.find(search).exec((err, recipes) => {
-    /* istanbul ignore next */
     if (err) return next(err)
     res.status(200).send(recipes)
   })

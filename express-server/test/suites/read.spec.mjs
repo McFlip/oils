@@ -157,6 +157,14 @@ export default function read () {
         done()
       })
   })
+  it('should fail to search recipes with empty query', async function() {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/recipes/search')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(500)
+    res.text.should.have.string('MongoError: $regex has to be a string')
+  })
   it('should get the 1st post', function (done) {
     const { apiURL, token, post1ID } = this.test.ctx
     const post = {
@@ -289,5 +297,13 @@ export default function read () {
         res.body[0].title.should.eql('1st test product use')
         done()
       })
+  })
+  it('should fail to search uses with empty query', async function() {
+    const { apiURL, token } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/uses/search')
+      .set({ Authorization: `Bearer ${token}` })
+    res.should.have.status(500)
+    res.text.should.have.string('MongoError: $regex has to be a string')
   })
 }

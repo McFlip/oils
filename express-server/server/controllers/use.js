@@ -96,13 +96,11 @@ export function addUse (req, res, next) {
   })
 }
 
-export function searchUses (req, res) {
+export function searchUses (req, res, next) {
   const { q } = req.query
   const search = { 'title': { '$regex': q, '$options': 'i' } }
   Use.find(search).exec((err, uses) => {
-    if (err) {
-      res.status(500).send(err)
-    }
+    if (err) return next(err)
     res.status(200).send(uses)
   })
 }
