@@ -105,32 +105,25 @@ export function searchUses (req, res, next) {
   })
 }
 
-export function createUse (req, res) {
+export function createUse (req, res, next) {
+  const { title, category, refId } = req.body
   const newUse = new Use()
-  newUse.title = req.body.title
+  const item = category === 'product' ? Product : Recipe
+
+  if (!title || !category || !refId) return next('missing required param')
+  newUse.title = title
   newUse.save((err, use) => {
-    if (err) res.status(500).send(err)
-    if (req.body.category === 'product') {
-      Product.findById(req.body.refId)
-        .exec((err, prod) => {
-          if (err) res.status(500).send(err)
-          prod.uses.push(use._id)
-          prod.save((err) => {
-            if (err) res.status(500).send(err)
-            res.status(200).send(use._id)
-          })
+    if (err) return next(err)
+    item.findById(refId)
+      .exec((err, foundItem) => {
+        if (err) return next(err)
+        if (!foundItem) return next('item not found by refId')
+        foundItem.uses.push(use._id)
+        foundItem.save((err) => {
+          if (err) return next(err)
+          res.status(200).send(use._id)
         })
-    } else {
-      Recipe.findById(req.body.refId)
-        .exec((err, recipe) => {
-          if (err) res.status(500).send(err)
-          recipe.uses.push(use._id)
-          recipe.save((err) => {
-            if (err) res.status(500).send(err)
-            res.status(200).send(use._id)
-          })
-        })
-    }
+      })
   })
 }
 

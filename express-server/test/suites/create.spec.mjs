@@ -83,6 +83,48 @@ export default function create () {
         done()
       })
   })
+  it('fails to create a use with missing title', async function() {
+    const { apiURL, token, prod1ID } = this.test.ctx
+    const use = {
+      // title: '1st test product use',
+      category: 'product',
+      refId: prod1ID
+    }
+    const res = await chai.request(apiURL)
+      .post('/uses')
+      .set({ Authorization: `Bearer ${token}` })
+      .send(use)
+    res.should.have.status(500)
+    res.text.should.have.string('missing required param')
+  })
+  it('fails to create a use with wrong ID', async function() {
+    const { apiURL, token } = this.test.ctx
+    const use = {
+      title: 'I have the wrong refId',
+      category: 'product',
+      refId: 'aaaaaaaaaaaa'
+    }
+    const res = await chai.request(apiURL)
+      .post('/uses')
+      .set({ Authorization: `Bearer ${token}` })
+      .send(use)
+    res.should.have.status(500)
+    res.text.should.have.string('item not found by refId')
+  })
+  it('fails to create a use with bad ID', async function() {
+    const { apiURL, token } = this.test.ctx
+    const use = {
+      title: 'I have a malformed refId',
+      category: 'product',
+      refId: 'badid'
+    }
+    const res = await chai.request(apiURL)
+      .post('/uses')
+      .set({ Authorization: `Bearer ${token}` })
+      .send(use)
+    res.should.have.status(500)
+    res.text.should.have.string('CastError: Cast to ObjectId failed for value &quot;badid&quot;')
+  })
   it('creates a recipe', function (done) {
     const { apiURL, token } = this.test.ctx
     const recipe = { title: '1st test recipe' }
