@@ -356,7 +356,7 @@ export function updatePost (req, res, next) {
             post.image = image
             savePost()
           })
-          .catch(err => next(err))
+          .catch(/* istanbul ignore next */err => next(err))
         } else if (image) {
           // brand new image; no previous image
           post.image = image

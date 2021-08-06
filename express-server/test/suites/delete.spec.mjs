@@ -162,6 +162,13 @@ export default function del () {
         console.log(err)
       })
   })
+  it('should fail to delete recipe with bad ID', async function () {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete('/recipes/badid')
+    res.should.have.status(500)
+    res.text.should.have.string('CastError: Cast to ObjectId failed for value &quot;badid&quot')
+  })
   it('should delete the 1st prod use', function (done) {
     const { apiURL, token, use1ID, prod1ID } = this.test.ctx
     chai.request(apiURL)

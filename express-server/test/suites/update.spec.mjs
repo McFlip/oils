@@ -322,6 +322,15 @@ export default function update () {
           })
       })
   })
+  it('should fail to update recipe with bad id', async function() {
+    const { apiURL } = this.test.ctx
+    const payload = { fu: 'bar' }
+    const res = await chai.request(apiURL)
+      .post('/recipes/badid')
+      .send(payload)
+    res.should.have.status(500)
+    res.text.should.have.string('CastError: Cast to ObjectId failed for value &quot;badid&quot')
+  })
   it('should update post content', function (done) {
     const { apiURL, prod1ID, post1ID } = this.test.ctx
     const post = {
