@@ -44,6 +44,7 @@ export function getUse (req, res, next) {
       }
     ])
     .exec((err, use) => {
+      /* istanbul ignore if */
       if (err) return next(err)
       res.status(200).send(use[0])
     })
@@ -113,6 +114,7 @@ export function createUse (req, res, next) {
   if (!title || !category || !refId) return next('missing required param')
   newUse.title = title
   newUse.save((err, use) => {
+    /* istanbul ignore if */
     if (err) return next(err)
     item.findById(refId)
       .exec((err, foundItem) => {
@@ -120,6 +122,7 @@ export function createUse (req, res, next) {
         if (!foundItem) return next('item not found by refId')
         foundItem.uses.push(use._id)
         foundItem.save((err) => {
+          /* istanbul ignore if */
           if (err) return next(err)
           res.status(200).send(use._id)
         })
@@ -127,28 +130,35 @@ export function createUse (req, res, next) {
   })
 }
 
-export function deleteUse (req, res) {
+export function deleteUse (req, res, next) {
   const { id } = req.params
+  /* istanbul ignore if */
+  if (!mongoose.Types.ObjectId(id)) return next('bad id')
   Product.find({ uses: id }, (err, prods) => {
-    if (err) res.status(500).send(err)
+    /* istanbul ignore if */
+    if (err) return next(err)
     prods.map(p => {
       p.uses = _.filter(p.uses, i => i !== id)
       p.save((err) => {
-        if (err) res.status(500).send(err)
+        /* istanbul ignore if */
+        if (err) return next(err)
       })
     })
   })
   Recipe.find({ uses: id }, (err, recipes) => {
-    if (err) res.status(500).send(err)
+    /* istanbul ignore if */
+    if (err) return next(err)
     recipes.map(r => {
       r.uses = _.filter(r.uses, i => i !== id)
       r.save((err) => {
-        if (err) res.status(500).send(err)
+        /* istanbul ignore if */
+        if (err) return next(err)
       })
     })
   })
   Use.findByIdAndRemove(id, (err) => {
-    if (err) res.status(500).send(err)
+    /* istanbul ignore if */
+    if (err) return next(err)
     res.status(200).send(id)
   })
 }

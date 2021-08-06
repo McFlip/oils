@@ -211,4 +211,11 @@ export default function del () {
     res.should.have.status(200)
     res.body.should.eql({})
   })
+  it('should fail to delete with bad id', async function () {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .delete('/uses/badid')
+    res.should.have.status(500)
+    res.text.should.have.string('Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters')
+  })
 }
