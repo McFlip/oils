@@ -466,6 +466,17 @@ Object {
                   <div
                     class="card"
                   >
+                    <div
+                      class="alert alert-yl"
+                    >
+                      postTitle
+                      <a
+                        class="btn float-right"
+                        href="/products/a/editpost/postId"
+                      >
+                        ...
+                      </a>
+                    </div>
                     <img
                       alt="posted image"
                       class=""
@@ -474,17 +485,6 @@ Object {
                     <div
                       class="card-body"
                     >
-                      <div
-                        class="alert alert-yl"
-                      >
-                        postTitle
-                        <a
-                          class="btn float-right"
-                          href="/products/a/editpost/postId"
-                        >
-                          ...
-                        </a>
-                      </div>
                       <div
                         class="card-text"
                       >
@@ -966,6 +966,17 @@ Object {
                 <div
                   class="card"
                 >
+                  <div
+                    class="alert alert-yl"
+                  >
+                    postTitle
+                    <a
+                      class="btn float-right"
+                      href="/products/a/editpost/postId"
+                    >
+                      ...
+                    </a>
+                  </div>
                   <img
                     alt="posted image"
                     class=""
@@ -974,17 +985,6 @@ Object {
                   <div
                     class="card-body"
                   >
-                    <div
-                      class="alert alert-yl"
-                    >
-                      postTitle
-                      <a
-                        class="btn float-right"
-                        href="/products/a/editpost/postId"
-                      >
-                        ...
-                      </a>
-                    </div>
                     <div
                       class="card-text"
                     >
