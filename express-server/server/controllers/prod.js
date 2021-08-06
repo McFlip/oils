@@ -1,11 +1,11 @@
-import { Product, Oil, Post } from '../models/product.js'
+import { Product, Oil, Post } from '../models/product'
 import { Inventory } from '../models/inventory'
 import mongoose from 'mongoose'
 import { Recipe, Ingredient } from '../models/recipe'
 import _ from 'lodash'
 
 /* GET all products. */
-export function getProducts (req, res) {
+export function getProducts (req, res, next) {
   if (!req.search) req.search = {}
   Product
     .aggregate([
@@ -45,14 +45,15 @@ export function getProducts (req, res) {
         $sort: { category: 1, sku: 1 }
       }
     ])
-    .exec((error, prods) => {
-      if (error) res.status(500).send(error)
+    .exec((err, prods) => {
+      /* istanbul ignore next */
+      if (err) return next(err)
       res.status(200).send(prods)
     })
 }
 
 /* GET one product. */
-export function getProduct (req, res) {
+export function getProduct (req, res, next) {
   const id = mongoose.Types.ObjectId(req.params.id)
   // TODO: optimize each lookup with a pipeline - project only needed data for each subdoc
   Product.aggregate([
@@ -118,8 +119,9 @@ export function getProduct (req, res) {
       }
     }
   ])
-    .exec((error, product) => {
-      if (error) res.status(500).send(error)
+    .exec((err, product) => {
+      /* istanbul ignore next */
+      if (err) return next(err)
       res.status(200).send(product[0])
     })
 }
@@ -141,12 +143,13 @@ export function searchProducts (req, res) {
 }
 
 // GET all items on your wishlist
-export function getWishlist (req, res) {
+export function getWishlist (req, res, next) {
   // TODO: generalize this to also get instock items
   Inventory.find({ apiKey: req.user.sub, wishlist: true })
     .populate('prod')
     .exec((err, inv) => {
-      if (err) res.status(500).send(err)
+      /* istanbul ignore next */
+      if (err) next(err)
       const prods = inv.map(i => {
         const { prod, qty, wishlist } = i
         prod.set('inventory', [{ qty, wishlist }])
@@ -157,7 +160,7 @@ export function getWishlist (req, res) {
 }
 
 // CREATE product
-export function createProduct (req, res) {
+export function createProduct (req, res, next) {
   const { sku, descr, size, category, qty, wholesale, retail, pv, wishlist, oil, photosensitive, topical, dilute, aromatic } = req.body
   const apiKey = req.user.sub
   let product = new Product({ sku, descr, size, category, wholesale, retail, pv })
@@ -165,18 +168,18 @@ export function createProduct (req, res) {
     product.oil = new Oil({ photosensitive, topical, dilute, aromatic })
   }
   product.save((error, p) => {
-    if (error) res.status(500).send(error)
+    if (error) return next(error)
     const prod = req.params.id = p._id
     const inv = new Inventory({ prod, qty, wishlist, apiKey })
     inv.save((err) => {
-      if (err) res.status(500).send(err)
+      if (err) return next(err)
       getProduct(req, res)
     })
   })
 }
 
 /* Delete one product. */
-export function deleteProduct (req, res) {
+export function deleteProduct (req, res, next) {
   const { id } = req.params
   // enforce ref integrity with cascade delete
   Product.findById(id)
@@ -198,6 +201,7 @@ export function deleteProduct (req, res) {
     .then(prod => {
       Recipe.find({ 'ingredients.product': id })
         .exec((error, recipes) => {
+          /* istanbul ignore next */
           if (error) console.log(error) // eslint-disable-line no-console
           recipes.forEach(recipe => {
             let vals = _.filter(recipe.ingredients, i => i.product != id) // eslint-disable-line eqeqeq
@@ -210,61 +214,44 @@ export function deleteProduct (req, res) {
     // if all goes well delete the prod
     .then(prod => prod.remove())
     .then(res.status(200).send(id))
-    .catch(err => res.status(500).send(err))
+    .catch(err => next(err))
 }
 
 /* Update one product */
-export function updateProduct (req, res) {
+export function updateProduct (req, res, next) {
   const { qty, wishlist } = req.body
-  const val = { qty, wishlist }
-  const { id } = req.params
-  const { sub } = req.user
-  Inventory.findOne({ prod: id, apiKey: sub })
-    .exec((err, inv) => {
-      if (err) res.status(500).send(err)
-      // if the inventory item doesn't exist yet, create one
-      if (!inv) {
-        inv = new Inventory({
-          apiKey: sub,
-          prod: id,
-          qty,
-          wishlist
-        })
-        inv.save((err) => {
-          if (err) res.status(500).send(err)
-          delete req.body.qty
-          delete req.body.wishlist
-          Product.findByIdAndUpdate(req.params.id, { $set: req.body })
-            .exec((error) => {
-              if (error) res.status(500).send(error)
-              getProduct(req, res)
-            })
-        })
+
+  delete req.body.qty
+  delete req.body.wishlist
+  Product.findByIdAndUpdate(req.params.id, { $set: req.body })
+    .exec((err) => {
+      /* istanbul ignore next */
+      if (err) next(err)
+      if (!(qty === undefined && wishlist === undefined)) {
+        req.body.qty = qty
+        req.body.wishlist = wishlist
+        updateInventory(req, res)
       } else {
-        inv.update({ $set: val })
-          .exec((err) => {
-            if (err) res.status(500).send(err)
-            delete req.body.qty
-            delete req.body.wishlist
-            Product.findByIdAndUpdate(req.params.id, { $set: req.body })
-              .exec((error) => {
-                if (error) res.status(500).send(error)
-                getProduct(req, res)
-              })
-          })
+        getProduct(req, res)
       }
     })
 }
 
-export function updateInventory (req, res) {
+export function updateInventory (req, res, next) {
   const { id } = req.params
   const { sub } = req.user
+  const { qty, wishlist } = req.body
+  // const val = { qty, wishlist }
+  let val = {}
+  if (typeof qty === 'number') val.qty = qty
+  if (wishlist !== null && wishlist !== undefined) val.wishlist = wishlist
+
   Inventory.findOne({ prod: id, apiKey: sub })
     .exec((err, inv) => {
-      if (err) res.status(500).send(err)
+      /* istanbul ignore next */
+      if (err) next(err)
       // if the inventory item doesn't exist yet, create one
       if (!inv) {
-        const { qty, wishlist } = req.body
         inv = new Inventory({
           apiKey: sub,
           prod: id,
@@ -272,13 +259,15 @@ export function updateInventory (req, res) {
           wishlist
         })
         inv.save((err) => {
-          if (err) res.status(500).send(err)
+          /* istanbul ignore next */
+          if (err) next(err)
           getProduct(req, res)
         })
       } else {
-        inv.update({ $set: req.body })
+        inv.updateOne({ $set: val })
           .exec((err) => {
-            if (err) res.status(500).send(err)
+            /* istanbul ignore next */
+            if (err) next(err)
             getProduct(req, res)
           })
       }
@@ -286,7 +275,7 @@ export function updateInventory (req, res) {
 }
 
 /* Create a post. */
-export function createPost (req, res) {
+export function createPost (req, res, next) {
   const image = req.file ? req.file.filename : null
   let post = new Post({
     title: req.body.title,
@@ -296,69 +285,114 @@ export function createPost (req, res) {
 
   Product.findById(req.body.id)
     .exec((err, prod) => {
-      if (err) res.status(500).send(err)
-      prod.posts.push(post)
-      prod.save(err => {
-        if (err) res.status(500).send(err)
-        res.status(201).json({
-          message: 'Post created successfully'
+      /* istanbul ignore next */
+      if (err) next(err)
+      if (!prod) {
+        res.status(404).send('Cannot create post. Product not found')
+      } else {
+        prod.posts.push(post)
+        prod.save(err => {
+          /* istanbul ignore next */
+          if (err) next(err)
+          res.status(201).json({
+            message: 'Post created successfully'
+          })
         })
-      })
+      }
     })
 }
 
 // Get a post
-export function getPost (req, res) {
+export function getPost (req, res, next) {
   const { prodId, postId } = req.params
   Product.findById(prodId)
     .exec((err, prod) => {
-      if (err) res.status(500).send(err)
-      const post = prod.posts.id(postId)
-      res.status(200).send(post)
+      /* istanbul ignore next */
+      if (err) next(err)
+      if (!prod) {
+        res.status(404).send('Product not found')
+      } else {
+        const post = prod.posts.id(postId)
+        if (!post) {
+          res.status(404).send('Post not found')
+        } else {
+          res.status(200).send(post)
+        }
+      }
     })
 }
 
 // UPDATE a post
-export function updatePost (req, res) {
+export function updatePost (req, res, next) {
   const { postId } = req.params
   const { id, title, content, deleteImg } = req.body
   const image = req.file ? req.file.filename : null
   Product.findById(id).exec((err, prod) => {
-    if (err) res.status(500).send(err)
-    const post = prod.posts.id(postId)
-    // set the text fields
-    post.title = title
-    post.content = content
-    // set the image
-    if (!!image || deleteImg === 'true') {
-      req.gfs.remove({ filename: post.image })
-        .catch(err => res.status(500).send(err))
-        .then(() => {
-          post.image = image
+    if (err) next(err)
+    if (!prod) {
+      res.status(404).send('Product not found')
+    } else {
+      const post = prod.posts.id(postId)
+      if (!post) {
+        res.status(404).send('Post not found')
+      } else {
+        // set the text fields
+        post.title = title
+        post.content = content
+        const savePost = () => {
           prod.save(err => {
-            if (err) res.status(500).send(err)
+            /* istanbul ignore next */
+            if (err) next(err)
             res.status(201).json({
               message: 'Post updated successfully'
             })
           })
-        })
+        }
+        // set the image
+        if ((!!image || deleteImg === 'true') && post.image) {
+          // remove/replace existing image
+          req.gfs.remove({ filename: post.image })
+          .then(() => {
+            post.image = image
+            savePost()
+          })
+          .catch(/* istanbul ignore next */err => next(err))
+        } else if (image) {
+          // brand new image; no previous image
+          post.image = image
+          savePost()
+        } else {
+          // no change to image
+          savePost()
+        }
+      }
     }
   })
 }
 
 // DELETE a post
-export function deletePost (req, res) {
+export function deletePost (req, res, next) {
   const { prodId, postId } = req.params
   Product.findById(prodId).exec((err, prod) => {
-    if (err) res.status(500).send(err)
-    const post = prod.posts.id(postId)
-    if (post.image) req.gfs.remove({ filename: post.image })
-    post.remove()
-    prod.save(err => {
-      if (err) res.status(500).send(err)
-      res.status(200).json({
-        message: 'Post deleted successfully'
-      })
-    })
+    /* istanbul ignore next */
+    if (err) next(err)
+    if (!prod) {
+      res.status(404).send('Product not found')
+    } else {
+      const post = prod.posts.id(postId)
+      if (!post) {
+        res.status(404).send('Post not found')
+      } else {
+        if (post.image) req.gfs.remove({ filename: post.image })
+        post.remove()
+        prod.save(err => {
+          /* istanbul ignore next */
+          if (err) next(err)
+          res.status(200).json({
+            message: 'Post deleted successfully'
+          })
+        })
+      }
+    }
   })
 }

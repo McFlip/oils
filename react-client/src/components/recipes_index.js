@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Menu from './menu'
-import SearchBar from './search_bar'
 import CreateRecipe from './create'
 import { searchRecipes, createRecipe } from '../actions/recipes'
 
@@ -37,9 +36,8 @@ class RecipesIndex extends Component {
       <div>
         <Menu page='recipes' />
         <div className='bg-secondary text-light border border-dark'>
-          <CreateRecipe onCreateSubmit={this.handleCreate} />
-          <p>Click Search without search term to list all available recipes</p>
-          <SearchBar onSearchSubmit={this.handleSearch} subject='uses' />
+          <p>Start typing to live search for Recipes. Enter recipe name & click Create to create recipe.</p>
+          <CreateRecipe onCreateSubmit={this.handleCreate} onSearchSubmit={this.handleSearch} />
         </div>
         <h2>Recipes Found</h2>
         <ul className='list-group'>{this.renderRecipes(this.state.recipes)}</ul>

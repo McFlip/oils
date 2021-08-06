@@ -16,7 +16,7 @@ class Create extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className='input-group'>
             <div className='input-group-prepend'>
-              <span className='input-group-text'>Create</span>
+              <span className='input-group-text'>Search</span>
             </div>
             <input
               id='createUseInput'

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Ingredient } from './recipe'
+import { Ingredient } from './recipe.js'
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema

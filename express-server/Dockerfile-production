@@ -9,7 +9,7 @@ RUN npm ci
 COPY . /app
 RUN npm run build
 
-FROM node:12-alpine
+FROM node:14-alpine
 WORKDIR /usr/src/app
 COPY --from=build /app/node_modules /usr/src/app/node_modules/
 COPY --from=build /app/.build /usr/src/app/

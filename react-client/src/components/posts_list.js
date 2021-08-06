@@ -13,12 +13,12 @@ class PostList extends Component {
       const md = marked(clean)
       return (
         <div className='card' key={i}>
+          <div className='alert alert-yl'>
+            {post.title}
+            <Link className='btn float-right' to={`/products/${id}/editpost/${post._id}`}>...</Link>
+          </div>
           {post.image && <img className='' alt='posted image' src={IMG_HOST + post.image} />}
           <div className='card-body'>
-            <div className='alert alert-yl'>
-              {post.title}
-              <Link className='btn float-right' to={`/products/${id}/editpost/${post._id}`}>...</Link>
-            </div>
             <div className='card-text' dangerouslySetInnerHTML={{ __html: md }} />
           </div>
         </div>

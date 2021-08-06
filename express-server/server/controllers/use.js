@@ -1,31 +1,27 @@
-import Use from '../models/use.js'
-import { Product } from '../models/product.js'
-import { Recipe } from '../models/recipe.js'
+import Use from '../models/use'
+import { Product } from '../models/product'
+import { Recipe } from '../models/recipe'
 import _ from 'lodash'
 import mongoose from 'mongoose'
 
 // get uses for item
-export function getUses (req, res) {
+export function getUses (req, res, next) {
   const { id, refType } = req.params
-  if (refType === 'product') {
-    Product.findById(id)
-      .populate('uses')
-      .exec((err, prod) => {
-        if (err) res.status(500).send(err)
-        res.status(200).send(prod.uses)
-      })
-  } else {
-    Recipe.findById(id)
-      .populate('uses')
-      .exec((err, recipe) => {
-        if (err) res.status(200).send(err)
-        res.status(200).send(recipe.uses)
-      })
-  }
+  const getItem = refType === 'product' ? Product : Recipe
+  getItem.findById(id)
+    .populate('uses')
+    .exec((err, item) => {
+      if (err) return next(err)
+      if (!item) {
+        res.status(404).send('cannot find item by that ID')
+      } else {
+        res.status(200).send(item.uses)
+      }
+    })
 }
 
 // get single use
-export function getUse (req, res) {
+export function getUse (req, res, next) {
   const id = mongoose.Types.ObjectId(req.params.id)
   Use
     .aggregate([
@@ -48,118 +44,121 @@ export function getUse (req, res) {
       }
     ])
     .exec((err, use) => {
-      if (err) res.status(500).send(err)
+      /* istanbul ignore if */
+      if (err) return next(err)
       res.status(200).send(use[0])
     })
 }
 
 // remove a reference to a product or recipe
-export function removeUse (req, res) {
+export function removeUse (req, res, next) {
   const { id, category, refId } = req.params
+  let item = null
   if (category === 'product') {
-    Product.findById(refId, (err, prod) => {
-      if (err) res.status(500).send(err)
-      _.remove(prod.uses, i => i.toString() === id)
-      prod.markModified('uses')
-      prod.save()
-    })
+    item = Product
   } else if (category === 'recipe') {
-    Recipe.findById(refId, (err, recipe) => {
-      if (err) res.status(500).send(err)
-      _.remove(recipe.uses, i => i.toString() === id)
-      recipe.markModified('uses')
-      recipe.save()
-    })
+    item = Recipe
   } else {
-    res.status(500).send('invalid category')
+    next('invalid category')
   }
-  res.status(200).send({ id, refId, category })
+  item.findById(refId, (err, foundItem) => {
+    if (err) return next(err)
+    if (foundItem) {
+      _.remove(foundItem.uses, i => i.toString() === id)
+      foundItem.markModified('uses')
+      foundItem.save()
+      res.status(200).send({ id, refId, category })
+    } else {
+      res.status(404).send('unable to find ref by that ID')
+    }
+  })
 }
 
-export function addUse (req, res) {
+export function addUse (req, res, next) {
   const { id, category, refId } = req.params
+  let item = null
   if (category === 'product') {
-    Product.findById(refId, (err, prod) => {
-      if (err) res.status(500).send(err)
-      prod.uses.push(id)
-      prod.markModified('uses')
-      prod.save()
-    })
+    item = Product
   } else if (category === 'recipe') {
-    Recipe.findById(refId, (err, recipe) => {
-      if (err) res.status(500).send(err)
-      recipe.uses.push(id)
-      recipe.markModified('uses')
-      recipe.save()
-    })
+    item = Recipe
   } else {
-    res.status(500).send('invalid category')
+    return next('invalid category')
   }
-  res.status(200).send(id)
+  item.findById(refId, (err, foundItem) => {
+    if (err) return next(err)
+    if (!foundItem) {
+      res.status(404).send('unable to find item by that ID')
+    } else {
+      foundItem.uses.push(id)
+      foundItem.markModified('uses')
+      foundItem.save()
+      res.status(200).send(id)
+    }
+  })
 }
 
-export function searchUses (req, res) {
+export function searchUses (req, res, next) {
   const { q } = req.query
   const search = { 'title': { '$regex': q, '$options': 'i' } }
   Use.find(search).exec((err, uses) => {
-    if (err) {
-      res.status(500).send(err)
-    }
+    if (err) return next(err)
     res.status(200).send(uses)
   })
 }
 
-export function createUse (req, res) {
+export function createUse (req, res, next) {
+  const { title, category, refId } = req.body
   const newUse = new Use()
-  newUse.title = req.body.title
+  const item = category === 'product' ? Product : Recipe
+
+  if (!title || !category || !refId) return next('missing required param')
+  newUse.title = title
   newUse.save((err, use) => {
-    if (err) res.status(500).send(err)
-    if (req.body.category === 'product') {
-      Product.findById(req.body.refId)
-        .exec((err, prod) => {
-          if (err) res.status(500).send(err)
-          prod.uses.push(use._id)
-          prod.save((err) => {
-            if (err) res.status(500).send(err)
-            res.status(200).send(use._id)
-          })
+    /* istanbul ignore if */
+    if (err) return next(err)
+    item.findById(refId)
+      .exec((err, foundItem) => {
+        if (err) return next(err)
+        if (!foundItem) return next('item not found by refId')
+        foundItem.uses.push(use._id)
+        foundItem.save((err) => {
+          /* istanbul ignore if */
+          if (err) return next(err)
+          res.status(200).send(use._id)
         })
-    } else {
-      Recipe.findById(req.body.refId)
-        .exec((err, recipe) => {
-          if (err) res.status(500).send(err)
-          recipe.uses.push(use._id)
-          recipe.save((err) => {
-            if (err) res.status(500).send(err)
-            res.status(200).send(use._id)
-          })
-        })
-    }
+      })
   })
 }
 
-export function deleteUse (req, res) {
+export function deleteUse (req, res, next) {
   const { id } = req.params
+  /* istanbul ignore if */
+  if (!mongoose.Types.ObjectId(id)) return next('bad id')
   Product.find({ uses: id }, (err, prods) => {
-    if (err) res.status(500).send(err)
+    /* istanbul ignore if */
+    if (err) return next(err)
     prods.map(p => {
       p.uses = _.filter(p.uses, i => i !== id)
       p.save((err) => {
-        if (err) res.status(500).send(err)
+        /* istanbul ignore if */
+        if (err) return next(err)
       })
     })
   })
   Recipe.find({ uses: id }, (err, recipes) => {
-    if (err) res.status(500).send(err)
+    /* istanbul ignore if */
+    if (err) return next(err)
     recipes.map(r => {
       r.uses = _.filter(r.uses, i => i !== id)
       r.save((err) => {
-        if (err) res.status(500).send(err)
+        /* istanbul ignore if */
+        if (err) return next(err)
       })
     })
   })
   Use.findByIdAndRemove(id, (err) => {
-    if (err) res.status(500).send(err)
+    /* istanbul ignore if */
+    if (err) return next(err)
     res.status(200).send(id)
   })
 }

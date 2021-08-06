@@ -5,8 +5,8 @@
   "main": "index.js",
   "repository": "git@github.com:McFlip/oils.git",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0",
-    "test": "jest",
+    "start": "webpack-dev-server --open --host 0.0.0.0",
+    "test": "jest --coverage",
     "build": "webpack --config webpack.config.production.js && cp -r index.html favicon.ico style ./dist/"
   },
   "author": "Grady Denton",

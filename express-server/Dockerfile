@@ -1,22 +1,11 @@
-# Create image based on the official Node image from dockerhub
-FROM node:12
-
-# Create a directory where our app will be placed
+FROM node:14
 RUN mkdir -p /usr/src/app
-
-# Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
-
+# For webpack to know this is node
 ENV BUILD_TARGET server
-
-# Copy dependency definitions
-COPY package.json package-lock.json /usr/src/app/
-
-# Install dependecies
+# Copy dependency definitions and webpack configs
+# Don't copy source code for dev because it will be mounted in a volume
+COPY package.json package-lock.json webpack.config.common.js webpack.config.server.js .babelrc.json ./
+# Faster than install, since we already built package-lock on host dev system
 RUN npm ci
-
-# Get all the code needed to run the app
-COPY . /usr/src/app
-
-# Expose the port the app runs in
 EXPOSE 3000

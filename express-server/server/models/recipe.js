@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Product } from './product'
-import { Use } from './use'
+import { Product } from './product.js'
+import Use from './use.js'
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 const ObjectId = mongoose.Schema.Types.ObjectId
@@ -13,7 +13,10 @@ const ingredientSchema = new Schema({
 
 // create mongoose schema
 const recipeSchema = new Schema({
-  title: String,
+  title: {
+    type: String,
+    required: [true, 'Recipe title is required']
+  },
   ingredients: [ingredientSchema],
   directions: String,
   uses: [{ type: ObjectId, ref: 'Use', index: true }]

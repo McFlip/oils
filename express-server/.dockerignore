@@ -1,5 +1,8 @@
 node_modules/
 .build/
+test/
+coverage/
+.nyc_output/
 *.bash
 .eslint
 .dockerignore
