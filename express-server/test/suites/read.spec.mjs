@@ -213,6 +213,12 @@ export default function read () {
         done()
       })
   })
+  it('should fail to get a non-existant image', async function () {
+    const { apiURL } = this.test.ctx
+    const res = await chai.request(apiURL)
+      .get('/images/fakeimage')
+    res.should.have.status(404)
+  })
   it('should get 1st products uses', function (done) {
     const { apiURL, prod1ID } = this.test.ctx
     chai.request(apiURL)

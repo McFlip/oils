@@ -114,10 +114,11 @@ router.post('/posts/:postId', upload, gfsMidWare, ProdController.updatePost)
 router.post('/posts', upload, ProdController.createPost)
 
 // Downloading a single file
-router.get('/images/:filename', (req, res) => {
+router.get('/images/:filename', (req, res, next) => {
   gfs.collection('fs')
   gfs.files.find({ filename: req.params.filename }).toArray(function (err, files) {
-    if (err) res.status(500).send(err)
+    /* istanbul ignore if */  
+    if (err) return next(err)
     if (!files || files.length === 0) {
       return res.status(404).json({
         responseCode: 1,
@@ -207,7 +208,7 @@ router.delete('/mockmongoose', (req, res) => {
     .then(() => {
       res.status(200).send('MongoDB Disconnected\r\n')
     })
-    .catch((err) => {
+    .catch(/* istanbul ignore next */(err) => {
       console.log('unable to kill mockmongoose')
       console.error(err)
     })
