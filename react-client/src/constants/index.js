@@ -18,4 +18,5 @@ export const DELETE_RECIPE = 'DELETE_RECIPE'
 export const ROOT_URL = process.env.ROOT_URL || 'http://localhost:3000'
 export const IMG_HOST = process.env.IMG_HOST || 'http://localhost:3000/images/'
 // JSON Web Token acts as API key
-export const JWT = process.env.JWT ? process.env.JWT : window.localStorage.getItem('jwt')
+// export const JWT = process.env.JWT ? process.env.JWT : window.localStorage.getItem('jwt')
+export const JWT = window.localStorage.getItem('jwt')
